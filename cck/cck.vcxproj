@@ -147,17 +147,66 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Battle.h" />
+    <ClInclude Include="Character.h" />
+    <ClInclude Include="CharacterStats.h" />
+    <ClInclude Include="Command.h" />
+    <ClInclude Include="Direction.h" />
+    <ClInclude Include="Errors.h" />
+    <ClInclude Include="Event.h" />
+    <ClInclude Include="Game.h" />
+    <ClInclude Include="GameConfig.h" />
+    <ClInclude Include="GameInputCmd.h" />
+    <ClInclude Include="GameIO.h" />
+    <ClInclude Include="Stairs.h" />
+    <ClInclude Include="TextDisplay.h" />
+    <ClInclude Include="Treasure.h" />
+    <ClInclude Include="Item.h" />
+    <ClInclude Include="Level.h" />
+    <ClInclude Include="Map.h" />
+    <ClInclude Include="Player.h" />
+    <ClInclude Include="Position.h" />
+    <ClInclude Include="Potion.h" />
+    <ClInclude Include="PotionEffects.h" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="Sprite.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="TreasureStats.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Battle.cpp" />
     <ClCompile Include="cck.cpp" />
+    <ClCompile Include="Character.cpp" />
+    <ClCompile Include="CharacterStats.cpp" />
+    <ClCompile Include="Command.cpp" />
+    <ClCompile Include="Errors.cpp" />
+    <ClCompile Include="Event.cpp" />
+    <ClCompile Include="Game.cpp" />
+    <ClCompile Include="GameConfig.cpp" />
+    <ClCompile Include="GameInputCmd.cpp" />
+    <ClCompile Include="GameIO.cpp" />
+    <ClCompile Include="Stairs.cpp" />
+    <ClCompile Include="TextDisplay.cpp" />
+    <ClCompile Include="Treasure.cpp" />
+    <ClCompile Include="Item.cpp" />
+    <ClCompile Include="Level.cpp" />
+    <ClCompile Include="Map.cpp" />
+    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Position.cpp" />
+    <ClCompile Include="Potion.cpp" />
+    <ClCompile Include="PotionEffects.cpp" />
+    <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="TreasureStats.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="cck.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
