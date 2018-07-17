@@ -1,9 +1,9 @@
 #pragma once
 #include <map>
 
-class CharacterStats;
-class PotionEffects;
-class TreasureStats;
+struct CharacterStats;
+struct PotionEffects;
+struct TreasureStats;
 
 struct GameConfig
 {

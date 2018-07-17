@@ -28,10 +28,10 @@ private:
 
 public: 
 	Map(std::string name);
+	~Map();
 	
 	const Cell& GetCell(int x, int y) const;
-	const Cell& GetCell(const Position &pos) const
-		;
+	const Cell& GetCell(const Position &pos) const;
 	const std::vector<Cell> &GetCells() const;
 	int GetWidth() const;
 	int GetHeight() const;

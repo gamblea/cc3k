@@ -5,8 +5,8 @@
 #include "Item.h"
 #include "Errors.h"
 #include "Player.h"
-#include "Battle.h"
 #include "Map.h"
+#include "Event.h"
 
 #include <exception>
 #include <memory>
@@ -104,16 +104,18 @@ bool Level::Play()
 		// can make all these to one with supercalss of exception and overload what ()
 		catch (const DirectionExeption& attempt)
 		{
-			io.InvalidMove(""); // add exception .what()
+			io.InvalidMove(attempt.what()); // add exception .what()
 			continue;
 		}
 
+		// STILL HAVE TO DO ENEMIES MOVES
 
 		io.DrawBoard();
 		io.DrawDetails(mapOfLevel.GetName());
 		if (completed) io.LevelCompleted();
 	}
 
+	return completed;
 }
 
 void Level::BuildLevel()
@@ -130,7 +132,7 @@ std::shared_ptr<Character> Level::getEnemyAt(Position position)
 			return enemy;
 		}
 	}
-	throw CannotAttack{};
+	throw std::exception();
 }
 
 
@@ -156,7 +158,7 @@ Position Level::calcPosition(Position current, Direction direction)
 	int changeY = 0;
 	switch (direction)
 	{
-	case Direction::N:
+	case Direction::N :
 		changeX = 0;
 		changeY = -1;
 		break;
@@ -188,10 +190,10 @@ Position Level::calcPosition(Position current, Direction direction)
 		changeX = -1;
 		changeY = 1;
 		break;
-	case default:
+	default :
 		throw std::runtime_error("");
-		break;
 	}
+
 	Position newPos{ current.x + changeX, current.y + changeY };
 	if (newPos.x >= 0 && newPos.x < mapOfLevel.GetWidth() && newPos.y >= 0 || newPos.y < mapOfLevel.GetHeight())
 		return newPos;
@@ -230,7 +232,7 @@ std::shared_ptr<Item> Level::getItemAt(Position position)
 			return item;
 		}
 	}
-	throw CannotUse{};
+	throw std::exception();
 }
 
 void Level::removeEnemy(std::shared_ptr<Character> enemy)
@@ -255,5 +257,5 @@ std::shared_ptr<Item> Level::getWalkoverItemAt(Position position)
 			return item;
 		}
 	}
-	throw CannotMove{};
+	throw std::exception();
 }

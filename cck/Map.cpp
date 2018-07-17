@@ -236,7 +236,9 @@ const std::vector<Map::Cell>& Map::GetCells() const
 
 
 Map::~Map()
-{}
+{
+
+}
 
 char operator>>(Map::Cell cell, char &c)
 {

@@ -30,10 +30,20 @@ Event::Event(EventType type, std::shared_ptr<Character> attacker, std::shared_pt
 	}
 }
 
-Event::Event(EventType type, std::shared_ptr<Player> player, PotionEffects effects) :type{type}
+Event::Event(EventType type, std::shared_ptr<Player> player, PotionEffects effect) 
+	: type{type}
 {
-	description = "The " + player->GetName() + " picked up a " + effects.Description + ".";
+	std::string effects{};
+	if (effect.AtkEffect != 0)
+		effects += "Atk: " + std::to_string(effect.AtkEffect);
+	if (effect.DefEffect != 0)
+		effects += "Def: " + std::to_string(effect.DefEffect);
+	if (effect.HealthEffect != 0)
+		effects += "Hp: " + std::to_string(effect.HealthEffect);
+	description = player->GetName() + " drank " + effect.Description + effects;
 }
+
+
 
 
 

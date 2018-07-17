@@ -1,6 +1,7 @@
 #pragma once
 #include "Character.h"
 #include "TreasureStats.h"
+#include "PotionEffects.h"
 #include "Direction.h"
 
 class Stairs;

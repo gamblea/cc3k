@@ -4,6 +4,7 @@
 
 class Character;
 class Player;
+struct PotionEffects;
 
 class Event
 {
@@ -15,7 +16,7 @@ private:
 public:
 	Event(EventType type, std::string description);
 	Event(EventType type, std::shared_ptr<Character> attacker, std::shared_ptr<Character> defender, bool hit, int damage);
-	Event(EventType type, std::shared_ptr<Player> player, PotionEffects effects);
+	Event(EventType type, std::shared_ptr<Player> player, PotionEffects effect);
 
 	virtual ~Event();
 

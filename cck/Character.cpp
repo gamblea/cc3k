@@ -2,7 +2,6 @@
 #include "Character.h"
 #include "Level.h"
 #include "Errors.h"
-#include "Battle.h"
 
 #include <memory>
 

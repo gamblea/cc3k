@@ -49,7 +49,11 @@ std::istream &operator>>(std::istream &in, Command &command)
 	if (in >> command.action)
 	{
 		if (command.action != Command::Action::Quit && command.action != Command::Action::None)
-			in >> command.direction;
+		{
+			std::string s{};
+			in >> s;
+			command.direction = Helpers::strToDirection(s);
+		}
 	}
 	return in;
 }

@@ -15,5 +15,5 @@ Stairs::~Stairs()
 
 std::shared_ptr<Event> Stairs::GetPickedUpBy(std::shared_ptr<Player> player)
 {
-	player->Use(*this);
+	return player->Use(*this);
 }

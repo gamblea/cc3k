@@ -40,6 +40,7 @@ private:
 
 public:
 	Level(std::shared_ptr<Player> player, std::string fileName, GameIO &io);
+	~Level();
 	bool Play();
 
 	void AddStaircase();

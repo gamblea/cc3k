@@ -2,6 +2,7 @@
 
 #include <string>
 #include "Direction.h"
+#include "Helpers.h"
 
 
 class DirectionExeption
@@ -22,7 +23,7 @@ public:
 
 	std::string what() const
 	{
-		return "Cannot move " + DirectionToStr(direction);
+		return "Cannot move " + Helpers::directionToStr(direction);
 	}
 };
 
@@ -33,7 +34,7 @@ public:
 
 	std::string what() const
 	{
-		return "Cannot attack " + DirectionToStr(direction);
+		return "Cannot attack " + Helpers::directionToStr(direction);
 	}
 };
 
@@ -44,7 +45,7 @@ public:
 
 	std::string what() const
 	{
-		return "Cannot use item to the " + DirectionToStr(direction);
+		return "Cannot use item to the " + Helpers::directionToStr(direction);
 	}
 };
 

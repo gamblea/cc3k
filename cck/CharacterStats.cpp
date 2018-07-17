@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "CharacterStats.h"
+#include "Helpers.h"
 
 
 std::istream &operator>>(std::istream &in, CharacterStats stats)
@@ -20,13 +21,13 @@ std::istream &operator>>(std::istream &in, CharacterStats stats)
 		{
 			std::string val{};
 			in >> val;
-			stats.Playable = stringToBool(val);
+			stats.Playable = Helpers::stringToBool(val);
 		}
 		else if (field == "AccessToPath:")
 		{
 			std::string val{};
 			in >> val;
-			stats.AccessToPath = stringToBool(val);
+			stats.AccessToPath = Helpers::stringToBool(val);
 		}
 		else if (field == "HpStart:")
 		{
@@ -91,6 +92,7 @@ std::istream &operator>>(std::istream &in, CharacterStats stats)
 			in >> stats.GoldDrop;
 		}
 	}
+	return in;
 }
 
 bool stringToBool(std::string str)

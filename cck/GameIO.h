@@ -8,7 +8,7 @@
 #include "Command.h"
 #include "Map.h"
 
-class CharacterStats;
+struct CharacterStats;
 class Character;
 class Sprite;
 class Player;
@@ -56,12 +56,12 @@ public:
 	CharacterStats GetPlayerRace(const std::map<std::string, CharacterStats> &races);
 	Command GetCommand();
 
-	void UpdateBoard(const Map &map, const std::vector<const std::shared_ptr<const Sprite>> &sprites);
+	void UpdateBoard();
 
 	void DrawBoard();
 	void DrawDetails(std::string levelName);
 	void LevelCompleted();
-	void InvalidMove(const std::string &msg);
+	void InvalidMove(const std::string &msg) const;
 	void EndGame();
 
 	void AttachPlayer(PPlayer const player);

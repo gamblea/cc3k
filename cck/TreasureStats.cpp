@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "TreasureStats.h"
 #include <string>
+#include "Helpers.h"
 
 
 std::istream &operator>>(std::istream &in, TreasureStats stats)
@@ -20,7 +21,7 @@ std::istream &operator>>(std::istream &in, TreasureStats stats)
 		{
 			std::string s{};
 			in >> s;
-			stats.CanBePickedUp = stringToBool(s);
+			stats.CanBePickedUp = Helpers::stringToBool(s);
 			pickedUpSet = true;
 		}
 	}
@@ -29,9 +30,3 @@ std::istream &operator>>(std::istream &in, TreasureStats stats)
 	return in;
 }
 
-bool stringToBool(std::string str)
-{
-	if (str == "true") return true;
-	else if (str == "false") return false;
-	else throw std::runtime_error("Expected true or false");
-}
