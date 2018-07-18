@@ -23,13 +23,14 @@ Player::~Player()
 
 std::shared_ptr<Event> Player::Use(PotionEffects effect) // called by Item
 {
+	// needs implementation 
 	return std::make_shared<Event>(Event::EventType::GetPotion, std::make_shared<Player>(*this), effect);
 }
 
 std::shared_ptr<Event> Player::Use(TreasureStats treasureStats) // called by Item
 {
 	// needs impementation
-	std::string msg = stats.Name + "Picked up: " + std::to_string(treasureStats.Value) + " gold.";
+	std::string msg = stats.Name + " picked up: " + std::to_string(treasureStats.Value) + " gold from a " + treasureStats.Name + ".";
 	return std::make_shared<Event>(Event::EventType::GetTreasure, msg);
 }
 

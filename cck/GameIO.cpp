@@ -2,7 +2,6 @@
 #include "GameIO.h"
 #include "Map.h"
 #include "Sprite.h"
-
 #include "Player.h"
 
 #include <string>

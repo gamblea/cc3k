@@ -65,6 +65,12 @@ int Character::GetGold() const
 	return gold;
 }
 
+int Character::PickupGold(int amount)
+{
+	gold += amount;
+	return gold;
+}
+
 Position Character::getPosFromDir(Direction dir)
 {
 	int changeX = 0;

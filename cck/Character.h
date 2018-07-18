@@ -28,5 +28,6 @@ public:
 
 	std::string GetName() const;
 	int GetGold() const;
+	int PickupGold(int amount);
 };
 

@@ -24,8 +24,12 @@ bool Level::Play()
 {
 	bool completed = false;
 
+	io.DrawBoard();
+	io.DrawDetails(mapOfLevel.GetName());
+
 	while (!completed)
 	{
+
 		Command command = io.GetCommand();
 
 		try
@@ -49,7 +53,7 @@ bool Level::Play()
 
 				break;
 
-			case Command::Action::Move :
+			case Command::Action::Move : 
 				try
 				{
 					Position newPos = calcPosition(player->GetPosition(), command.direction);
@@ -61,12 +65,13 @@ bool Level::Play()
 					}
 					else if (accessible)
 					{
-						std::shared_ptr<Item> item = getWalkoverItemAt(newPos);
+						std::shared_ptr<Item> item = getWalkoverItemAt(newPos); // throws exception if it can be picked up
 						std::shared_ptr<Event> event = item->GetPickedUpBy(player);
 						if (event->GetType() == Event::EventType::EndLevel)
 						{
 							completed = true;
 						}
+						removeItem(item);
 
 					}
 					else throw CannotMove{command.direction};
