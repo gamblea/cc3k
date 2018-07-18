@@ -15,3 +15,8 @@ char Sprite::GetSymbol() const
 {
 	return symbol;
 }
+
+Sprite::~Sprite()
+{
+
+}

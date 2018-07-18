@@ -7,6 +7,7 @@
 
 #include "Command.h"
 #include "Map.h"
+#include "CharacterStats.h"
 
 struct CharacterStats;
 class Character;
@@ -25,11 +26,11 @@ typedef std::shared_ptr<const std::map<std::string, CharacterStats>> PointerCons
 */
 
 typedef std::shared_ptr<const Player> PPlayer;
-typedef std::vector <const std::shared_ptr<const Sprite>> VectorSprite;
-typedef std::vector <const std::shared_ptr<const Event>> VectorEvent;
+typedef std::vector <std::shared_ptr<const Sprite>> VectorSprite;
+typedef std::vector <std::shared_ptr<const Event>> VectorEvent;
 
-typedef std::shared_ptr<std::vector<const std::shared_ptr<const Sprite>>> PVectorSprite;
-typedef std::shared_ptr<std::vector<const std::shared_ptr<const Event>>> PVectorEvent;
+typedef std::shared_ptr<std::vector<std::shared_ptr<const Sprite>>> PVectorSprite;
+typedef std::shared_ptr<std::vector<std::shared_ptr<const Event>>> PVectorEvent;
 
 typedef std::shared_ptr<const Map> PMap;
 
@@ -64,10 +65,10 @@ public:
 	void InvalidMove(const std::string &msg) const;
 	void EndGame();
 
-	void AttachPlayer(PPlayer const player);
-	void AttachSprites(PVectorSprite const sprites);
-	void AttachEvents(PVectorEvent const events);
-	void AttachMap(PMap const map);
+	void AttachPlayer(PPlayer player);
+	void AttachSprites(PVectorSprite sprites);
+	void AttachEvents(PVectorEvent events);
+	void AttachMap(PMap map);
 
 	bool PlayAgain();
 

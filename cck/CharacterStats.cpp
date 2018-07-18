@@ -94,10 +94,3 @@ std::istream &operator>>(std::istream &in, CharacterStats stats)
 	}
 	return in;
 }
-
-bool stringToBool(std::string str)
-{
-	if (str == "true") return true;
-	else if (str == "false") return false;
-	else throw std::runtime_error("Expected true or false");
-}
