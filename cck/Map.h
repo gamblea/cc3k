@@ -36,6 +36,8 @@ public:
 	int GetWidth() const;
 	int GetHeight() const;
 	std::string GetName() const;
+
+	const std::vector<std::vector<Position>>& GetRooms();
 	
 
 	friend std::ostream &operator<<(std::ostream &os, Map &map);

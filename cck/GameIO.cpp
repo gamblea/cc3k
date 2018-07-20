@@ -4,6 +4,7 @@
 #include "Map.h"
 #include "Sprite.h"
 #include "Player.h"
+#include "Level.h"
 
 #include <string>
 
@@ -69,14 +70,15 @@ CharacterStats GameIO::GetPlayerRace(const std::map<std::string, CharacterStats>
 
 void GameIO::UpdateBoard()
 {
-	if (height < 1 || height != map->GetHeight() || width < 1 || width != map->GetWidth())
+	const Map& map = level->GetMap();
+	if (height < 1 || height != map.GetHeight() || width < 1 || width != map.GetWidth())
 	{
 		board.clear();
-		width = map->GetWidth();
-		height = map->GetHeight();
+		width = map.GetWidth();
+		height = map.GetHeight();
 
 		int i = 0;
-		for (const Map::Cell& cell : map->GetCells())
+		for (const Map::Cell& cell : map.GetCells())
 		{
 			if (i == width) i = 0;
 			if (i == 0)
@@ -90,13 +92,13 @@ void GameIO::UpdateBoard()
 		}
 		if (height != board.size()) throw std::runtime_error("Update of Board failed!");
 	}
-	else if (width == map->GetWidth() && height == map->GetHeight())
+	else if (width == map.GetWidth() && height == map.GetHeight())
 	{
 		for (int y = 0; y < height; y++)
 		{
 			for (int x = 0; x < width; x++)
 			{
-				const Map::Cell &cell = map->GetCell(x, y);
+				const Map::Cell &cell = map.GetCell(x, y);
 				char c = 0;
 				cell >> c;
 				board.at(x).at(y) = c;
@@ -105,7 +107,7 @@ void GameIO::UpdateBoard()
 	}
 	else throw std::runtime_error("Update of Board failed!");
 
-	for (const std::shared_ptr<const Sprite> sprite : *sprites)
+	for (const std::shared_ptr<const Sprite> sprite : level->GetSprites())
 	{
 		char &element = getBoardAt(sprite->GetPosition());
 		element = sprite->GetSymbol();
@@ -123,16 +125,18 @@ void GameIO::DrawBoard()
 	out << board;
 }
 
-void GameIO::DrawDetails(std::string levelName)
+void GameIO::DrawDetails()
 {
+	const Map& map = level->GetMap();
+	const PPlayer player = level->GetPlayer();
 	int width = board.back().size();
 	std::string playerRaceAndGold = ("Race: " + player->GetName()) + (" Gold: "  + player->GetGold());
-	PrintBothEnds(playerRaceAndGold, levelName);
+	PrintBothEnds(playerRaceAndGold, map.GetName());
 	out << "HP: " << player->GetHealth() << "/" << player->GetStartingHealth() << std::endl;
 	out << "Atk: " << player->GetAttack() << std::endl;
 	out << "Def: " << player->GetDefense() << std::endl;
 	int outputed = 0;
-	for (const std::shared_ptr<const Event> &event : *events)
+	for (const std::shared_ptr<const Event> &event : level->GetEvents())
 	{
 		out << event;
 		outputed++;
@@ -151,7 +155,7 @@ void GameIO::LevelCompleted()
 	out << "Level Completed!" << std::endl;
 }
 
-void GameIO::InvalidMove(const std::string &msg) const 
+void GameIO::InvalidCommand(const std::string &msg) const 
 {
 	out << "Invalid: " << msg << std::endl;
 }
@@ -161,25 +165,12 @@ void GameIO::EndGame()
 	out << "Game over! You gave up :(";
 }
 
-void GameIO::AttachPlayer(PPlayer player)
+void GameIO::AttachLevel(std::shared_ptr<Level> level)
 {
-	this->player = player;
+	this->level = level;
 }
 
-void GameIO::AttachSprites(PVectorSprite sprites)
-{
-	this->sprites = sprites;
-}
 
-void GameIO::AttachEvents(PVectorEvent events)
-{
-	this->events = events;
-}
-
-void GameIO::AttachMap(PMap const map)
-{
-	this->map = map;
-}
 
 bool GameIO::PlayAgain()
 {

@@ -14,6 +14,11 @@
 Level::Level(std::shared_ptr<Player> player, std::string fileName, GameIO &io)
 	: player{player}, mapOfLevel{fileName}, io{io}
 {
+	// needs to be implemented
+	AddStaircase();
+	AddPotions();
+	AddTreasure();
+	AddEnemies();
 }
 
 Level::~Level()
@@ -22,16 +27,12 @@ Level::~Level()
 
 bool Level::Play()
 {
-	bool completed = false;
-
 	io.DrawBoard();
-	io.DrawDetails(mapOfLevel.GetName());
+	io.DrawDetails();
 
 	while (!completed)
 	{
-
 		Command command = io.GetCommand();
-
 		try
 		{
 			switch (command.action)
@@ -56,25 +57,7 @@ bool Level::Play()
 			case Command::Action::Move : 
 				try
 				{
-					Position newPos = calcPosition(player->GetPosition(), command.direction);
-
-					bool accessible = accessibleCell(newPos, true);
-					if (accessible && !cellOccupied(newPos))
-					{
-						player->Move(newPos);
-					}
-					else if (accessible)
-					{
-						std::shared_ptr<Item> item = getWalkoverItemAt(newPos); // throws exception if it can be picked up
-						std::shared_ptr<Event> event = item->GetPickedUpBy(player);
-						if (event->GetType() == Event::EventType::EndLevel)
-						{
-							completed = true;
-						}
-						removeItem(item);
-
-					}
-					else throw CannotMove{command.direction};
+					MovePlayer(command.direction);
 				}
 				catch(...)
 				{
@@ -109,14 +92,15 @@ bool Level::Play()
 		// can make all these to one with supercalss of exception and overload what ()
 		catch (const DirectionExeption& attempt)
 		{
-			io.InvalidMove(attempt.what()); // add exception .what()
+			io.InvalidCommand(attempt.what()); // add exception .what()
 			continue;
 		}
 
+		MoveEnemies();
 		// STILL HAVE TO DO ENEMIES MOVES
 
 		io.DrawBoard();
-		io.DrawDetails(mapOfLevel.GetName());
+		io.DrawDetails();
 		if (completed) io.LevelCompleted();
 	}
 
@@ -125,6 +109,33 @@ bool Level::Play()
 
 void Level::BuildLevel()
 {
+
+}
+
+void Level::MovePlayer(Direction direction)
+{
+	Position newPos = calcPosition(player->GetPosition(), direction);
+
+	bool accessible = accessibleCell(newPos, true);
+	if (accessible && !cellOccupied(newPos))
+	{
+		player->Move(newPos);
+		std::string msg = player->GetName() + " moved " + Helpers::directionToStr(direction) + ".";
+		events.emplace_back(std::make_shared<Event>(Event::EventType::Move, msg));
+
+	}
+	else if (accessible)
+	{
+		std::shared_ptr<Item> item = getWalkoverItemAt(newPos); // throws exception if it can be picked up
+		std::shared_ptr<Event> event = item->GetPickedUpBy(player);
+		if (event->GetType() == Event::EventType::EndLevel)
+		{
+			completed = true;
+		}
+		events.emplace_back(std::a);
+		removeItem(item);
+	}
+	else throw CannotMove{direction};
 
 }
 
@@ -243,13 +254,13 @@ std::shared_ptr<Item> Level::getItemAt(Position position)
 void Level::removeEnemy(std::shared_ptr<Character> enemy)
 {
 	enemies.erase(std::find(enemies.begin(), enemies.end(), enemy));
-	sprites.erase(std::find(sprites.begin(), sprites.end(), std::dynamic_pointer_cast<Sprite>(enemy)));
+	sprites.erase(std::find(sprites.begin(), sprites.end(), std::static_pointer_cast<Sprite>(enemy)));
 }
 
 void Level::removeItem(std::shared_ptr<Item> item)
 {
 	items.erase(std::find(items.begin(), items.end(), item));
-	sprites.erase(std::find(sprites.begin(), sprites.end(), std::dynamic_pointer_cast<Sprite>(item)));
+	sprites.erase(std::find(sprites.begin(), sprites.end(), std::static_pointer_cast<Sprite>(item)));
 }
 
 std::shared_ptr<Item> Level::getWalkoverItemAt(Position position)
@@ -263,4 +274,34 @@ std::shared_ptr<Item> Level::getWalkoverItemAt(Position position)
 		}
 	}
 	throw std::exception();
+}
+
+const Map & Level::GetMap()
+{
+	return mapOfLevel;
+}
+
+PPlayer Level::GetPlayer()
+{
+	return player;
+}
+
+const VectorPCharacter & Level::GetEnemies()
+{
+	return enemies;
+}
+
+const VectorPSprite & Level::GetSprites()
+{
+	return sprites;
+}
+
+const VectorPItem& Level::GetItems()
+{
+	return items;
+}
+
+const VectorPEvent & Level::GetEvents()
+{
+	return events;
 }

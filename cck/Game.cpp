@@ -42,11 +42,11 @@ void Game::Start()
 	{
 		bool passLevel = true;
 		player = std::make_shared<Player>(io.GetPlayerRace(allCharacters));
-		io.AttachPlayer(player);
 
 		for (int i = 0; i < 5 && passLevel; i++ ) // Play the levels
 		{
-			level = std::make_shared<Level>(player, "level.map", io);
+			std::shared_ptr<Level> level = std::make_shared<Level>(player, "level.map", io);
+			io.AttachLevel(level);
 			passLevel = level->Play();			
 		}
 

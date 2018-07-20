@@ -9,7 +9,7 @@ struct PotionEffects;
 class Event
 {
 public:
-	enum class EventType {Battle, EndLevel, GetPotion, GetTreasure, See, None};
+	enum class EventType {Battle, EndLevel, GetPotion, GetTreasure, See, Move, None};
 private:
 	std::string description;
 	EventType type;

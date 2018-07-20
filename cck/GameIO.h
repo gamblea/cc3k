@@ -14,6 +14,7 @@ class Sprite;
 class Player;
 
 class Event;
+class Level;
 
 
 typedef std::shared_ptr<const std::map<std::string, CharacterStats>> PointerConstCharactersStatsMap;
@@ -42,10 +43,7 @@ class GameIO
 	int width = 0;
 	int height = 0;
 
-	PPlayer player;
-	PVectorSprite sprites;
-	PVectorEvent events;
-	PMap map;
+	std::shared_ptr<Level> level;
 
 	char &getBoardAt(Position pos);
 	void PrintBothEnds(const std::string &front, const std::string &back) const;
@@ -59,21 +57,16 @@ public:
 	void UpdateBoard();
 
 	void DrawBoard();
-	void DrawDetails(std::string levelName);
+	void DrawDetails();
 	void LevelCompleted();
-	void InvalidMove(const std::string &msg) const;
+	void InvalidCommand(const std::string &msg) const;
 	void EndGame();
 
-	void AttachPlayer(PPlayer const player);
-	void AttachSprites(PVectorSprite const sprites);
-	void AttachEvents(PVectorEvent const events);
-	void AttachMap(PMap const map);
+	void AttachLevel(std::shared_ptr<Level> level);
 
 	bool PlayAgain();
 
-
 	friend std::ostream &operator<<(std::ostream &out, const std::vector<std::vector<char>> &dVector);
-
 };
 
 std::ostream &operator<<(std::ostream &out, const std::vector<std::vector<char>> &dVector);

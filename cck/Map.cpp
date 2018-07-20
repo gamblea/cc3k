@@ -273,3 +273,8 @@ std::string Map::GetName() const
 {
 	return name;
 }
+
+const std::vector<std::vector<Position>>& Map::GetRooms()
+{
+	return rooms;
+}

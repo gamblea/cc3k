@@ -26,11 +26,8 @@ private:
 	std::map<std::string, PotionEffects> allPotions;
 	std::map<std::string, TreasureStats> allTreasures;
 
-	std::shared_ptr<Level> level;
 	std::shared_ptr<Player> player;
-	std::shared_ptr<TextDisplay> display;
 	GameIO io{std::cin,std::cout};
-
 
 	template<typename ConfigName, typename Config>
 	void ReadConfigurations(std::string fileName, std::map<ConfigName, Config> configurations);
