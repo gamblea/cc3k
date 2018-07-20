@@ -23,6 +23,7 @@ void Character::Move(Position pos)
 
 std::shared_ptr<Event> Character::Attack(std::shared_ptr<Character> enemy)
 {
+
 	// mutate me and the enemy 
 
 	//make a pointer to event that is actaully a battle

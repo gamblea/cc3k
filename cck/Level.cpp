@@ -264,7 +264,7 @@ void Level::removeItem(std::shared_ptr<Item> item)
 }
 
 std::shared_ptr<Item> Level::getWalkoverItemAt(Position position)
-{
+{\
 	for (const std::shared_ptr<Item> &item : items)
 	{
 		if (item->GetPosition() == position && 
