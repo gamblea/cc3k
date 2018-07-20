@@ -7,9 +7,9 @@ std::istream &operator>>(std::istream &in, PotionEffects effects)
 
 	while (in >> field)
 	{
-		if (field == "Name:")
+		if (field == "Description:")
 		{
-			in >> effects.Name;
+			in >> effects.Description;
 		}
 		else if (field == "HealthEffect:")
 		{

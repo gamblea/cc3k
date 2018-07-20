@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "GameIO.h"
+#include "CharacterStats.h"
 #include "Map.h"
 #include "Sprite.h"
 #include "Player.h"
@@ -42,11 +43,11 @@ CharacterStats GameIO::GetPlayerRace(const std::map<std::string, CharacterStats>
 {
 	bool selected = false;
 	std::string raceName;
-	CharacterStats stats{};
+	CharacterStats stats;
 
 	while (!selected)
 	{
-		out << "Select a Race!" << std::endl; // Should Display the Options
+		out << "Select a Race!" << std::endl;
 		if (in >> raceName)
 		{
 			if (races.find(raceName) != races.end() && races.find(raceName)->second.Playable == true)
@@ -199,8 +200,6 @@ bool GameIO::PlayAgain()
 			return false;
 		}
 	}
-	// Should not hit here
-	return false;
 }
 
 

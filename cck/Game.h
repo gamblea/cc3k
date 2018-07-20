@@ -13,14 +13,18 @@ class Level;
 class TextDisplay;
 class GameIO;
 
-struct CharacterStats;
+class CharacterStats;
 
 class Game
 {
 private:
 	const std::string charactersFile;
 
-	GameConfig gameConfig;
+	GameConfig config;
+
+	std::map<std::string, CharacterStats> allCharacters;
+	std::map<std::string, PotionEffects> allPotions;
+	std::map<std::string, TreasureStats> allTreasures;
 
 	std::shared_ptr<Level> level;
 	std::shared_ptr<Player> player;
@@ -32,7 +36,6 @@ private:
 	void ReadConfigurations(std::string fileName, std::map<ConfigName, Config> configurations);
 
 public:
-	Game() = default; // should delete 
 	Game(std::string charactersFile, std::string potionsFile, std::string treasureFile);
 	void Start();
 	~Game();

@@ -2,7 +2,6 @@
 #include "Character.h"
 #include "Level.h"
 #include "Errors.h"
-#include "Event.h"
 
 #include <memory>
 
@@ -24,15 +23,9 @@ void Character::Move(Position pos)
 
 std::shared_ptr<Event> Character::Attack(std::shared_ptr<Character> enemy)
 {
-	// not completed
-	bool hit = false;
-	int damage = 0;
-
 	// mutate me and the enemy 
 
 	//make a pointer to event that is actaully a battle
-
-	return std::make_shared<Event>(Event::EventType::Battle,std::make_shared<Character>(*this), enemy, hit, damage);
 }
 
 int Character::GetHealth() const

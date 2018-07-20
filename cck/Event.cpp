@@ -40,7 +40,7 @@ Event::Event(EventType type, std::shared_ptr<Player> player, PotionEffects effec
 		effects += "Def: " + std::to_string(effect.DefEffect);
 	if (effect.HealthEffect != 0)
 		effects += "Hp: " + std::to_string(effect.HealthEffect);
-	description = player->GetName() + " drank " + effect.Name + effects;
+	description = player->GetName() + " drank " + effect.Description + effects;
 }
 
 
