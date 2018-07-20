@@ -4,6 +4,7 @@
 #include "Errors.h"
 
 #include <memory>
+#include <algorithm>
 
 
 Character::Character(CharacterStats stats, Position start)
@@ -108,6 +109,6 @@ Position Character::getPosFromDir(Direction dir)
 	return { position.x + changeX, position.y + changeY };
 }
 
-void DecrementHealth(int amount){
+void Character::DecrementHealth(int amount){
 	health = std::max(health - amount, 0);	
 }
