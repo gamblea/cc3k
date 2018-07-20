@@ -26,6 +26,8 @@ public:
 	int GetAttack() const; // need to add potion benefits
 	int GetDefense() const; // need to add potion benefits
 
+	void DecrementHealth(int amount);
+
 	std::string GetName() const;
 	int GetGold() const;
 	int PickupGold(int amount);

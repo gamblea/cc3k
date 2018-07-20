@@ -107,3 +107,7 @@ Position Character::getPosFromDir(Direction dir)
 
 	return { position.x + changeX, position.y + changeY };
 }
+
+void DecrementHealth(int amount){
+	health = std::max(health - amount, 0);	
+}
