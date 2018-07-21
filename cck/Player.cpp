@@ -33,24 +33,39 @@ int Player::GetDefense()
 
 std::shared_ptr<Event> Player::Use(PotionEffects effect) // called by Item
 {
-	// needs implementation 
+	if(stats.PotionEffect != 100){
+		effect.DefEffect = stats.PotionEffect * effect.DefEffect / 100;
+		effect.AtkEffect = stats.PotionEffect * effect.AtkEffect / 100;
+		effect.HealthEffect = stats.PotionEffect * effect.HealthEffect / 100;
+	}	
+
+	DefChange += effect.DefEffect;
+	AtkChange += effect.AtkEffect;
+	health += effect.HealthEffect;
+
+	if(GetAttack() < 0) AtkChange = -stats.Atk;
+	if(GetDefense() < 0) DefChange = -stats.Def;
+	if(getMaxHealth() && health > GetStartingHealth()) health = GetStartingHealth();
+	
 	return std::make_shared<Event>(Event::EventType::GetPotion, std::make_shared<Player>(*this), effect);
 }
 
 std::shared_ptr<Event> Player::Use(TreasureStats treasureStats) // called by Item
 {
-	// needs impementation
+	gold += treasureStats.Value;
 	std::string msg = stats.Name + " picked up: " + std::to_string(treasureStats.Value) + " gold from a " + treasureStats.Name + ".";
 	return std::make_shared<Event>(Event::EventType::GetTreasure, msg);
 }
 
 std::shared_ptr<Event> Player::Use(const Stairs &stairs)
 {
+	
 	return std::make_shared<Event>(Event::EventType::EndLevel, "Level Complete!");
 }
 
 
 void Player::ResetForLevel()
 {
-	// reset potion effects
+	AtkChange = 0;
+	DefChnage = 0;
 }
