@@ -19,7 +19,30 @@ std::shared_ptr<Event> Dragon::Attack(std::shared_ptr<Character> enemy) {
 
 	if ((myDiffX <= 1 && myDiffY <= 1)
 		|| (protectedDiffX <= 1 && protectedDiffY <= 1)) {
-	
+
+		int dodgeChance = Helpers::getRandom(0, 100);
+		int attackChange = Helpers::getRandom(0, 100);
+		bool success = true;
+		
+		if (r > stats.AtkAccuray) {
+			success = false;
+		} else if {
+			(r > enemy->stats.dodgeAccuracy)success = false;
+		}
+		
+		if (success) {
+			health += stats.AtkHpGain;
+		}
+		
+		if(stats.MaxHp && health > stats.HpStart) {
+			health = stats.HpStart;
+		}
+
+		int damage = std::ceil((100/(100+enemy->stats.Def))*stats.Atk);
+		enemy->DecrementHealth(damage);
+		std::shared_ptr<Event> event = std::make_shared<Event>(Event::EventType::Battle, std::make_shared<Character>(this), enemy, success, damage);
+		
+		return event; 
 	} 
 }
 
