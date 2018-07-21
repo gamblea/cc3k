@@ -14,8 +14,8 @@
 #include <exception>
 #include <memory>
 
-Level::Level(std::shared_ptr<Player> player, std::string fileName, GameIO &io, const GameConfig &gameConfig)
-	: player{player}, mapOfLevel{fileName}, io{io}, gameConfig{gameConfig}
+Level::Level(std::shared_ptr<Player> player, std::string fileName, GameIO &io, std::shared_ptr<SpriteFactory> factory)
+	: player{player}, mapOfLevel{fileName}, io{io}, factory{factory}
 {
 	// needs to be implemented
 	AddStaircase();
@@ -325,23 +325,12 @@ std::shared_ptr<Item> Level::getWalkoverItemAt(Position position)
 	throw std::exception();
 }
 
-Position Level::getRandomPosition()
-{
-	bool positionFound = false;
-	while (!positionFound)
-	{
-		const std::vector<std::vector<Position>> &rooms = mapOfLevel.GetRooms();
-		int numRooms = rooms.size();
-	}
-
-	return Position();
-}
 
 void Level::AddPotions()
 {
 	for (int i = 0; i < 10; i++)
 	{
-		std::shared_ptr<Potion> potion = SpriteFactory->CreatePotion();
+		std::shared_ptr<Potion> potion = factory->CreatePotion();
 		items.emplace_back(potion);
 		sprites.emplace_back(potion);
 	}
@@ -352,7 +341,7 @@ void Level::AddTreasure()
 {
 	for (int i = 0; i < 10; i++)
 	{
-		std::shared_ptr<Treasure> treasure = SpriteFactory->CreateTreasure();
+		std::shared_ptr<Treasure> treasure = factory->CreateTreasure();
 		items.emplace_back(treasure);
 		sprites.emplace_back(treasure);
 	}
@@ -363,7 +352,7 @@ void Level::AddEnemies()
 {
 	for (int i = 0; i < 20; i++)
 	{
-		std::shared_ptr<Character> enemy = SpriteFactory->CreateEnemy();
+		std::shared_ptr<Character> enemy = factory->CreateEnemy();
 		enemies.emplace_back(enemy);
 		sprites.emplace_back(enemy);
 	}

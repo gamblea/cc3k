@@ -25,6 +25,7 @@ private:
 
 	std::shared_ptr<Player> player;
 	GameIO io{std::cin,std::cout};
+	std::shared_ptr<SpriteFactory> factory;
 
 	template<typename ConfigName, typename Config>
 	void ReadConfigurations(std::string fileName, std::map<ConfigName, Config> configurations);

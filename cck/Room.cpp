@@ -19,7 +19,7 @@ void Room::AddPosition(Position pos)
 	positions.emplace_back(pos);
 }
 
-Position Room::GetRandomPosition()
+Position Room::GetRandomPositionInRoom() const
 {
 	int elementIndex = Helpers::getRandom(0, positions.size() - 1);
 	return positions.at(elementIndex);

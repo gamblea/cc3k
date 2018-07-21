@@ -40,8 +40,10 @@ public:
 	int GetHeight() const;
 	std::string GetName() const;
 
-	const std::vector<std::vector<Position>>& GetRooms();
+	const std::vector<Room>& GetRooms();
+	const Room& GetRandomRoom() const;
 	
+	Position GetRandomPosition() const;
 
 	friend std::ostream &operator<<(std::ostream &os, Map &map);
 

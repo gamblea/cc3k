@@ -5,6 +5,7 @@
 #include <string>
 #include "Position.h"
 #include "Room.h"
+#include "Helpers.h"
 
 Map::Map(std::string name) :name{name}
 {
@@ -276,7 +277,19 @@ std::string Map::GetName() const
 	return name;
 }
 
-const std::vector<std::vector<Position>>& Map::GetRooms()
+const std::vector<Room>& Map::GetRooms()
 {
 	return rooms;
+}
+
+const Room &Map::GetRandomRoom() const
+{
+	int size = rooms.size();
+	int index = Helpers::getRandom(0, size - 1);
+	return rooms.at(index);
+}
+
+Position Map::GetRandomPosition() const
+{
+	return GetRandomRoom().GetRandomPositionInRoom();
 }

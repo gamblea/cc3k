@@ -28,7 +28,7 @@ SpriteFactory::~SpriteFactory()
 {
 }
 
-std::shared_ptr<Character> SpriteFactory::CreateCharacter()
+std::shared_ptr<Character> SpriteFactory::CreateEnemy()
 {
 	int size = enemyNamesChoose.size();
 	int index = Helpers::getRandom(0, size - 1);
@@ -44,4 +44,14 @@ std::shared_ptr<Treasure> SpriteFactory::CreateTreasure()
 	auto elem = gameConfig.Treasures.find(treasureNamesChoose.at(index));
 
 	return std::make_shared<Treasure>(elem->second);
+}
+
+std::shared_ptr<Potion> SpriteFactory::CreatePotion()
+{
+	int size = gameConfig.Potions.size();
+	int index = Helpers::getRandom(0, size - 1);
+	auto elem = gameConfig.Characters.begin();
+	std::advance(elem, index);
+
+	return std::make_shared<Potion>(elem->second);
 }

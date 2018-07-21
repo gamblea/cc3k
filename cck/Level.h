@@ -3,6 +3,7 @@
 #include "Position.h"
 #include "GameIO.h"
 #include "GameConfig.h"
+#include "SpriteFactory.h"
 
 #include <vector>
 #include <memory>
@@ -25,7 +26,6 @@ class Level
 {
 private:
 	GameIO &io;
-	const GameConfig &gameConfig;
 
 	PPlayer player;
 	VectorPCharacter enemies;
@@ -36,6 +36,7 @@ private:
 
 	Map mapOfLevel;
 
+	std::shared_ptr<SpriteFactory> factory;
 	
 
 	bool enemiesMoveable = true;
@@ -53,10 +54,8 @@ private:
 	std::shared_ptr<Item> getWalkoverItemAt(Position position);
 	bool completed = false;
 
-	Position getRandomPosition();
-
 public:
-	Level(std::shared_ptr<Player> player, std::string fileName, GameIO &io, const GameConfig &gameConfig);
+	Level(std::shared_ptr<Player> player, std::string fileName, GameIO &io, std::shared_ptr<SpriteFactory> factory);
 	~Level();
 	bool Play();
 
