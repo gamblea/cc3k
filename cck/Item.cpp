@@ -37,11 +37,6 @@ void Item::SetGuarded(bool value)
 }
 
 
-Dragon Item::AddGuard(CharacterStats guardStats, Position start)
-{
-	guarded = true;
-	return Dragon{ guardStats, start, this};
-}
 
 
 	

@@ -5,6 +5,7 @@
 #include "Item.h"
 #include "Errors.h"
 #include "Player.h"
+#include "Dragon.h"
 #include "Map.h"
 #include "Event.h"
 #include "Treasure.h"
@@ -384,12 +385,13 @@ void Level::addEnemies()
 	{
 		if (item->ToBeGuarded())
 		{
+			Position guardPos;
 			bool posFound = false;
 			while (!posFound)
 			{
 				try
 				{
-					Position guardPos = GetAvalibleAdjacent(item->GetPosition());
+					guardPos = GetAvalibleAdjacent(item->GetPosition());
 					posFound = true;
 				}
 				catch (...) // All Spots around Dragon Board full
@@ -398,7 +400,7 @@ void Level::addEnemies()
 				}
 			}
 
-			Character enemy = 
+			addEnemy(std::make_shared<Dragon>(factory->CreateDragon(guardPos, item->GetGuardName(), item)));
 		}
 	}
 

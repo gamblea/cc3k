@@ -29,7 +29,5 @@ public:
 	std::string GetGuardName() const;
 	bool ToBeGuarded() const;
 	void SetGuarded(bool value);
-
-	Dragon AddGuard(CharacterStats guardStats, Position start);
 };
 

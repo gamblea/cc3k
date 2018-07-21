@@ -9,6 +9,7 @@
 
 #include <vector>
 #include <map>
+#include <memory>
 
 
 SpriteFactory::SpriteFactory(GameConfig gameConfig) : gameConfig{gameConfig}
@@ -49,6 +50,12 @@ Character SpriteFactory::CreateEnemy(Position start, std::string name)
 	CharacterStats stats = gameConfig.Characters.find(name)->second;
 
 	return Character{ stats, start };
+}
+
+Dragon SpriteFactory::CreateDragon(Position start, std::string name, std::shared_ptr<Item> itemToProtect)
+{
+	CharacterStats stats = gameConfig.Characters.find(name)->second;
+	return Dragon(stats, start, itemToProtect);
 }
 
 Treasure SpriteFactory::CreateTreasure(Position start)

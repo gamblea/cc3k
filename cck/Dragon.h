@@ -9,11 +9,10 @@ class Item;
 class Event;
 
 class Dragon : public Character {
-
 	std::shared_ptr<Item> itemToProtect;
 
 public:
-	Dragon(CharacterStats stats,Position start, Item *itemToProtect);
+	Dragon(CharacterStats stats,Position start, std::shared_ptr<Item> itemToProtect);
 	std::shared_ptr<Item> getItem();
 	std::shared_ptr<Event> Attack(std::shared_ptr<Character> enemy) override;
 	~Dragon();

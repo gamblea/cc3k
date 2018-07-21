@@ -6,9 +6,11 @@
 #include "Helpers.h"
 #include "Event.h"
 
-Dragon::Dragon(CharacterStats stats, Position start, Item *itemToProtect):
-	Character{stats, start}, itemToProtect{itemToProtect}
-	{}
+Dragon::Dragon(CharacterStats stats, Position start, std::shared_ptr<Item> itemToProtect)
+	: Character{stats, start}, itemToProtect{itemToProtect}
+{
+	itemToProtect->SetGuarded(true);
+}
 
 std::shared_ptr<Item> Dragon::getItem() {
 	return itemToProtect;
