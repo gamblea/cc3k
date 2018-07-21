@@ -25,7 +25,7 @@ int Player::GetAttack()
 	return stats.Atk + AtkChange;
 }
 
-int Plaer::GetDefense()
+int Player::GetDefense()
 {
 	return stats.Def + DefChange;
 }

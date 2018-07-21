@@ -23,10 +23,6 @@ private:
 
 	GameConfig config;
 
-	std::map<std::string, CharacterStats> allCharacters;
-	std::map<std::string, PotionEffects> allPotions;
-	std::map<std::string, TreasureStats> allTreasures;
-
 	std::shared_ptr<Player> player;
 	GameIO io{std::cin,std::cout};
 

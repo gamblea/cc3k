@@ -50,7 +50,7 @@ void Game::Start()
 	while (play)
 	{
 		bool passLevel = true;
-		player = std::make_shared<Player>(io.GetPlayerRace(allCharacters));
+		player = std::make_shared<Player>(io.GetPlayerRace(config.Characters));
 
 		for (int i = 0; i < 5 && passLevel; i++ ) // Play the levels
 		{

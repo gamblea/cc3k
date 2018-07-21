@@ -4,7 +4,7 @@
 
 
 Treasure::Treasure(Position position, TreasureStats stats) 
-	: Item{'G',position, Item::PickupMethod::Walkover}, stats { stats }
+	: Item{'G', position, Item::PickupMethod::Walkover}, stats { stats }
 {
 
 }
@@ -13,6 +13,6 @@ Treasure::~Treasure() {}
 
 
 std::shared_ptr<Event> Treasure::GetPickedUpBy(std::shared_ptr<Player> player)
-{
+{ 
 	return player->Use(stats);
 }
