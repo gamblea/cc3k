@@ -15,11 +15,11 @@ private:
 	EventType type;
 public:
 	Event(EventType type, std::string description);
+	Event(EventType type, std::shared_ptr<Character> character, Direction direction);
 	Event(EventType type, std::shared_ptr<Character> attacker, std::shared_ptr<Character> defender, bool hit, int damage);
 	Event(EventType type, std::shared_ptr<Player> player, PotionEffects effect);
 
 	virtual ~Event();
-
 	virtual std::string GetDescription() const;
 	EventType GetType() const;
 };

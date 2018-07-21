@@ -2,12 +2,18 @@
 #include "Event.h"
 #include "Character.h"
 #include "Player.h"
+#include "Helpers.h"
 
 #include <string>
 
 
 Event::Event(EventType type, std::string description) : type{ type }, description{ description }
 {}
+
+Event::Event(EventType type, std::shared_ptr<Character> character, Direction direction)
+{
+	description = character->GetName() + " moved " + Helpers::directionToStr(direction) + ".";
+}
 
 Event::Event(EventType type, std::shared_ptr<Character> attacker, std::shared_ptr<Character> defender, bool hit, int damage) : type{ type }
 {

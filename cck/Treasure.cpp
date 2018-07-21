@@ -4,7 +4,7 @@
 
 
 Treasure::Treasure(Position position, TreasureStats stats) 
-	: Item{'G', position, Item::PickupMethod::Walkover}, stats { stats }
+	: Item{'G', position, Item::PickupMethod::Walkover, stats.CanBePickedUp}, stats { stats }
 {
 
 }

@@ -2,9 +2,11 @@
 #include "Map.h"
 #include "Position.h"
 #include "GameIO.h"
+#include "GameConfig.h"
 
 #include <vector>
 #include <memory>
+
 
 
 class Item;
@@ -17,10 +19,13 @@ typedef std::vector<std::shared_ptr<Sprite>> VectorPSprite;
 typedef std::vector<std::shared_ptr<Item>> VectorPItem;
 typedef std::vector<std::shared_ptr<Event>> VectorPEvent;
 
+typedef std::shared_ptr<Character> PCharacter;
+
 class Level
 {
 private:
 	GameIO &io;
+	const GameConfig &gameConfig;
 
 	PPlayer player;
 	VectorPCharacter enemies;
@@ -30,6 +35,10 @@ private:
 
 
 	Map mapOfLevel;
+
+	
+
+	bool enemiesMoveable = true;
 
 	bool nonPickUpAt(const Position &pos);
 
@@ -44,9 +53,10 @@ private:
 	std::shared_ptr<Item> getWalkoverItemAt(Position position);
 	bool completed = false;
 
-	
+	Position getRandomPosition();
+
 public:
-	Level(std::shared_ptr<Player> player, std::string fileName, GameIO &io);
+	Level(std::shared_ptr<Player> player, std::string fileName, GameIO &io, const GameConfig &gameConfig);
 	~Level();
 	bool Play();
 
@@ -62,9 +72,6 @@ public:
 	const VectorPItem& GetItems();
 	const VectorPEvent& GetEvents();
 
-
-
-	void BuildLevel();
 	void ToggleEnemies();
 	void MoveEnemies();
 	void MovePlayer(Direction direction);
