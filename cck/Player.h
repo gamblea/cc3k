@@ -3,6 +3,7 @@
 #include "TreasureStats.h"
 #include "PotionEffects.h"
 #include "Direction.h"
+#include <memory>
 
 class Stairs;
 class Event;
@@ -18,8 +19,8 @@ public:
 	Player(CharacterStats stats);
 	virtual ~Player();
 
-	int GetAttack()override;
-	int GetDefense()override;
+	int GetAttack() const override ;
+	int GetDefense() const override ;
 
 	std::shared_ptr<Event> Use(PotionEffects effect);
 	std::shared_ptr<Event> Use(TreasureStats treasureStats);

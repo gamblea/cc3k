@@ -1,7 +1,7 @@
 #pragma once
 #include <vector>
 
-class Position;
+struct Position;
 
 class Room
 {

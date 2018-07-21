@@ -10,3 +10,4 @@ struct TreasureStats
 };
 
 std::istream &operator>>(std::istream &in, TreasureStats stats); 
+

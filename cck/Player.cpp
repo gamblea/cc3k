@@ -20,12 +20,13 @@ Player::~Player()
 {
 }
 
-int Player::GetAttack()
+
+int Player::GetAttack() const
 {
 	return stats.Atk + AtkChange;
 }
 
-int Player::GetDefense()
+int Player::GetDefense() const
 {
 	return stats.Def + DefChange;
 }
@@ -43,9 +44,14 @@ std::shared_ptr<Event> Player::Use(PotionEffects effect) // called by Item
 	AtkChange += effect.AtkEffect;
 	health += effect.HealthEffect;
 
-	if(GetAttack() < 0) AtkChange = -stats.Atk;
-	if(GetDefense() < 0) DefChange = -stats.Def;
-	if(getMaxHealth() && health > GetStartingHealth()) health = GetStartingHealth();
+	if (GetAttack() < 0)
+		AtkChange = 0;
+	if (GetDefense() < 0)
+		DefChange = 0;
+	if(stats.MaxHp && health > GetStartingHealth())
+		health = GetStartingHealth();
+
+	std::shared_from
 	
 	return std::make_shared<Event>(Event::EventType::GetPotion, std::make_shared<Player>(*this), effect);
 }
@@ -53,7 +59,7 @@ std::shared_ptr<Event> Player::Use(PotionEffects effect) // called by Item
 std::shared_ptr<Event> Player::Use(TreasureStats treasureStats) // called by Item
 {
 	gold += treasureStats.Value;
-	std::string msg = stats.Name + " picked up: " + std::to_string(treasureStats.Value) + " gold from a " + treasureStats.Name + ".";
+	std::string msg = stats.Name + " picked up: " + std::to_string(treasureStats.Value) + " gold.";
 	return std::make_shared<Event>(Event::EventType::GetTreasure, msg);
 }
 
