@@ -25,7 +25,7 @@ struct CharacterStats
 	std::map<std::string, int> DifferentAtkNumber;
 
 	int AtkHpGain = 0; //Amount of HP gained for successful attack
-	std::vector<std::string> AlgergicTo;
+	std::vector<std::string> AllgergicTo;
 
 
 	int Def;

@@ -17,7 +17,7 @@ std::istream &operator>>(std::istream &in, CharacterStats stats)
 		{
 			in >> stats.Symbol;
 		}
-		else if (field == "Playable")
+		else if (field == "Playable:")
 		{
 			std::string val{};
 			in >> val;
@@ -65,11 +65,11 @@ std::istream &operator>>(std::istream &in, CharacterStats stats)
 		{
 			in >> stats.AtkHpGain;
 		}
-		else if (field == "AlergicTo:")
+		else if (field == "AllergicTo:")
 		{
 			std::string name{};
 			in >> name;
-			stats.AlgergicTo.emplace_back(name);
+			stats.AllgergicTo.emplace_back(name);
 		}
 		else if (field == "Def:")
 		{
