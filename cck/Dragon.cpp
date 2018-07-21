@@ -26,13 +26,14 @@ std::shared_ptr<Event> Dragon::Attack(std::shared_ptr<Character> enemy) {
 	int protectedDiffY = position.y - protectedPosition.y;
 
 	if ((myDiffX <= 1 && myDiffY <= 1)
-		|| (protectedDiffX <= 1 && protectedDiffY <= 1)) {
+		|| (protectedDiffX <= 1 && protectedDiffY <= 1)) 
+	{
 
 		int dodgeChance = Helpers::getRandom(0, 100);
 		int attackChance = Helpers::getRandom(0, 100);
 		bool success = true;
 		
-		if (dodgeChance > stats.AtkAccuray) {
+		if (dodgeChance > enemy->stats.AtkAccuray) {
 			success = false;
 		} else if (attackChance > enemy->stats.dodgeAccuracy) {
 			success = false;
@@ -51,6 +52,7 @@ std::shared_ptr<Event> Dragon::Attack(std::shared_ptr<Character> enemy) {
 		std::shared_ptr<Event> event = std::make_shared<Event>(Event::EventType::Battle, std::make_shared<Character>(this), enemy, success, damage);
 		
 		return event; 
+		
 	} else {
 		return std::make_shared<Event>(Event::EventType::None, "");
 	}
