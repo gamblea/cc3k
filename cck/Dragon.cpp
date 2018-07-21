@@ -43,7 +43,9 @@ std::shared_ptr<Event> Dragon::Attack(std::shared_ptr<Character> enemy) {
 		std::shared_ptr<Event> event = std::make_shared<Event>(Event::EventType::Battle, std::make_shared<Character>(this), enemy, success, damage);
 		
 		return event; 
-	} 
+	} else {
+		return std::make_shared<Event>(Event::EventType::None, "");
+	}
 }
 
 Dragon::~Dragon() {}
