@@ -6,6 +6,7 @@
 #include "TreasureStats.h"
 #include "GameIO.h"
 #include "GameConfig.h"
+#include <time.h>
 
 
 class Player;
@@ -22,10 +23,6 @@ private:
 
 	GameConfig config;
 
-	std::map<std::string, CharacterStats> allCharacters;
-	std::map<std::string, PotionEffects> allPotions;
-	std::map<std::string, TreasureStats> allTreasures;
-
 	std::shared_ptr<Player> player;
 	GameIO io{std::cin,std::cout};
 
@@ -34,6 +31,7 @@ private:
 
 public:
 	Game(std::string charactersFile, std::string potionsFile, std::string treasureFile);
+	Game(std::string charactersFile, std::string potionFile, std::string treasureFile, int seed);
 	void Start();
 	~Game();
 

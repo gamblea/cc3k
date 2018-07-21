@@ -3,6 +3,7 @@
 #include "Direction.h"
 
 #include <string>
+#include <cstdlib>
 
 
 bool Helpers::stringToBool(std::string str)
@@ -84,4 +85,12 @@ Direction Helpers::strToDirection(const std::string &str)
 		return Direction::SE;
 	}
 	else throw std::runtime_error("Cannot read string to direction");
+}
+
+int Helpers::getRandom(int min, int max)
+{
+	if (min > max) std::swap(min, max);
+	int range = max - min + 1;
+	int random = rand() % range;
+	return random + range;
 }

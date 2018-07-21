@@ -2,10 +2,11 @@
 #include "Character.h"
 #include "Level.h"
 #include "Errors.h"
+#include "Event.h"
 
 #include <memory>
 #include <algorithm>
-
+#include <cmath>
 
 Character::Character(CharacterStats stats, Position start)
 	: Sprite{stats.Symbol, start}, stats { stats }, health{ stats.HpStart }
@@ -24,10 +25,19 @@ void Character::Move(Position pos)
 
 std::shared_ptr<Event> Character::Attack(std::shared_ptr<Character> enemy)
 {
+	int r = Helpers::getRandom(0, 100);
+	bool success = true;
+	if (r > stats.AtkAccuracy )success = false;
+	else if (r > enemy->stats.DodgeAccuracy) success = false;
+	if(success) health += stats.AtkHpGain;
+	if(stats.MaxHp && health > stats.HpStart) health = stats.HpStart;
 
-	// mutate me and the enemy 
+	int damage = std::ceil((100/(100+enemy->stats.Def))*stats.Atk);
 
-	//make a pointer to event that is actaully a battle
+	enemy->DecrementHealth(damage);
+
+	std::shared_ptr<Event> event = std::make_shared<Event>(Event::EventType::Battle, std::make_shared<Character>(this), enemy, success, damage);
+	return event; 
 }
 
 int Character::GetHealth() const
@@ -109,6 +119,7 @@ Position Character::getPosFromDir(Direction dir)
 	return { position.x + changeX, position.y + changeY };
 }
 
-void Character::DecrementHealth(int amount){
+void Character::DecrementHealth(int amount)
+{
 	health = std::max(health - amount, 0);	
 }

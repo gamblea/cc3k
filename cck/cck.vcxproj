@@ -158,7 +158,6 @@
     <ClInclude Include="GameIO.h" />
     <ClInclude Include="Helpers.h" />
     <ClInclude Include="Stairs.h" />
-    <ClInclude Include="TextDisplay.h" />
     <ClInclude Include="Treasure.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="Level.h" />
@@ -185,7 +184,6 @@
     <ClCompile Include="GameIO.cpp" />
     <ClCompile Include="Helpers.cpp" />
     <ClCompile Include="Stairs.cpp" />
-    <ClCompile Include="TextDisplay.cpp" />
     <ClCompile Include="Treasure.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="Level.cpp" />

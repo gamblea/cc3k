@@ -12,6 +12,15 @@ Game::Game(std::string charactersFile, std::string potionsFile, std::string trea
 	ReadConfigurations<std::string, CharacterStats>(charactersFile, config.Characters);
 	ReadConfigurations<std::string, PotionEffects>(charactersFile, config.Potions);
 	ReadConfigurations<std::string, TreasureStats>(charactersFile, config.Treasures);
+	srand(time(nullptr));
+}
+
+Game::Game(std::string charactersFile, std::string potionFile, std::string treasureFile, int seed)
+{
+	ReadConfigurations<std::string, CharacterStats>(charactersFile, config.Characters);
+	ReadConfigurations<std::string, PotionEffects>(charactersFile, config.Potions);
+	ReadConfigurations<std::string, TreasureStats>(charactersFile, config.Treasures);
+	srand(seed);
 }
 
 
@@ -30,7 +39,7 @@ void Game::ReadConfigurations(std::string fileName, std::map<ConfigName, Config>
 		std::ifstream configFile{ configName + ".config" };
 		Config config{};
 		configFile >> config;
-		configurations.emplace(config);
+		configurations.emplace(config.Name, config);
 	}
 }
 
@@ -41,7 +50,7 @@ void Game::Start()
 	while (play)
 	{
 		bool passLevel = true;
-		player = std::make_shared<Player>(io.GetPlayerRace(allCharacters));
+		player = std::make_shared<Player>(io.GetPlayerRace(config.Characters));
 
 		for (int i = 0; i < 5 && passLevel; i++ ) // Play the levels
 		{

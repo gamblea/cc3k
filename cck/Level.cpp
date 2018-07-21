@@ -44,6 +44,7 @@ bool Level::Play()
 					std::shared_ptr<Character> defender = getEnemyAt(attackPos);
 					std::shared_ptr<Event> battle = player->Attack(defender); // Handles the attack
 
+					events.emplace_back(battle);
 					if (defender->GetHealth() <= 0)
 						removeEnemy(defender); // should be tested
 				}
@@ -71,6 +72,9 @@ bool Level::Play()
 				{
 					Position itemPos = calcPosition(player->GetPosition(), command.direction);
 					std::shared_ptr<Item> item = getItemAt(itemPos);
+
+
+
 					std::shared_ptr<Event> event = item->GetPickedUpBy(player);
 					
 					removeItem(item); // needs to be tested
@@ -107,6 +111,12 @@ bool Level::Play()
 	return completed;
 }
 
+void Level::AddStaircase()
+{
+	Positon start = 
+	std::shared_ptr<Item> = std::make_shared<Stairs>()
+}
+
 void Level::BuildLevel()
 {
 
@@ -136,7 +146,6 @@ void Level::MovePlayer(Direction direction)
 		removeItem(item);
 	}
 	else throw CannotMove{direction};
-
 }
 
 std::shared_ptr<Character> Level::getEnemyAt(Position position)
@@ -264,7 +273,7 @@ void Level::removeItem(std::shared_ptr<Item> item)
 }
 
 std::shared_ptr<Item> Level::getWalkoverItemAt(Position position)
-{\
+{
 	for (const std::shared_ptr<Item> &item : items)
 	{
 		if (item->GetPosition() == position && 
