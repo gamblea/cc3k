@@ -14,7 +14,7 @@ class Level;
 class TextDisplay;
 class GameIO;
 
-class CharacterStats;
+struct CharacterStats;
 
 class Game
 {

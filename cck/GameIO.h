@@ -24,15 +24,6 @@ typedef std::shared_ptr<const std::map<std::string, CharacterStats>> PointerCons
 	Can be refactored to be the abstract super class if multiple 
 	IO options are need. Or if WASD input is to be implemented
 */
- 
-typedef std::shared_ptr<const Player> PPlayer;
-typedef std::vector <const std::shared_ptr<const Sprite>> VectorSprite;
-typedef std::vector <const std::shared_ptr<const Event>> VectorEvent;
-
-typedef std::shared_ptr<std::vector<const std::shared_ptr<const Sprite>>> PVectorSprite;
-typedef std::shared_ptr<std::vector<const std::shared_ptr<const Event>>> PVectorEvent;
-
-typedef std::shared_ptr<const Map> PMap;
 
 
 class GameIO

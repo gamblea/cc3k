@@ -114,7 +114,7 @@ bool Level::Play()
 
 void Level::AddStaircase()
 {
-	std::shared_ptr<Item> = std::make_shared<Stairs>()
+	//std::shared_ptr<Item> = std::make_shared<Stairs>()
 }
 
 

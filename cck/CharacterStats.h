@@ -10,7 +10,7 @@ struct CharacterStats
 	std::string Name;
 	char Symbol;
 	bool Playable = false;
-	int Probability = 0; int / 18
+	int Probability = 0; // int / 18
 
 	bool AccessToPath = false;
 
