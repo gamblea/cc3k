@@ -30,9 +30,11 @@ std::shared_ptr<Event> Character::Attack(std::shared_ptr<Character> enemy)
 	if (r > stats.AtkAccuracy )success = false;
 	else if (r > enemy->stats.DodgeAccuracy) success = false;
 	if(success) health += stats.AtkHpGain;
-	if(stats.MaxHp && health > stats.HpStart) health -= stats.AtkHpGain;
+	if(stats.MaxHp && health > stats.HpStart) health = stats.HpStart;
 
 	int damage = std::ceil((100/(100+enemy->stats.Def))*stats.Atk);
+
+	enemy->DecrementHealth(damage);
 
 	std::shared_ptr<Event> event = std::make_shared<Event>(Event::EventType::Battle, std::make_shared<Character>(this), enemy, success, damage);
 	return event; 
