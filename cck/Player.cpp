@@ -50,8 +50,6 @@ std::shared_ptr<Event> Player::Use(PotionEffects effect) // called by Item
 		DefChange = 0;
 	if(stats.MaxHp && health > GetStartingHealth())
 		health = GetStartingHealth();
-
-	std::shared_from
 	
 	return std::make_shared<Event>(Event::EventType::GetPotion, std::make_shared<Player>(*this), effect);
 }
@@ -73,5 +71,5 @@ std::shared_ptr<Event> Player::Use(const Stairs &stairs)
 void Player::ResetForLevel()
 {
 	AtkChange = 0;
-	DefChnage = 0;
+	DefChange = 0;
 }

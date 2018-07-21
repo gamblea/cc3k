@@ -11,6 +11,11 @@ const Position &Sprite::GetPosition() const
 	return position;
 }
 
+void Sprite::Move(Position pos)
+{
+	position = pos;
+}
+
 char Sprite::GetSymbol() const
 {
 	return symbol;

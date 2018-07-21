@@ -6,7 +6,7 @@
 #include "Helpers.h"
 #include "Event.h"
 
-Dragon::Dragon(CharacterStats stats, Position start, std::shared_ptr<Item> itemToProtect):
+Dragon::Dragon(CharacterStats stats, Position start, Item *itemToProtect):
 	Character{stats, start}, itemToProtect{itemToProtect}
 	{}
 
@@ -16,7 +16,7 @@ std::shared_ptr<Item> Dragon::getItem() {
 
 
 std::shared_ptr<Event> Dragon::Attack(std::shared_ptr<Character> enemy) {
-
+	
 	Position protectedPosition = itemToProtect->GetPosition();
 	Position enemyPosition = enemy->GetPosition();
 	
@@ -47,7 +47,7 @@ std::shared_ptr<Event> Dragon::Attack(std::shared_ptr<Character> enemy) {
 			health = stats.HpStart;
 		}
 
-		int damage = std::ceil((100/(100+enemy->stats.Def))*stats.Atk);
+		int damage = (int) std::ceil((100/(100+enemy->stats.Def))*stats.Atk);
 		enemy->DecrementHealth(damage);
 		std::shared_ptr<Event> event = std::make_shared<Event>(Event::EventType::Battle, std::make_shared<Character>(this), enemy, success, damage);
 		
@@ -58,5 +58,5 @@ std::shared_ptr<Event> Dragon::Attack(std::shared_ptr<Character> enemy) {
 }
 
 Dragon::~Dragon() {
-	itemToProtect->guarded = false;
+	itemToProtect->SetGuarded(false);
 }

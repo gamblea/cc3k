@@ -1,10 +1,11 @@
 #include "stdafx.h"
 #include "Treasure.h"
 #include "Player.h"
+#include "TreasureStats.h"
 
 
 Treasure::Treasure(Position position, TreasureStats stats) 
-	: Item{'G', position, Item::PickupMethod::Walkover, stats.CanBePickedUp}, stats { stats }
+	: Item{ 'G', position, Item::PickupMethod::Walkover, stats.ToBeGuarded, stats.GuardName}, stats{ stats } 
 {
 
 }

@@ -1,4 +1,5 @@
 #pragma once
+
 #ifndef SPRITE_H
 #define SPRITE_H
 
@@ -17,6 +18,7 @@ protected:
 public:
 	Sprite(char symbol, Position position);
 	virtual const Position &GetPosition() const;
+	virtual void Move(Position pos);
 	char GetSymbol() const;
 	virtual ~Sprite() = 0;
 };

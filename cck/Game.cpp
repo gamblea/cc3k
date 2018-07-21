@@ -14,7 +14,7 @@ Game::Game(std::string charactersFile, std::string potionsFile, std::string trea
 	ReadConfigurations<std::string, PotionEffects>(charactersFile, config.Potions);
 	ReadConfigurations<std::string, TreasureStats>(charactersFile, config.Treasures);
 	this->factory = std::make_shared<SpriteFactory>(config);
-	srand(time(nullptr));
+	srand((unsigned int) time(nullptr));
 }
 
 Game::Game(std::string charactersFile, std::string potionFile, std::string treasureFile, int seed)
@@ -58,7 +58,7 @@ void Game::Start()
 
 		for (int i = 0; i < 5 && passLevel; i++ ) // Play the levels
 		{
-			std::shared_ptr<Level> level = std::make_shared<Level>(player, "level.map", io);
+			std::shared_ptr<Level> level = std::make_shared<Level>(player, "level.map", io, factory);
 			io.AttachLevel(level);
 			passLevel = level->Play();			
 		}

@@ -1,7 +1,10 @@
 #pragma once
 #include "Sprite.h"
+#include "CharacterStats.h"
+#include "Character.h"
+#include "Dragon.h"
+#include <string>
 #include <memory>
-
 
 class Event;
 class Player;
@@ -11,16 +14,22 @@ class Item : public Sprite
 public:
 	enum class PickupMethod { Walkover, Use };
 private:
-	bool guarded;
+	const bool toBeGuarded = false;
+	const std::string guardName = "";
+	bool guarded = false;
 	PickupMethod method;
 public:
-	Item(char symbol, Position position, PickupMethod method, bool guarded);
+	Item(char symbol, Position position, PickupMethod method, bool toBeGuarded, std::string guardName);
+	Item(char symbol, Position position, PickupMethod method);
 	virtual ~Item() = 0;
 
 	Item::PickupMethod GetPickupMethod();
 	virtual std::shared_ptr<Event> GetPickedUpBy(std::shared_ptr<Player> player) = 0;
 
-	bool IsGuarded() const;
+	std::string GetGuardName() const;
+	bool ToBeGuarded() const;
 	void SetGuarded(bool value);
+
+	Dragon AddGuard(CharacterStats guardStats, Position start);
 };
 

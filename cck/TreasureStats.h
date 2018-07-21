@@ -7,6 +7,9 @@ struct TreasureStats
 	int Value;
 	bool CanBePickedUp;
 	int Probability;
+
+	bool ToBeGuarded = false;
+	std::string GuardName = "";
 };
 
 std::istream &operator>>(std::istream &in, TreasureStats stats); 

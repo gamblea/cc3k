@@ -1,7 +1,6 @@
 #pragma once
 #include "Item.h"
-class Stairs :
-	public Item
+class Stairs : public Item
 {
 public:
 	Stairs(Position position);

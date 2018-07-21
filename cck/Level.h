@@ -38,8 +38,8 @@ private:
 
 	std::shared_ptr<SpriteFactory> factory;
 	
-
 	bool enemiesMoveable = true;
+	int roomOfStairs;
 
 	bool nonPickUpAt(const Position &pos);
 
@@ -48,21 +48,31 @@ private:
 	bool cellOccupied(const Position &pos);
 	std::shared_ptr<Item> getItemAt(Position position);
 
+	void addEnemy(std::shared_ptr<Character> enemy);
+	void addItem(std::shared_ptr<Item> item);
+	void addSprite(std::shared_ptr<Sprite> sprite);
 	void removeEnemy(std::shared_ptr<Character> enemy);
 	void removeItem(std::shared_ptr<Item> item);
+	void removeSprite(std::shared_ptr<Sprite> sprite);
+
 
 	std::shared_ptr<Item> getWalkoverItemAt(Position position);
 	bool completed = false;
+
+	void addStaircase();
+	void addPotions();
+	void addTreasure();
+	void addEnemies();
+
+	Position GetAvalibleRandomPos();
+	Position GetAvalibleRandomPosRoom(int room);
+
+	Position GetAvalibleAdjacent(Position pos);
 
 public:
 	Level(std::shared_ptr<Player> player, std::string fileName, GameIO &io, std::shared_ptr<SpriteFactory> factory);
 	~Level();
 	bool Play();
-
-	void AddStaircase();
-	void AddPotions();
-	void AddTreasure();
-	void AddEnemies();
 
 	const Map &GetMap();
 	PPlayer GetPlayer();
@@ -74,8 +84,6 @@ public:
 	void ToggleEnemies();
 	void MoveEnemies();
 	void MovePlayer(Direction direction);
-	
-	bool CanAttack(const Position &pos);
 
 	std::shared_ptr<Character> getEnemyAt(Position position);
 };

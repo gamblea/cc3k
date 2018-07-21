@@ -1,6 +1,8 @@
 #pragma once
 #include "Item.h"
 #include "TreasureStats.h"
+#include "CharacterStats.h"
+
 class Treasure :
 	public Item
 {

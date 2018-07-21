@@ -31,6 +31,11 @@ std::istream &operator>>(std::istream &in, TreasureStats stats)
 			stats.CanBePickedUp = Helpers::stringToBool(s);
 			pickedUpSet = true;
 		}
+		else if (field == "GuardName:")
+		{
+			stats.ToBeGuarded = true;
+			in >> stats.GuardName;
+		}
 	}
 	if (!valueSet || !pickedUpSet || !nameSet) throw std::runtime_error("TreasureStats cannot be fully read in!");
 

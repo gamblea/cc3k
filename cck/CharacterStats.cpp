@@ -101,9 +101,9 @@ std::istream &operator>>(std::istream &in, CharacterStats stats)
 			int n;
 			in >> name;
 			in >> n;
-			stats.DamageEffect.emplace_back(name);
+			stats.DamageEffect.emplace(name, n);
 		}
-		else if (filed == "NumPiles:") 
+		else if (field == "NumPiles:") 
 		{
 			in >> stats.NumPiles;
 		}

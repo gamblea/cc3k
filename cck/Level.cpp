@@ -10,18 +10,20 @@
 #include "Treasure.h"
 #include "Potion.h"
 #include "GameConfig.h"
+#include "Stairs.h"
 
 #include <exception>
 #include <memory>
+#include <algorithm>
 
 Level::Level(std::shared_ptr<Player> player, std::string fileName, GameIO &io, std::shared_ptr<SpriteFactory> factory)
 	: player{player}, mapOfLevel{fileName}, io{io}, factory{factory}
 {
 	// needs to be implemented
-	AddStaircase();
-	AddPotions();
-	AddTreasure();
-	AddEnemies();
+	addStaircase();
+	addPotions();
+	addTreasure();
+	addEnemies();
 }
 
 Level::~Level()
@@ -112,10 +114,7 @@ bool Level::Play()
 	return completed;
 }
 
-void Level::AddStaircase()
-{
-	//std::shared_ptr<Item> = std::make_shared<Stairs>()
-}
+
 
 
 void Level::ToggleEnemies()
@@ -130,7 +129,7 @@ void Level::MoveEnemies()
 	{
 		for (int x = 0; x < mapOfLevel.GetWidth(); x++)
 		{
-			for (PCharacter &enemy : enemies)
+			for (PCharacter enemy : enemies)
 			{
 				if (enemy->GetPosition().x == x && !enemy->BeenMoved())
 				{
@@ -156,7 +155,7 @@ void Level::MoveEnemies()
 				}
 			}
 		}
-		for (PCharacter &enemy : enemies)
+		for (PCharacter enemy : enemies)
 		{
 			enemy->SetMoved(false);
 		}
@@ -300,16 +299,41 @@ std::shared_ptr<Item> Level::getItemAt(Position position)
 	throw std::exception();
 }
 
+void Level::addEnemy(std::shared_ptr<Character> enemy)
+{
+	enemies.emplace_back(enemy);
+	addSprite(enemy);
+}
+
+void Level::addItem(std::shared_ptr<Item> item)
+{
+	items.emplace_back(item);
+	addSprite(item);
+}
+
+void Level::addSprite(std::shared_ptr<Sprite> sprite)
+{
+	sprites.emplace_back(sprite);
+}
+
+void Level::removeSprite(std::shared_ptr<Sprite> sprite)
+{
+	sprites.erase(std::find_if(sprites.begin(), sprites.end(),
+		[&sprite](const std::shared_ptr<Sprite> other) { *sprite == *other; }));
+}
+
 void Level::removeEnemy(std::shared_ptr<Character> enemy)
 {
-	enemies.erase(std::find(enemies.begin(), enemies.end(), enemy));
-	sprites.erase(std::find(sprites.begin(), sprites.end(), std::static_pointer_cast<Sprite>(enemy)));
+	enemies.erase(std::find_if(enemies.begin(), enemies.end(), 
+		[&enemy](const std::shared_ptr<Character> other) {*enemy == *other; }));
+	removeSprite(enemy);
 }
 
 void Level::removeItem(std::shared_ptr<Item> item)
 {
-	items.erase(std::find(items.begin(), items.end(), item));
-	sprites.erase(std::find(sprites.begin(), sprites.end(), std::static_pointer_cast<Sprite>(item)));
+	items.erase(std::find_if(items.begin(), items.end(), 
+		[&item](const std::shared_ptr<Item> other) {*other == *item; }));
+	removeSprite(item);
 }
 
 std::shared_ptr<Item> Level::getWalkoverItemAt(Position position)
@@ -325,37 +349,104 @@ std::shared_ptr<Item> Level::getWalkoverItemAt(Position position)
 	throw std::exception();
 }
 
+void Level::addStaircase()
+{
+	int room = Helpers::getRandom(0, mapOfLevel.GetNumRooms() - 1);
+	Position newPos = GetAvalibleRandomPosRoom(room);
+	addItem(std::make_shared<Stairs>(newPos));
+	roomOfStairs = room;
+}
 
-void Level::AddPotions()
+void Level::addPotions()
 {
 	for (int i = 0; i < 10; i++)
 	{
-		std::shared_ptr<Potion> potion = factory->CreatePotion();
-		items.emplace_back(potion);
-		sprites.emplace_back(potion);
+		Potion potion = factory->CreatePotion(GetAvalibleRandomPos());
+		addItem(std::make_shared<Potion>(potion));
 	}
 	
 }
 
-void Level::AddTreasure()
+void Level::addTreasure()
 {
 	for (int i = 0; i < 10; i++)
 	{
-		std::shared_ptr<Treasure> treasure = factory->CreateTreasure();
-		items.emplace_back(treasure);
-		sprites.emplace_back(treasure);
+		Treasure treasure = factory->CreateTreasure(GetAvalibleRandomPos());
+		// if protected add dragon need to add!
+		addItem(std::make_shared<Treasure>(treasure));
 	}
 	
 }
 
-void Level::AddEnemies()
+void Level::addEnemies()
 {
+	for (auto &item : items)
+	{
+		if (item->ToBeGuarded())
+		{
+			bool posFound = false;
+			while (!posFound)
+			{
+				try
+				{
+					Position guardPos = GetAvalibleAdjacent(item->GetPosition());
+					posFound = true;
+				}
+				catch (...) // All Spots around Dragon Board full
+				{
+					item->Move(GetAvalibleRandomPos());
+				}
+			}
+
+			Character enemy = 
+		}
+	}
+
 	for (int i = 0; i < 20; i++)
 	{
-		std::shared_ptr<Character> enemy = factory->CreateEnemy();
-		enemies.emplace_back(enemy);
-		sprites.emplace_back(enemy);
+		Character enemy = factory->CreateEnemy(GetAvalibleRandomPos());
+		addEnemy(std::make_shared<Character>(enemy));
 	}
+}
+
+Position Level::GetAvalibleRandomPos()
+{
+	int numRooms = mapOfLevel.GetNumRooms();
+	int room = Helpers::getRandom(0, numRooms - 1);
+	return GetAvalibleRandomPosRoom(room);
+}
+
+Position Level::GetAvalibleRandomPosRoom(int room)
+{
+	Position newPos;
+	bool found = false;
+	while (!found)
+	{
+		newPos = mapOfLevel.GetPositionFromRoom(room);
+		if (!cellOccupied(newPos) && accessibleCell(newPos, false))
+			found = true;
+	}
+	return newPos;
+}
+
+Position Level::GetAvalibleAdjacent(Position pos)
+{
+	std::vector<Direction> tried;
+	bool posFound = false;
+	Position newPos;
+
+	while (!posFound)
+	{
+		Direction direction = static_cast<Direction>(Helpers::getRandom(0, 7));
+		if (std::find(tried.begin(), tried.end(), direction) != tried.end())
+		{
+			tried.emplace_back(direction);
+			newPos = calcPosition(pos, direction);
+			if (accessibleCell(newPos, false) && !cellOccupied(newPos)) posFound = true;
+		}
+		if (tried.size() == 8) throw std::runtime_error("No avalible adjacent positions");
+	}
+	
 }
 
 const Map & Level::GetMap()

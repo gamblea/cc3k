@@ -2,6 +2,13 @@
 #include "SpriteFactory.h"
 #include "Helpers.h"
 #include "TreasureStats.h"
+#include "Position.h"
+#include "Character.h"
+#include "Treasure.h"
+#include "Potion.h"
+
+#include <vector>
+#include <map>
 
 
 SpriteFactory::SpriteFactory(GameConfig gameConfig) : gameConfig{gameConfig}
@@ -28,30 +35,38 @@ SpriteFactory::~SpriteFactory()
 {
 }
 
-std::shared_ptr<Character> SpriteFactory::CreateEnemy()
+Character SpriteFactory::CreateEnemy(Position start)
 {
 	int size = enemyNamesChoose.size();
 	int index = Helpers::getRandom(0, size - 1);
-	auto elem = gameConfig.Characters.find(enemyNamesChoose.at(index));
+	CharacterStats stats = gameConfig.Characters.find(enemyNamesChoose.at(index))->second;
 
-	return std::make_shared<Character>(elem->second);
+	return Character{ stats, start };
 }
 
-std::shared_ptr<Treasure> SpriteFactory::CreateTreasure()
+Character SpriteFactory::CreateEnemy(Position start, std::string name)
 {
-	int size = gameConfig.Treasures.size();
-	int index = Helpers::getRandom(0, size - 1);
-	auto elem = gameConfig.Treasures.find(treasureNamesChoose.at(index));
+	CharacterStats stats = gameConfig.Characters.find(name)->second;
 
-	return std::make_shared<Treasure>(elem->second);
+	return Character{ stats, start };
 }
 
-std::shared_ptr<Potion> SpriteFactory::CreatePotion()
+Treasure SpriteFactory::CreateTreasure(Position start)
+{
+	int size = (int) gameConfig.Treasures.size();
+	int index = Helpers::getRandom(0, size - 1);
+	TreasureStats stats = gameConfig.Treasures.find(treasureNamesChoose.at(index))->second;
+
+	return Treasure{start, stats };
+}
+
+Potion SpriteFactory::CreatePotion(Position start)
 {
 	int size = gameConfig.Potions.size();
 	int index = Helpers::getRandom(0, size - 1);
-	auto elem = gameConfig.Characters.begin();
+	auto elem = gameConfig.Potions.begin();
 	std::advance(elem, index);
+	PotionEffects stats = elem->second;
 
-	return std::make_shared<Potion>(elem->second);
+	return Potion{start , stats};
 }

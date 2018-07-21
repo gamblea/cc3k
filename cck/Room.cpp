@@ -41,4 +41,6 @@ std::ostream &operator<<(std::ostream &os, Room &room)
 	{
 		os << "(" << pos.x << "," << pos.y << ")" << std::endl;
 	}
+
+	return os;
 }
