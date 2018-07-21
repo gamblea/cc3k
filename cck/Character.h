@@ -23,8 +23,8 @@ public:
 
 	int GetHealth() const;
 	int GetStartingHealth() const;
-	int GetAttack() const; // need to add potion benefits
-	int GetDefense() const; // need to add potion benefits
+	virtual int GetAttack() const; // need to add potion benefits
+	virtual int GetDefense() const; // need to add potion benefits
 
 	void DecrementHealth(int amount);
 
