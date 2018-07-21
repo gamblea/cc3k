@@ -12,9 +12,8 @@ public:
 	Room();
 	~Room();
 
-
 	void AddPosition(Position pos);
-	Position GetRandomPosition();
+	Position GetRandomPositionInRoom() const;
 
 	bool ContainsPosition(const Position &pos);
 	

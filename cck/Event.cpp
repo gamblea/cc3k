@@ -12,7 +12,7 @@ Event::Event(EventType type, std::string description) : type{ type }, descriptio
 
 Event::Event(EventType type, std::shared_ptr<Character> character, Direction direction)
 {
-	description = character->GetName() + " moved " + Helpers::directionToStr(direction) + ".";
+	this->description = character->GetName() + " moved " + Helpers::directionToStr(direction) + ".";
 }
 
 Event::Event(EventType type, std::shared_ptr<Character> attacker, std::shared_ptr<Character> defender, bool hit, int damage) : type{ type }

@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include <memory>
+#include "Direction.h"
 
 class Character;
 class Player;

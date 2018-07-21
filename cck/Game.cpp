@@ -12,6 +12,7 @@ Game::Game(std::string charactersFile, std::string potionsFile, std::string trea
 	ReadConfigurations<std::string, CharacterStats>(charactersFile, config.Characters);
 	ReadConfigurations<std::string, PotionEffects>(charactersFile, config.Potions);
 	ReadConfigurations<std::string, TreasureStats>(charactersFile, config.Treasures);
+	factory = std::make_shared<SpriteFactory>(config);
 	srand(time(nullptr));
 }
 
@@ -20,6 +21,7 @@ Game::Game(std::string charactersFile, std::string potionFile, std::string treas
 	ReadConfigurations<std::string, CharacterStats>(charactersFile, config.Characters);
 	ReadConfigurations<std::string, PotionEffects>(charactersFile, config.Potions);
 	ReadConfigurations<std::string, TreasureStats>(charactersFile, config.Treasures);
+	factory = std::make_shared<SpriteFactory>(config);
 	srand(seed);
 }
 

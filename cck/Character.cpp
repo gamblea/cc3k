@@ -76,6 +76,7 @@ int Character::PickupGold(int amount)
 	return gold;
 }
 
+
 bool Character::BeenMoved() const
 {
 	return moved;

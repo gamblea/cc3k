@@ -1,33 +1,41 @@
-Dragon::Dragon(CharacterStats stats, Position start, Item itemToProtect):
+#include "stdafx.h"
+#include "Dragon.h"
+#include "Item.h"
+#include "Character.h"
+#include "Position.h"
+#include "Helpers.h"
+
+Dragon::Dragon(CharacterStats stats, Position start, std::shared_ptr<Item> itemToProtect):
 	Character{stats, start}, itemToProtect{itemToProtect}
 	{}
 
-std::shared_ptr<Event> Dragon::getItem() {
+std::shared_ptr<Item> Dragon::getItem() {
 	return itemToProtect;
 }
 
-std::shared_ptr<Event> Dragon::Attack(std::shared_ptr<Character> enemy) {
-	myPosition = getPosition();
-	protectedPosition = itemToProtect->getPostion();
-	enemyPosition = enemy->getPostion();
-	
-	myDiffX = myPosition.x - enemyPosition.x;
-	myDiffY = myPosition.y - enemyPosition.y;
 
-	protectedDiffX = myPosition.x - protectedPosition.x;
-	protectedDiffY = myPosition.y - protectedPosition.y;
+std::shared_ptr<Event> Dragon::Attack(std::shared_ptr<Character> enemy) {
+
+	Position protectedPosition = itemToProtect->GetPosition();
+	Position enemyPosition = enemy->GetPosition();
+	
+	int myDiffX = position.x - enemyPosition.x;
+	int myDiffY = position.y - enemyPosition.y;
+
+	int protectedDiffX = position.x - protectedPosition.x;
+	int protectedDiffY = position.y - protectedPosition.y;
 
 	if ((myDiffX <= 1 && myDiffY <= 1)
 		|| (protectedDiffX <= 1 && protectedDiffY <= 1)) {
 
 		int dodgeChance = Helpers::getRandom(0, 100);
-		int attackChange = Helpers::getRandom(0, 100);
+		int attackChance = Helpers::getRandom(0, 100);
 		bool success = true;
 		
-		if (r > stats.AtkAccuray) {
+		if (dodgeChance > stats.AtkAccuray) {
 			success = false;
-		} else if {
-			(r > enemy->stats.dodgeAccuracy)success = false;
+		} else if (attackChance > enemy->stats.dodgeAccuracy) {
+			success = false;
 		}
 		
 		if (success) {

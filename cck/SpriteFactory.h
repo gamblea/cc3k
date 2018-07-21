@@ -20,7 +20,7 @@ public:
 	SpriteFactory(GameConfig gameConfig);
 	~SpriteFactory();
 
-	std::shared_ptr<Character> CreateCharacter();
+	std::shared_ptr<Character> CreateEnemy();
 	std::shared_ptr<Treasure> CreateTreasure();
 	std::shared_ptr<Potion> CreatePotion();
 };
