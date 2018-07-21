@@ -11,15 +11,17 @@ class Character : public Sprite
 {
 protected:
 	CharacterStats stats;
+	bool moved = false;
 	int health;
 	int gold;
+
 
 	Position getPosFromDir(Direction dir);
 public:
 	Character(CharacterStats stats, Position start);
 	virtual ~Character();
 	void Move(Position pos);
-	std::shared_ptr<Event> Attack(std::shared_ptr<Character> enemy);
+	virtual std::shared_ptr<Event> Attack(std::shared_ptr<Character> enemy);
 
 	int GetHealth() const;
 	int GetStartingHealth() const;
@@ -31,5 +33,9 @@ public:
 	std::string GetName() const;
 	int GetGold() const;
 	int PickupGold(int amount);
+
+	bool BeenMoved() const;
+	void SetMoved(bool value);
+	bool AccessToPath();
 };
 

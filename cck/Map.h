@@ -6,6 +6,8 @@
 #include <iostream>
 #include "Position.h"
 
+class Room;
+
 class Map
 {
 public:
@@ -15,10 +17,11 @@ private:
 	const int width = 79;
 	const int height = 25;
 	std::vector<Cell> cells;
-	std::vector<std::vector<Position>> rooms;
 
-	void AddAttachedToRoom(std::vector<Position> &room, Position current);
-	bool ContainedInARoom(int x, int y);
+	std::vector<Room> rooms;
+
+	void AddAttachedToRoom(Room &room, Position current);
+	bool ContainedInARoom(Position pos);
 	char cellToChar(Cell cell);
 	Cell charToCell(char c);
 	std::string name;

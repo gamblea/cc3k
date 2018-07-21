@@ -27,7 +27,7 @@ std::shared_ptr<Event> Character::Attack(std::shared_ptr<Character> enemy)
 {
 	int r = Helpers::getRandom(0, 100);
 	bool success = true;
-	if (r > stats.AtkAccuracy )success = false;
+	if (r > stats.AtkAccuracy) success = false;
 	else if (r > enemy->stats.DodgeAccuracy) success = false;
 	if(success) health += stats.AtkHpGain;
 	if(stats.MaxHp && health > stats.HpStart) health = stats.HpStart;
@@ -75,6 +75,22 @@ int Character::PickupGold(int amount)
 	gold += amount;
 	return gold;
 }
+
+bool Character::BeenMoved() const
+{
+	return moved;
+}
+
+void Character::SetMoved(bool value)
+{
+	moved = value;
+}
+
+bool Character::AccessToPath()
+{
+	return stats.AccessToPath;
+}
+
 
 Position Character::getPosFromDir(Direction dir)
 {

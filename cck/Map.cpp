@@ -4,6 +4,7 @@
 #include <fstream>
 #include <string>
 #include "Position.h"
+#include "Room.h"
 
 Map::Map(std::string name) :name{name}
 {
@@ -165,40 +166,30 @@ std::ostream &operator<<(std::ostream &os, Map &map)
 
 	for (auto room : map.rooms)
 	{
-		os << "Room: " << std::endl;
-		for (auto pos : room)
-		{
-			os << "(" << pos.x << "," << pos.y << ")" << std::endl;
-		}
-
+		os << room;
 	}
 
 	return os;
 }
 
 
-bool Map::ContainedInARoom(int x, int y)
+bool Map::ContainedInARoom(Position pos)
 {
-	for (std::vector<Position> &room : rooms)
+	for (Room &room : rooms)
 	{
-		for (Position &pos : room)
-		{
-			if (pos == Position{ x,y })
-			{
-				return true;
-			}
-		}
+		if (room.ContainsPosition(pos)) 
+			return true;
 	}
 	return false;
 }
 
-void Map::AddAttachedToRoom(std::vector<Position> &room, Position current)
+void Map::AddAttachedToRoom(Room &room, Position current)
 {
 	if (current.x >= 0 && current.x < width && current.y >= 0 && current.y < height)
 	{
-		if (GetCell(current.x, current.y) == Cell::Floor && !ContainedInARoom(current.x,current.y))
+		if (GetCell(current.x, current.y) == Cell::Floor && !ContainedInARoom(current))
 		{
-			room.emplace_back(current);
+			room.AddPosition(current);
 			for (int i = -1; i <= 1; i++)
 			{
 				for (int j = -1; j <= 1; j++)
@@ -216,6 +207,17 @@ void Map::BuildRooms()
 {
 	rooms.clear();
 
+	for (int y = 0; y < height; y++)
+	{
+		for (int x = 0; x < width; x++)
+		{
+			if (GetCell(x, y) == Cell::Floor && !ContainedInARoom(x, y))
+			{
+				rooms.emplace_back(Room{});
+				AddAttachedToRoom(rooms.back(), Position{ x,y });
+			}
+		}
+	}
 	for (int y = 0; y < height; y++)
 	{
 		for (int x = 0; x < width; x++)

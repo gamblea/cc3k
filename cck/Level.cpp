@@ -7,12 +7,15 @@
 #include "Player.h"
 #include "Map.h"
 #include "Event.h"
+#include "Treasure.h"
+#include "Potion.h"
+#include "GameConfig.h"
 
 #include <exception>
 #include <memory>
 
-Level::Level(std::shared_ptr<Player> player, std::string fileName, GameIO &io)
-	: player{player}, mapOfLevel{fileName}, io{io}
+Level::Level(std::shared_ptr<Player> player, std::string fileName, GameIO &io, const GameConfig &gameConfig)
+	: player{player}, mapOfLevel{fileName}, io{io}, gameConfig{gameConfig}
 {
 	// needs to be implemented
 	AddStaircase();
@@ -50,7 +53,7 @@ bool Level::Play()
 				}
 				catch (...)
 				{
-					throw CannotAttack{ command.direction };
+					throw CannotAttack{command.direction};
 				}
 
 				break;
@@ -72,8 +75,6 @@ bool Level::Play()
 				{
 					Position itemPos = calcPosition(player->GetPosition(), command.direction);
 					std::shared_ptr<Item> item = getItemAt(itemPos);
-
-
 
 					std::shared_ptr<Event> event = item->GetPickedUpBy(player);
 					
@@ -113,13 +114,54 @@ bool Level::Play()
 
 void Level::AddStaircase()
 {
-	Positon start = 
 	std::shared_ptr<Item> = std::make_shared<Stairs>()
 }
 
-void Level::BuildLevel()
-{
 
+void Level::ToggleEnemies()
+{
+	if (enemiesMoveable) enemiesMoveable = false;
+	else enemiesMoveable = true;
+}
+
+void Level::MoveEnemies()
+{
+	if (enemiesMoveable)
+	{
+		for (int x = 0; x < mapOfLevel.GetWidth(); x++)
+		{
+			for (PCharacter &enemy : enemies)
+			{
+				if (enemy->GetPosition().x == x && !enemy->BeenMoved())
+				{
+					std::shared_ptr<Event> enemyEvent = enemy->Attack(player);
+					if (enemyEvent->GetType() == Event::EventType::Battle)
+					{
+						events.emplace_back(enemyEvent);
+						enemy->SetMoved(true);
+					}
+					else
+					{
+						while (!enemy->BeenMoved())
+						{
+							Direction direction = static_cast<Direction>(Helpers::getRandom(0, 7));
+							Position newPos = calcPosition(player->GetPosition(), direction);
+							if (cellOccupied(newPos) && accessibleCell(newPos, enemy->AccessToPath()))
+							{
+								enemy->Move(newPos);
+								enemy->SetMoved(true);
+							}
+						}
+					}
+				}
+			}
+		}
+		for (PCharacter &enemy : enemies)
+		{
+			enemy->SetMoved(false);
+		}
+	}
+	
 }
 
 void Level::MovePlayer(Direction direction)
@@ -130,9 +172,7 @@ void Level::MovePlayer(Direction direction)
 	if (accessible && !cellOccupied(newPos))
 	{
 		player->Move(newPos);
-		std::string msg = player->GetName() + " moved " + Helpers::directionToStr(direction) + ".";
-		events.emplace_back(std::make_shared<Event>(Event::EventType::Move, msg));
-
+		events.emplace_back(std::make_shared<Event>(Event::EventType::Move, player,direction));
 	}
 	else if (accessible)
 	{
@@ -142,7 +182,7 @@ void Level::MovePlayer(Direction direction)
 		{
 			completed = true;
 		}
-		events.emplace_back(std::a);
+		events.emplace_back(event);
 		removeItem(item);
 	}
 	else throw CannotMove{direction};
@@ -283,6 +323,50 @@ std::shared_ptr<Item> Level::getWalkoverItemAt(Position position)
 		}
 	}
 	throw std::exception();
+}
+
+Position Level::getRandomPosition()
+{
+	bool positionFound = false;
+	while (!positionFound)
+	{
+		const std::vector<std::vector<Position>> &rooms = mapOfLevel.GetRooms();
+		int numRooms = rooms.size();
+	}
+
+	return Position();
+}
+
+void Level::AddPotions()
+{
+	for (int i = 0; i < 10; i++)
+	{
+		std::shared_ptr<Potion> potion = SpriteFactory->CreatePotion();
+		items.emplace_back(potion);
+		sprites.emplace_back(potion);
+	}
+	
+}
+
+void Level::AddTreasure()
+{
+	for (int i = 0; i < 10; i++)
+	{
+		std::shared_ptr<Treasure> treasure = SpriteFactory->CreateTreasure();
+		items.emplace_back(treasure);
+		sprites.emplace_back(treasure);
+	}
+	
+}
+
+void Level::AddEnemies()
+{
+	for (int i = 0; i < 20; i++)
+	{
+		std::shared_ptr<Character> enemy = SpriteFactory->CreateEnemy();
+		enemies.emplace_back(enemy);
+		sprites.emplace_back(enemy);
+	}
 }
 
 const Map & Level::GetMap()
