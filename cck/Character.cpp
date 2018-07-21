@@ -5,7 +5,7 @@
 
 #include <memory>
 #include <algorithm>
-
+#include <cmath>
 
 Character::Character(CharacterStats stats, Position start)
 	: Sprite{stats.Symbol, start}, stats { stats }, health{ stats.HpStart }
@@ -24,10 +24,17 @@ void Character::Move(Position pos)
 
 std::shared_ptr<Event> Character::Attack(std::shared_ptr<Character> enemy)
 {
+	int r = getRandom(0, 100);
+	bool success = true;
+	if (r > stats.AtkAccuracy )success = false;
+	else if (r > enemy->stats.DodgeAccuracy) success = false;
+	if(success) health += AtkHpGain;
+	if(stats.MaxHp && health > HpStart) health -= AtkHpGain;
 
-	// mutate me and the enemy 
+	int damage = std::ceil((100/(100+enemy->stats.Def))*stats.Atk);
 
-	//make a pointer to event that is actaully a battle
+	Event retval = {Event::EventType::Battle, this, enemy, success, damage};
+	return retval; 
 }
 
 int Character::GetHealth() const
@@ -109,6 +116,7 @@ Position Character::getPosFromDir(Direction dir)
 	return { position.x + changeX, position.y + changeY };
 }
 
-void Character::DecrementHealth(int amount){
+void Character::DecrementHealth(int amount)
+{
 	health = std::max(health - amount, 0);	
 }

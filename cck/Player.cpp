@@ -20,6 +20,16 @@ Player::~Player()
 {
 }
 
+int Player::GetAttack()
+{
+	return stats.Atk + AtkChange;
+}
+
+int Plaer::GetDefense()
+{
+	return stats.Def + DefChange;
+}
+
 
 std::shared_ptr<Event> Player::Use(PotionEffects effect) // called by Item
 {
