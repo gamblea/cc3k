@@ -6,6 +6,7 @@
 #include "TreasureStats.h"
 #include "GameIO.h"
 #include "GameConfig.h"
+#include <time.h>
 
 
 class Player;
@@ -34,6 +35,7 @@ private:
 
 public:
 	Game(std::string charactersFile, std::string potionsFile, std::string treasureFile);
+	Game(std::string charactersFile, std::string potionFile, std::string treasureFile, int seed);
 	void Start();
 	~Game();
 

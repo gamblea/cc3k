@@ -107,6 +107,12 @@ bool Level::Play()
 	return completed;
 }
 
+void Level::AddStaircase()
+{
+	Positon start = 
+	std::shared_ptr<Item> = std::make_shared<Stairs>()
+}
+
 void Level::BuildLevel()
 {
 
