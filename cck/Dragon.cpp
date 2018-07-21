@@ -48,4 +48,6 @@ std::shared_ptr<Event> Dragon::Attack(std::shared_ptr<Character> enemy) {
 	}
 }
 
-Dragon::~Dragon() {}
+Dragon::~Dragon() {
+	itemToProtect->guarded = false;
+}

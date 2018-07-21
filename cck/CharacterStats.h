@@ -10,7 +10,7 @@ struct CharacterStats
 	std::string Name;
 	char Symbol;
 	bool Playable = false;
-	int Probability = 0; int / 18
+	int Probability = 0; // int / 18
 
 	bool AccessToPath = false;
 
@@ -23,9 +23,10 @@ struct CharacterStats
 
 	int NumberOfAtks = 1;
 	std::map<std::string, int> DifferentAtkNumber;
+	std::map<std::string, int> DamageEffect; // out of 100
 
 	int AtkHpGain = 0; //Amount of HP gained for successful attack
-	std::vector<std::string> AllgergicTo;
+	std::vector<std::string> AllergicTo;
 
 
 	int Def;

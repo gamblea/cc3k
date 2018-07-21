@@ -69,7 +69,7 @@ std::istream &operator>>(std::istream &in, CharacterStats stats)
 		{
 			std::string name{};
 			in >> name;
-			stats.AllgergicTo.emplace_back(name);
+			stats.AllergicTo.emplace_back(name);
 		}
 		else if (field == "Def:")
 		{
@@ -87,9 +87,21 @@ std::istream &operator>>(std::istream &in, CharacterStats stats)
 		{
 			in >> stats.GoldForKill;
 		}
-		else if (field == "GoldDrop")
+		else if (field == "GoldDrop:")
 		{
 			in >> stats.GoldDrop;
+		}
+		else if (field == "Probability:") 
+		{
+			in >> stats.Probability;
+		}
+		else if (field == "DamageEffect:") 
+		{
+			std::string name{};
+			int n;
+			in >> name;
+			in >> n;
+			stats.DamageEffect.emplace_back(name);
 		}
 	}
 	return in;
