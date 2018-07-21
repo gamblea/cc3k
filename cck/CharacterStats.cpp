@@ -103,6 +103,10 @@ std::istream &operator>>(std::istream &in, CharacterStats stats)
 			in >> n;
 			stats.DamageEffect.emplace_back(name);
 		}
+		else if (filed == "NumPiles:") 
+		{
+			in >> stats.NumPiles;
+		}
 	}
 	return in;
 }

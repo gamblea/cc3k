@@ -34,7 +34,8 @@ struct CharacterStats
 
 	int PotionEffect = 100; // out of a 100 
 	int GoldForKill = 0; // amount gold gets per kill
-	int GoldDrop; // amount dropOnDeath
+	int NumPiles = 0; // number of piles of gold dropped
+	int GoldDrop = 0; // value of Gold dropped
 };
 
 
