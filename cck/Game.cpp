@@ -39,7 +39,7 @@ void Game::ReadConfigurations(std::string fileName, std::map<ConfigName, Config>
 		std::ifstream configFile{ configName + ".config" };
 		Config config{};
 		configFile >> config;
-		configurations.emplace(config);
+		configurations.emplace(config.Name, config);
 	}
 }
 

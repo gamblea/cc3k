@@ -4,6 +4,7 @@
 
 struct PotionEffects
 {
+	std::string Name = "";
 	std::string Description = "";
 	int HealthEffect = 0;
 	int AtkEffect = 0;

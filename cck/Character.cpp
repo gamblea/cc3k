@@ -2,6 +2,7 @@
 #include "Character.h"
 #include "Level.h"
 #include "Errors.h"
+#include "Event.h"
 
 #include <memory>
 #include <algorithm>
@@ -24,17 +25,17 @@ void Character::Move(Position pos)
 
 std::shared_ptr<Event> Character::Attack(std::shared_ptr<Character> enemy)
 {
-	int r = getRandom(0, 100);
+	int r = Helpers::getRandom(0, 100);
 	bool success = true;
 	if (r > stats.AtkAccuracy )success = false;
 	else if (r > enemy->stats.DodgeAccuracy) success = false;
-	if(success) health += AtkHpGain;
-	if(stats.MaxHp && health > HpStart) health -= AtkHpGain;
+	if(success) health += stats.AtkHpGain;
+	if(stats.MaxHp && health > stats.HpStart) health -= stats.AtkHpGain;
 
 	int damage = std::ceil((100/(100+enemy->stats.Def))*stats.Atk);
 
-	Event retval = {Event::EventType::Battle, this, enemy, success, damage};
-	return retval; 
+	std::shared_ptr<Event> event = std::make_shared<Event>(Event::EventType::Battle, std::make_shared<Character>(this), enemy, success, damage);
+	return event; 
 }
 
 int Character::GetHealth() const
