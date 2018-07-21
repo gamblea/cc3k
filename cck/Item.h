@@ -2,8 +2,9 @@
 #include "Sprite.h"
 #include <memory>
 
-class Player;
+
 class Event;
+class Player;
 
 class Item : public Sprite
 {

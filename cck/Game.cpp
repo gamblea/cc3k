@@ -8,20 +8,22 @@
 
 
 Game::Game(std::string charactersFile, std::string potionsFile, std::string treasureFile)
+	:factory{nullptr}
 {
 	ReadConfigurations<std::string, CharacterStats>(charactersFile, config.Characters);
 	ReadConfigurations<std::string, PotionEffects>(charactersFile, config.Potions);
 	ReadConfigurations<std::string, TreasureStats>(charactersFile, config.Treasures);
-	factory = std::make_shared<SpriteFactory>(config);
+	this->factory = std::make_shared<SpriteFactory>(config);
 	srand(time(nullptr));
 }
 
 Game::Game(std::string charactersFile, std::string potionFile, std::string treasureFile, int seed)
+	:factory{ nullptr }
 {
 	ReadConfigurations<std::string, CharacterStats>(charactersFile, config.Characters);
 	ReadConfigurations<std::string, PotionEffects>(charactersFile, config.Potions);
 	ReadConfigurations<std::string, TreasureStats>(charactersFile, config.Treasures);
-	factory = std::make_shared<SpriteFactory>(config);
+	this->factory = std::make_shared<SpriteFactory>(config);
 	srand(seed);
 }
 

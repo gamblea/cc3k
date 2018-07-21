@@ -1,7 +1,12 @@
+#pragma once
 #ifndef _DRAGON_H_
 #define _DRAGON_H_
+
 #include "Character.h"
 #include <memory>
+
+class Item;
+class Event;
 
 class Dragon : public Character {
 

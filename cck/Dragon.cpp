@@ -4,6 +4,7 @@
 #include "Character.h"
 #include "Position.h"
 #include "Helpers.h"
+#include "Event.h"
 
 Dragon::Dragon(CharacterStats stats, Position start, std::shared_ptr<Item> itemToProtect):
 	Character{stats, start}, itemToProtect{itemToProtect}

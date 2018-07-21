@@ -223,7 +223,7 @@ void Map::BuildRooms()
 	{
 		for (int x = 0; x < width; x++)
 		{
-			if (GetCell(x, y) == Cell::Floor && !ContainedInARoom(x, y))
+			if (GetCell(x, y) == Cell::Floor && !ContainedInARoom(Position{ x, y }))
 			{
 				rooms.emplace_back(std::vector<Position>{});
 				AddAttachedToRoom(rooms.back(), Position{ x,y });

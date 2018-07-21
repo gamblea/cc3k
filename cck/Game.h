@@ -13,6 +13,7 @@ class Player;
 class Level;
 class TextDisplay;
 class GameIO;
+class SpriteFactory;
 
 struct CharacterStats;
 
