@@ -22,14 +22,15 @@ std::shared_ptr<Event> Character::Attack(std::shared_ptr<Character> enemy)
 {
 	// memory error in this passing poitner where reference is wanted
 	/*
-	int r = Helpers::getRandom(0, 100);
+	int r1 = Helpers::getRandom(0, 100);
+	int r2 = Helpers::getRandom(0, 100);
 	bool success = true;
-	if (r > stats.AtkAccuracy) success = false;
-	else if (r > enemy->stats.DodgeAccuracy) success = false;
+	if (r1 > stats.AtkAccuracy) success = false;
+	else if (r2 > enemy->getDodgeAccuary()) success = false;
 	if(success) health += stats.AtkHpGain;
 	if(stats.MaxHp && health > stats.HpStart) health = stats.HpStart;
 
-	int damage = std::ceil((100/(100+enemy->stats.Def))*stats.Atk);
+	int damage = std::ceil((100/(100+enemy->getDefense()))*stats.Atk);
 
 	enemy->DecrementHealth(damage);
 	*/
@@ -62,6 +63,11 @@ int Character::GetDefense() const
 std::string Character::GetName() const
 {
 	return stats.Name;
+}
+
+int Character::GetDodgeAccuray() const
+{
+	return stats.DodgeAccuracy;
 }
 
 int Character::GetGold() const
