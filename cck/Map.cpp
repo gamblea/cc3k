@@ -3,6 +3,7 @@
 
 #include <fstream>
 #include <string>
+#include <vector>
 #include "Position.h"
 #include "Room.h"
 #include "Helpers.h"
@@ -212,20 +213,9 @@ void Map::BuildRooms()
 	{
 		for (int x = 0; x < width; x++)
 		{
-			if (GetCell(x, y) == Cell::Floor && !ContainedInARoom(x, y))
-			{
-				rooms.emplace_back(Room{});
-				AddAttachedToRoom(rooms.back(), Position{ x,y });
-			}
-		}
-	}
-	for (int y = 0; y < height; y++)
-	{
-		for (int x = 0; x < width; x++)
-		{
 			if (GetCell(x, y) == Cell::Floor && !ContainedInARoom(Position{ x, y }))
 			{
-				rooms.emplace_back(std::vector<Position>{});
+				rooms.emplace_back(Room{});
 				AddAttachedToRoom(rooms.back(), Position{ x,y });
 			}
 		}
@@ -292,4 +282,14 @@ const Room &Map::GetRandomRoom() const
 Position Map::GetRandomPosition() const
 {
 	return GetRandomRoom().GetRandomPositionInRoom();
+}
+
+int Map::GetNumRooms() const
+{
+	return rooms.size();
+}
+
+Position Map::GetPositionFromRoom(int room) const
+{
+	return rooms.at(room).GetRandomPositionInRoom();
 }

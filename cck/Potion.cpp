@@ -4,6 +4,23 @@
 #include "Event.h"
 
 
+bool Potion::isEqual(const Sprite & other) const
+{
+	try
+	{
+		const Potion &otherPotion = dynamic_cast<const Potion &>(other);
+		if (position == otherPotion.position && effect == otherPotion.effect)
+		{
+			return true;
+		}
+		else return false;
+	}
+	catch (const std::bad_cast&)
+	{
+		return false;
+	}
+}
+
 Potion::Potion(Position position, PotionEffects effect)
 	: Item{ 'P' , position, Item::PickupMethod::Use, true }, effect{ effect }
 {

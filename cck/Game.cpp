@@ -3,26 +3,28 @@
 #include "CharacterStats.h"
 #include <fstream>
 #include "Player.h"
+#include "Character.h"
+#include "Command.h"
 #include "Level.h"
 
 
 
-Game::Game(std::string charactersFile, std::string potionsFile, std::string treasureFile)
+Game::Game(std::string charactersDirectory, std::string potionsDirectory, std::string treasuresDirectory)
 	:factory{nullptr}
 {
-	ReadConfigurations<std::string, CharacterStats>(charactersFile, config.Characters);
-	ReadConfigurations<std::string, PotionEffects>(charactersFile, config.Potions);
-	ReadConfigurations<std::string, TreasureStats>(charactersFile, config.Treasures);
+	ReadConfigurations<std::string, CharacterStats>(charactersDirectory, config.Characters);
+	ReadConfigurations<std::string, PotionEffects>(potionsDirectory, config.Potions);
+	ReadConfigurations<std::string, TreasureStats>(treasuresDirectory, config.Treasures);
 	this->factory = std::make_shared<SpriteFactory>(config);
-	srand(time(nullptr));
+	srand((unsigned int) time(nullptr));
 }
 
-Game::Game(std::string charactersFile, std::string potionFile, std::string treasureFile, int seed)
+Game::Game(std::string charactersDirectory, std::string potionsDirectory, std::string treasuresDirectory, int seed)
 	:factory{ nullptr }
 {
-	ReadConfigurations<std::string, CharacterStats>(charactersFile, config.Characters);
-	ReadConfigurations<std::string, PotionEffects>(charactersFile, config.Potions);
-	ReadConfigurations<std::string, TreasureStats>(charactersFile, config.Treasures);
+	ReadConfigurations<std::string, CharacterStats>(charactersDirectory, config.Characters);
+	ReadConfigurations<std::string, PotionEffects>(potionsDirectory, config.Potions);
+	ReadConfigurations<std::string, TreasureStats>(treasuresDirectory, config.Treasures);
 	this->factory = std::make_shared<SpriteFactory>(config);
 	srand(seed);
 }
@@ -34,13 +36,13 @@ Game::~Game()
 
 
 template<typename ConfigName, typename Config> 
-void Game::ReadConfigurations(std::string fileName, std::map<ConfigName, Config> configurations)
+void Game::ReadConfigurations(std::string directory, std::map<ConfigName, Config> configurations)
 {
-	std::ifstream file{ fileName };
+	std::ifstream file{ directory + '/' + directory + "List.txt" };
 	std::string configName{};
 	while (file >> configName)
 	{
-		std::ifstream configFile{ configName + ".config" };
+		std::ifstream configFile{directory + '/' + configName + ".config" };
 		Config config{};
 		configFile >> config;
 		configurations.emplace(config.Name, config);
@@ -58,7 +60,7 @@ void Game::Start()
 
 		for (int i = 0; i < 5 && passLevel; i++ ) // Play the levels
 		{
-			std::shared_ptr<Level> level = std::make_shared<Level>(player, "level.map", io);
+			std::shared_ptr<Level> level = std::make_shared<Level>(player, "floor.txt", io, factory);
 			io.AttachLevel(level);
 			passLevel = level->Play();			
 		}

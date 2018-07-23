@@ -1,6 +1,6 @@
 #pragma once
-#ifndef POSITION_H
-#define POSITION_H
+//#ifndef POSITION_H
+//#define POSITION_H
 
 struct Position
 {
@@ -11,4 +11,4 @@ struct Position
 };
 
 
-#endif 
+//#endif 

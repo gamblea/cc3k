@@ -9,6 +9,8 @@ class Character;
 
 class Character : public Sprite
 {
+private:
+	virtual bool isEqual(const Sprite& other) const;
 protected:
 	CharacterStats stats;
 	bool moved = false;
@@ -20,7 +22,6 @@ protected:
 public:
 	Character(CharacterStats stats, Position start);
 	virtual ~Character();
-	void Move(Position pos);
 	virtual std::shared_ptr<Event> Attack(std::shared_ptr<Character> enemy);
 
 	int GetHealth() const;

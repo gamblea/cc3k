@@ -3,7 +3,24 @@
 #include "Player.h"
 
 
-Stairs::Stairs(Position position) 
+bool Stairs::isEqual(const Sprite & other) const
+{
+	try
+	{
+		const Stairs &otherStairs = dynamic_cast<const Stairs &>(other);
+		if (position == otherStairs.position && GetSymbol() == other.GetSymbol())
+		{
+			return true;
+		}
+		else return false;
+	}
+	catch (const std::bad_cast&)
+	{
+		return false;
+	}
+}
+
+Stairs::Stairs(Position position)
 	: Item{'\\',position,PickupMethod::Walkover}
 {
 }

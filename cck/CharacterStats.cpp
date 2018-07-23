@@ -101,9 +101,9 @@ std::istream &operator>>(std::istream &in, CharacterStats stats)
 			int n;
 			in >> name;
 			in >> n;
-			stats.DamageEffect.emplace_back(name);
+			stats.DamageEffect.emplace(name, n);
 		}
-		else if (filed == "NumPiles:") 
+		else if (field == "NumPiles:") 
 		{
 			in >> stats.NumPiles;
 		}
@@ -111,9 +111,13 @@ std::istream &operator>>(std::istream &in, CharacterStats stats)
 	return in;
 }
 
-bool stringToBool(std::string str)
+
+bool CharacterStats::operator==(const CharacterStats & other) const
 {
-	if (str == "true") return true;
-	else if (str == "false") return false;
-	else throw std::runtime_error("Expected true or false");
+	return Name == other.Name;
+}
+
+bool CharacterStats::operator!=(const CharacterStats & other) const
+{
+	return !(*this == other);
 }

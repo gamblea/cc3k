@@ -14,6 +14,7 @@ class Player :
 private:
 	int AtkChange = 0;
 	int DefChange = 0;
+	virtual bool isEqual(const Sprite& other) const; // not all fields but a good amount
 public:
 	Player(CharacterStats stats, Position start);
 	Player(CharacterStats stats);

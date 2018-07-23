@@ -31,9 +31,23 @@ std::istream &operator>>(std::istream &in, TreasureStats stats)
 			stats.CanBePickedUp = Helpers::stringToBool(s);
 			pickedUpSet = true;
 		}
+		else if (field == "GuardName:")
+		{
+			stats.ToBeGuarded = true;
+			in >> stats.GuardName;
+		}
 	}
 	if (!valueSet || !pickedUpSet || !nameSet) throw std::runtime_error("TreasureStats cannot be fully read in!");
 
 	return in;
 }
 
+bool TreasureStats::operator==(const TreasureStats & other) const
+{
+	return Name == other.Name && Value == other.Value;
+}
+
+bool TreasureStats::operator!=(const TreasureStats & other) const
+{
+	return !(*this == other);
+}

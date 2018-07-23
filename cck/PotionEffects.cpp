@@ -31,3 +31,14 @@ std::istream &operator>>(std::istream &in, PotionEffects effects)
 
 	return in;
 }
+
+bool PotionEffects::operator==(const PotionEffects & other) const
+{
+	return Name == other.Name && HealthEffect == other.HealthEffect && AtkEffect == other.AtkEffect
+		&& DefEffect == other.DefEffect;
+}
+
+bool PotionEffects::operator!=(const PotionEffects & other) const
+{
+	return !(*this == other);
+}

@@ -5,10 +5,13 @@
 #include <vector>
 #include <string>
 #include "CharacterStats.h"
+#include "Position.h"
 
 class Treasure;
 class Potion;
 class Character;
+class Dragon;
+class Item;
 
 class SpriteFactory
 {
@@ -20,8 +23,10 @@ public:
 	SpriteFactory(GameConfig gameConfig);
 	~SpriteFactory();
 
-	std::shared_ptr<Character> CreateEnemy();
-	std::shared_ptr<Treasure> CreateTreasure();
-	std::shared_ptr<Potion> CreatePotion();
+	Character CreateEnemy(Position start);
+	Character CreateEnemy(Position start, std::string name);
+	Dragon CreateDragon(Position start, std::string name, std::shared_ptr<Item> itemToProtect);
+	Treasure CreateTreasure(Position start);
+	Potion CreatePotion(Position start);
 };
 
