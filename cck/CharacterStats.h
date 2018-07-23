@@ -36,6 +36,10 @@ struct CharacterStats
 	int GoldForKill = 0; // amount gold gets per kill
 	int NumPiles = 0; // number of piles of gold dropped
 	int GoldDrop = 0; // value of Gold dropped
+
+	// only checks if names are equal right now!
+	bool operator==(const CharacterStats &other) const;
+	bool operator!=(const CharacterStats &other) const;
 };
 
 

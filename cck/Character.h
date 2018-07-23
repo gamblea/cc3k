@@ -9,6 +9,8 @@ class Character;
 
 class Character : public Sprite
 {
+private:
+	virtual bool isEqual(const Sprite& other) const;
 protected:
 	CharacterStats stats;
 	bool moved = false;

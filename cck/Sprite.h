@@ -13,6 +13,8 @@ class Sprite
 {
 private:
 	char symbol;
+
+	virtual bool isEqual(const Sprite& other) const = 0;
 protected:
 	Position position;
 public:
@@ -21,6 +23,9 @@ public:
 	virtual void Move(Position pos);
 	char GetSymbol() const;
 	virtual ~Sprite() = 0;
+
+	bool operator==(const Sprite& other) const;
+	bool operator!=(const Sprite& other) const;
 };
 
 #endif

@@ -10,6 +10,9 @@ struct TreasureStats
 
 	bool ToBeGuarded = false;
 	std::string GuardName = "";
+
+	bool operator==(const TreasureStats &other) const;
+	bool operator!=(const TreasureStats &other) const;
 };
 
 std::istream &operator>>(std::istream &in, TreasureStats stats); 

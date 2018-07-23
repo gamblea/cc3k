@@ -18,6 +18,7 @@ private:
 	const std::string guardName = "";
 	bool guarded = false;
 	PickupMethod method;
+
 public:
 	Item(char symbol, Position position, PickupMethod method, bool toBeGuarded, std::string guardName);
 	Item(char symbol, Position position, PickupMethod method);

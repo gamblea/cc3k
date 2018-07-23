@@ -3,6 +3,24 @@
 #include "Event.h"
 
 
+bool Player::isEqual(const Sprite & other) const
+{
+	try
+	{
+		const Player &otherCharacter = dynamic_cast<const Player &>(other);
+		if (position == otherCharacter.position && stats == otherCharacter.stats && health == otherCharacter.healt
+			&& gold == otherCharacter.gold)
+		{
+			return true;
+		}
+		else return false;
+	}
+	catch (const std::bad_cast&)
+	{
+		return false;
+	}
+}
+
 Player::Player(CharacterStats stats, Position start)
 	: Character{ stats, start}
 {

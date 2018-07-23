@@ -9,8 +9,9 @@ class Item;
 class Event;
 
 class Dragon : public Character {
+private:
 	std::shared_ptr<Item> itemToProtect;
-
+	virtual bool isEqual(const Sprite& other) const;
 public:
 	Dragon(CharacterStats stats,Position start, std::shared_ptr<Item> itemToProtect);
 	std::shared_ptr<Item> getItem();

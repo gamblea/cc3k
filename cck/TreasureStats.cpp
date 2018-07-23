@@ -42,3 +42,12 @@ std::istream &operator>>(std::istream &in, TreasureStats stats)
 	return in;
 }
 
+bool TreasureStats::operator==(const TreasureStats & other) const
+{
+	return Name == other.Name && Value == other.Value;
+}
+
+bool TreasureStats::operator!=(const TreasureStats & other) const
+{
+	return !(*this == other);
+}

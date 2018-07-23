@@ -9,6 +9,7 @@ class Potion :
 {
 private:
 	PotionEffects effect;
+	virtual bool isEqual(const Sprite& other) const;
 public:
 	Potion(Position position, PotionEffects effect);
 	virtual ~Potion();

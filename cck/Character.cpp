@@ -33,7 +33,9 @@ std::shared_ptr<Event> Character::Attack(std::shared_ptr<Character> enemy)
 
 	enemy->DecrementHealth(damage);
 	*/
-	std::shared_ptr<Event> event = std::make_shared<Event>(Event::EventType::Battle, std::make_shared<Character>(this), enemy, success, damage);
+	bool success = false;
+	int damage = 0;
+	std::shared_ptr<Event> event = std::make_shared<Event>(Event::EventType::Battle, std::make_shared<Character>(*this), enemy, success, damage);
 	return event; 
 }
 
@@ -89,6 +91,24 @@ bool Character::AccessToPath()
 	return stats.AccessToPath;
 }
 
+
+bool Character::isEqual(const Sprite & other) const
+{
+	try
+	{
+		const Character &otherCharacter = dynamic_cast<const Character &>(other);
+		if (stats == otherCharacter.stats && moved == otherCharacter.moved && health == otherCharacter.health
+			&& position == otherCharacter.position && gold == otherCharacter.gold)
+		{
+			return true;
+		}
+		else return false;
+	}
+	catch (const std::bad_cast&)
+	{
+		return false;
+	}
+}
 
 Position Character::getPosFromDir(Direction dir)
 {

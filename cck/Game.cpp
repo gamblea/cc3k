@@ -3,6 +3,8 @@
 #include "CharacterStats.h"
 #include <fstream>
 #include "Player.h"
+#include "Character.h"
+#include "Command.h"
 #include "Level.h"
 
 

@@ -320,20 +320,20 @@ void Level::addSprite(std::shared_ptr<Sprite> sprite)
 void Level::removeSprite(std::shared_ptr<Sprite> sprite)
 {
 	sprites.erase(std::find_if(sprites.begin(), sprites.end(),
-		[&sprite](const std::shared_ptr<Sprite> other) { *sprite == *other; }));
+		[&sprite](const std::shared_ptr<Sprite> other) { return *sprite == *other; }));
 }
 
 void Level::removeEnemy(std::shared_ptr<Character> enemy)
 {
 	enemies.erase(std::find_if(enemies.begin(), enemies.end(), 
-		[&enemy](const std::shared_ptr<Character> other) {*enemy == *other; }));
+		[&enemy](const std::shared_ptr<Character> other) {return *enemy == *other; }));
 	removeSprite(enemy);
 }
 
 void Level::removeItem(std::shared_ptr<Item> item)
 {
 	items.erase(std::find_if(items.begin(), items.end(), 
-		[&item](const std::shared_ptr<Item> other) {*other == *item; }));
+		[&item](const std::shared_ptr<Item> other) {return *other == *item; }));
 	removeSprite(item);
 }
 
@@ -446,9 +446,14 @@ Position Level::GetAvalibleAdjacent(Position pos)
 			newPos = calcPosition(pos, direction);
 			if (accessibleCell(newPos, false) && !cellOccupied(newPos)) posFound = true;
 		}
-		if (tried.size() == 8) throw std::runtime_error("No avalible adjacent positions");
+		if (tried.size() == 8)
+			break;
 	}
-	
+	if (posFound)
+	{
+		return newPos;
+	}
+	else throw std::runtime_error("No avalible adjacent positions");
 }
 
 const Map & Level::GetMap()

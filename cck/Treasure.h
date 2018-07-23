@@ -8,6 +8,8 @@ class Treasure :
 {
 private:
 	TreasureStats stats;
+
+	virtual bool isEqual(const Sprite& other) const;
 public:
 	Treasure(Position position, TreasureStats stats);
 	virtual ~Treasure();

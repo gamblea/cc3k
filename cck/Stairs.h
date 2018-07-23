@@ -2,6 +2,8 @@
 #include "Item.h"
 class Stairs : public Item
 {
+private:
+	virtual bool isEqual(const Sprite& other) const;
 public:
 	Stairs(Position position);
 	virtual ~Stairs();
