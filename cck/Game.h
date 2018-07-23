@@ -29,11 +29,11 @@ private:
 	std::shared_ptr<SpriteFactory> factory;
 
 	template<typename ConfigName, typename Config>
-	void ReadConfigurations(std::string fileName, std::map<ConfigName, Config> configurations);
+	void ReadConfigurations(std::string directory, std::map<ConfigName, Config> configurations);
 
 public:
-	Game(std::string charactersFile, std::string potionsFile, std::string treasureFile);
-	Game(std::string charactersFile, std::string potionFile, std::string treasureFile, int seed);
+	Game(std::string charactersDirectory, std::string potionsDirectory, std::string treasuresDirectory);
+	Game(std::string charactersDirectory, std::string potionsDirectory, std::string treasuresDirectory, int seed);
 	void Start();
 	~Game();
 

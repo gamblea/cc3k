@@ -5,7 +5,7 @@ struct TreasureStats
 {
 	std::string Name;
 	int Value;
-	bool CanBePickedUp;
+	bool CanBePickedUp; //can get rid of 
 	int Probability;
 
 	bool ToBeGuarded = false;

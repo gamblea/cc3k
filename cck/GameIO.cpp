@@ -112,6 +112,10 @@ void GameIO::UpdateBoard()
 		char &element = getBoardAt(sprite->GetPosition());
 		element = sprite->GetSymbol();
 	}
+
+	// draws player over everything
+	char &element = getBoardAt((level->GetPlayer())->GetPosition());
+	element = level->GetPlayer()->GetSymbol();
 }
 
 char & GameIO::getBoardAt(Position pos)

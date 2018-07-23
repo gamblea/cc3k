@@ -8,7 +8,7 @@ bool Player::isEqual(const Sprite & other) const
 	try
 	{
 		const Player &otherCharacter = dynamic_cast<const Player &>(other);
-		if (position == otherCharacter.position && stats == otherCharacter.stats && health == otherCharacter.healt
+		if (position == otherCharacter.position && stats == otherCharacter.stats && health == otherCharacter.health
 			&& gold == otherCharacter.gold)
 		{
 			return true;
