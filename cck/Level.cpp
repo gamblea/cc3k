@@ -379,33 +379,33 @@ void Level::addStaircase()
 void Level::addPotions()
 {
 	const GameConfig &config = factory->GetGameConfig();
-	for (const auto item: mapOfLevel.existingItems) 
+	for (const auto item: mapOfLevel.GetExistingItems()) 
 	{
-		if (item.second = '0') 
+		if (item.first =='0') 
 		{
 			PotionEffects effect = config.Potions.find("PositiveHealth")->second;
-			addItem(std::make_shared<Potion>(Potion{item.first,effect}));
+			addItem(std::make_shared<Potion>(Potion{item.second,effect}));
 
-		} else if (item.second = '1') 
+		} else if (item.first == '1') 
 		{
 			PotionEffects effect = config.Potions.find("PositiveAtk")->second;
-			addItem(std::make_shared<Potion>(Potion{item.first,effect}));
-		} else if (item.second = '2') 
+			addItem(std::make_shared<Potion>(Potion{ item.second,effect}));
+		} else if (item.first == '2') 
 		{
 			PotionEffects effect = config.Potions.find("PositiveDef")->second;
-			addItem(std::make_shared<Potion>(Potion{item.first,effect}));
-		} else if (item.second = '3') 
+			addItem(std::make_shared<Potion>(Potion{ item.second,effect}));
+		} else if (item.first == '3') 
 		{
 			PotionEffects effect = config.Potions.find("NegativeHealth")->second;
-			addItem(std::make_shared<Potion>(Potion{item.first,effect}));
-		} else if (item.second = '4')
+			addItem(std::make_shared<Potion>(Potion{ item.second,effect}));
+		} else if (item.first == '4')
 		{
 			PotionEffects effect = config.Potions.find("NegativeAtk")->second;
-			addItem(std::make_shared<Potion>(Potion{item.first,effect}));
-		} else if (item.second= '5') 
+			addItem(std::make_shared<Potion>(Potion{ item.second,effect}));
+		} else if (item.first == '5') 
 		{
 			PotionEffects effect = config.Potions.find("NegativeDef")->second;
-			addItem(std::make_shared<Potion>(Potion{item.first,effect}));
+			addItem(std::make_shared<Potion>(Potion{ item.second,effect}));
 		}
 	}
 	for (int i = 0; i < 10; i++)
@@ -419,24 +419,25 @@ void Level::addPotions()
 void Level::addTreasure()
 {	
 	const GameConfig &config = factory->GetGameConfig();
-	for (const auto item: mapOfLevel.existingItems) 
+	for (const auto item: mapOfLevel.GetExistingItems()) 
 	{
-		if (item.second = "5") 
+		if (item.first == '5') 
 		{
 			TreasureStats effect = config.Treasures.find("Normal")->second;
-			addItem(std::make_shared<Treasure>(Treasure{item.first,effect}));
-		} else (item.second = "6")
+			addItem(std::make_shared<Treasure>(Treasure{item.second,effect}));
+		}
+		else if (item.first == '6')
 		{
 			TreasureStats effect = config.Treasures.find("Small")->second;
-			addItem(std::make_shared<Treasure>(Treasure{item.first,effect}));
-		} else (item.second = "7")
+			addItem(std::make_shared<Treasure>(Treasure{ item.second,effect}));
+		} else if (item.first == '7')
 		{
 			TreasureStats effect = config.Treasures.find("MerchantHoard")->second;
-			addItem(std::make_shared<Treasure>(Treasure{item.first,effect}));
-		} else (item.second ="8")
+			addItem(std::make_shared<Treasure>(Treasure{ item.second,effect}));
+		} else if (item.first  == '8')
 		{
 			TreasureStats effect = config.Treasures.find("DragonHoard")->second;
-			addItem(std::make_shared<Treasure>(Treasure{item.first,effect}));
+			addItem(std::make_shared<Treasure>(Treasure{ item.second,effect}));
 		}
 	}
 

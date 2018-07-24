@@ -3,6 +3,7 @@
 //#define MAP_H
 #include <string>
 #include <vector>
+#include <map>
 #include <iostream>
 #include "Position.h"
 
@@ -21,7 +22,7 @@ private:
 	std::vector<Room> rooms;
 
 	// find numbers that are from 0 - 9
-	std::map<std::string, Position> existingItems;
+	std::map<char, Position> existingItems;
 
 	void AddAttachedToRoom(Room &room, Position current);
 	bool ContainedInARoom(Position pos);
@@ -51,6 +52,8 @@ public:
 	int GetNumRooms() const;
 
 	Position GetPositionFromRoom(int room) const;
+
+	const std::map<char, Position> &GetExistingItems();
 
 	friend std::ostream &operator<<(std::ostream &os, Map &map);
 

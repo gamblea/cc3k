@@ -35,6 +35,9 @@ private:
 public:
 	Game(std::string charactersDirectory, std::string potionsDirectory, std::string treasuresDirectory);
 	Game(std::string charactersDirectory, std::string potionsDirectory, std::string treasuresDirectory, int seed);
+	Game(std::string charactersDirectory, std::string potionsDirectory, std::string treasuresDirectory, std::string floor);
+	Game(std::string charactersDirectory, std::string potionsDirectory, std::string treasuresDirectory, std::string floor, int seed);
+	
 	void Start();
 	~Game();
 

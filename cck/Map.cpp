@@ -30,7 +30,7 @@ void Map::ReadMap(std::string fileName)
 			{
 				if (c >= '0' && c <= '9') {
 					tempCells.emplace_back(Cell::Floor);
-					existingItems.emplace({col, i}, c);
+					existingItems.emplace(c, Position{ col, i });
 
 				} else {
 					switch (c)
@@ -300,4 +300,9 @@ int Map::GetNumRooms() const
 Position Map::GetPositionFromRoom(int room) const
 {
 	return rooms.at(room).GetRandomPositionInRoom();
+}
+
+const std::map<char, Position> &Map::GetExistingItems()
+{
+	return existingItems;
 }

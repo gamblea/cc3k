@@ -23,13 +23,14 @@ Game::Game(std::string charactersDirectory, std::string potionsDirectory, std::s
 }
 
 Game::Game(std::string charactersDirectory, std::string potionsDirectory, std::string treasuresDirectory, std::string floor)
-	:factory{nullptr}, floor{floor}
+	:factory{ nullptr }, floor{ floor }
 {
 	ReadConfigurations<std::string, CharacterStats>(charactersDirectory, config.Characters);
 	ReadConfigurations<std::string, PotionEffects>(potionsDirectory, config.Potions);
 	ReadConfigurations<std::string, TreasureStats>(treasuresDirectory, config.Treasures);
 	this->factory = std::make_shared<SpriteFactory>(config);
-	sr
+	srand((unsigned int)time(nullptr));
+}
 
 Game::Game(std::string charactersDirectory, std::string potionsDirectory, std::string treasuresDirectory, int seed)
 	:factory{ nullptr }
