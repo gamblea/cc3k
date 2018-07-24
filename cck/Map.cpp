@@ -68,14 +68,14 @@ void Map::ReadMap(std::string fileName)
 				++col;
 			}
 		}
-		else
-			throw std::runtime_error("Invalid width of map while reading: " + width);
+		//else
+		//	throw std::runtime_error("Invalid width of map while reading: " + width);
 	}
 
 	if ((int)tempCells.size() == width * height)
 		cells = tempCells;
-	//  else 
-	//     throw std::runtime_error("Invalid read of Cells");
+	 else 
+	    throw std::runtime_error("Invalid read of Cells");
 
 }
 

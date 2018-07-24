@@ -30,7 +30,7 @@ private:
 	std::string floor = "floor.txt";
 
 	template<typename ConfigName, typename Config>
-	void ReadConfigurations(std::string directory, std::map<ConfigName, Config> configurations);
+	void ReadConfigurations(std::string directory, std::map<ConfigName, Config> &configurations);
 
 public:
 	Game(std::string charactersDirectory, std::string potionsDirectory, std::string treasuresDirectory);

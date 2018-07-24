@@ -7,6 +7,8 @@
 #include <memory>
 #include <algorithm>
 #include <cmath>
+#include <vector>
+#include <map>
 
 Character::Character(CharacterStats stats, Position start)
 	: Sprite{stats.Symbol, start}, stats { stats }, health{ stats.HpStart }
@@ -20,56 +22,64 @@ Character::~Character()
 
 std::shared_ptr<Event> Character::Attack(std::shared_ptr<Character> enemy)
 {
-	// memory error in this passing pointer where reference is wanted
-	int r1 = Helpers::getRandom(0, 100);
-	int r2 = Helpers::getRandom(0, 100);
-	bool success = true;
+	Position enemyPosition = enemy->GetPosition();
+	int myDiffX = std::abs(position.x - enemyPosition.x);
+	int myDiffY = std::abs(position.y - enemyPosition.y);
 
-	//ATTACK
-	if (r1 > stats.AtkAccuracy) {
-		success = false;	
-	} 
-	
-	// DODGE
-	// halfing have a 50% chance to dodge to attack
-	if (r2 > enemy->getDodgeAccuary()) {
-		success = false;
+	if (myDiffX <= 1 && myDiffY <= 1)
+	{
+		int r1 = Helpers::getRandom(0, 100);
+		int r2 = Helpers::getRandom(0, 100);
+		bool success = true;
+
+		//ATTACK
+		if (r1 > stats.AtkAccuracy)
+			success = false;
+
+		// DODGE
+		// halfing have a 50% chance to dodge to attack
+		if (r2 <= enemy->GetDodgeAccuracy())
+			success = false;
+
+		// SUCCESSFUL
+		if (success)
+		{
+			// check if it loses HP because it is allergic to enemy
+
+			if (std::find(stats.AllergicTo.begin(), stats.AllergicTo.end(), enemy->stats.Name) 
+				!= stats.AllergicTo.end())  // allergic to enemy
+				health -= stats.AtkHpGain;
+			else  // else then we want to add gain HP
+				health += stats.AtkHpGain;
+
+			if (stats.MaxHp && health > stats.HpStart)
+				health = stats.HpStart;
+
+			// DAMAGE ON ENEMY
+			int damage = (int) std::ceil((100.0 / (100 + enemy->GetDefense())) * stats.Atk);
+
+			// check if we do more damage on a certain type
+			auto damageAmount = stats.DamageEffect.find(enemy->stats.Name);
+			double effect = 1.0;
+			if (damageAmount != stats.DamageEffect.end())
+				effect = damageAmount->second / 100;
+
+
+			enemy->DecrementHealth(damage * effect);
+
+			std::shared_ptr<Event> battle = std::make_shared<Event>(Event::EventType::Battle, *this, *enemy, true, damage);
+			return battle;
+		}
+		else
+		{
+			return std::make_shared<Event>(Event::EventType::Battle, *this, *enemy, false, 0);
+		}
+
 	}
-
-	// SUCCESSFUL
-	if(success) {
-		// check if it loses HP because it is allergic to enemy
-		auto allergic = td::find(AllergicTo.begin(), AllergicTo.end(), enemy->stats.Name);
-		
-		if (allergic != AllergicTo.end()) { // allergic to enemy
-			health -= stats.AtkHpGain;
-		} else { // else then we want to add gain HP
-			health += stats.AtkHpGain;
-		}
-		// add gold for successful attack
-			gold += stats.GoldForKill;
-
-		if (stats.MaxHp && health > stats.HpStart) {
-			health = stats.HpStart;
-		}
-
-		// DAMAGE ON ENEMY
-		int damage = std::ceil((100/(100+enemy->getDefense()))*stats.Atk);
-
-		// check if we do more damage on a certain type
-		auto damageAmount = DamageEffect.find(enemy->stats.Name);
-		if (damageEnemy != DamageEffect.end()) {
-			double effect = 1;
-			effect = *damageAmount / 100;
-		} 
-
-		enemy->DecrementHealth(damage * effect);
-
-		std::shared_ptr<Event> event = std::make_shared<Event>(Event::EventType::Battle, std::make_shared<Character>(*this), enemy, success, damage);
-		return event; 
-	} else { // NOT SUCCESSFUL
+	else 
 		return std::make_shared<Event>(Event::EventType::None, "");
-	}
+	
+	// memory error in this passing pointer where reference is wanted
 }
 
 int Character::GetHealth() const
@@ -97,9 +107,14 @@ std::string Character::GetName() const
 	return stats.Name;
 }
 
-int Character::GetDodgeAccuray() const
+int Character::GetDodgeAccuracy() const
 {
 	return stats.DodgeAccuracy;
+}
+
+std::vector<std::string> Character::GetAllergicTo() const
+{
+	return stats.AllergicTo;
 }
 
 int Character::GetGold() const

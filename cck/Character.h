@@ -3,6 +3,7 @@
 #include "Direction.h"
 #include "CharacterStats.h"
 #include "PotionEffects.h"
+#include <vector>
 
 class Event;
 class Character;
@@ -14,8 +15,8 @@ private:
 protected:
 	CharacterStats stats;
 	bool moved = false;
-	int health;
-	int gold;
+	int health = 0;
+	int gold = 0;
 
 
 	Position getPosFromDir(Direction dir);
@@ -29,6 +30,7 @@ public:
 	virtual int GetAttack() const; // need to add potion benefits
 	virtual int GetDefense() const; // need to add potion benefits
 	int GetDodgeAccuracy() const;
+	std::vector<std::string> GetAllergicTo() const;
 
 	void DecrementHealth(int amount);
 

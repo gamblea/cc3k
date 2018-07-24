@@ -24,13 +24,13 @@ bool Player::isEqual(const Sprite & other) const
 Player::Player(CharacterStats stats, Position start)
 	: Character{ stats, start}
 {
-	stats.Symbol = '@';
+	this->symbol = '@';
 }
 
 Player::Player(CharacterStats stats)
 	: Character{ stats, {0,0} }
 {
-	stats.Symbol = '@';
+	this->symbol = '@';
 }
 
 
@@ -69,7 +69,7 @@ std::shared_ptr<Event> Player::Use(PotionEffects effect) // called by Item
 	if(stats.MaxHp && health > GetStartingHealth())
 		health = GetStartingHealth();
 	
-	return std::make_shared<Event>(Event::EventType::GetPotion, std::make_shared<Player>(*this), effect);
+	return std::make_shared<Event>(Event::EventType::GetPotion, *this, effect);
 }
 
 std::shared_ptr<Event> Player::Use(TreasureStats treasureStats) // called by Item

@@ -12,10 +12,9 @@ class Level;
 class Sprite
 {
 private:
-	char symbol;
-
 	virtual bool isEqual(const Sprite& other) const = 0;
 protected:
+	char symbol;
 	Position position;
 public:
 	Sprite(char symbol, Position position);

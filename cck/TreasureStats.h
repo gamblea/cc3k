@@ -3,10 +3,10 @@
 
 struct TreasureStats
 {
-	std::string Name;
-	int Value;
-	bool CanBePickedUp; //can get rid of 
-	int Probability;
+	std::string Name = "";
+	int Value = 0;
+	bool CanBePickedUp = false; //can get rid of 
+	int Probability = 0;
 
 	bool ToBeGuarded = false;
 	std::string GuardName = "";
@@ -15,5 +15,5 @@ struct TreasureStats
 	bool operator!=(const TreasureStats &other) const;
 };
 
-std::istream &operator>>(std::istream &in, TreasureStats stats); 
+std::istream &operator>>(std::istream &in, TreasureStats &stats); 
 

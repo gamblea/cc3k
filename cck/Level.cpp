@@ -25,6 +25,7 @@ Level::Level(std::shared_ptr<Player> player, std::string fileName, GameIO &io, s
 	addPotions();
 	addTreasure();
 	addEnemies();
+	addPlayer();
 }
 
 Level::~Level()
@@ -33,6 +34,7 @@ Level::~Level()
 
 bool Level::Play()
 {
+	io.UpdateBoard();
 	io.DrawBoard();
 	io.DrawDetails();
 
@@ -105,10 +107,11 @@ bool Level::Play()
 		}
 
 		MoveEnemies();
-		// STILL HAVE TO DO ENEMIES MOVES
 
+		io.UpdateBoard();
 		io.DrawBoard();
 		io.DrawDetails();
+		events.clear();
 		if (completed) io.LevelCompleted();
 	}
 
@@ -146,7 +149,7 @@ void Level::MoveEnemies()
 						{
 							Direction direction = static_cast<Direction>(Helpers::getRandom(0, 7));
 							Position newPos = calcPosition(player->GetPosition(), direction);
-							if (cellOccupied(newPos) && accessibleCell(newPos, enemy->AccessToPath()))
+							if (!cellOccupied(newPos) && accessibleCell(newPos, enemy->AccessToPath()))
 							{
 								enemy->Move(newPos);
 								enemy->SetMoved(true);
@@ -172,7 +175,7 @@ void Level::MovePlayer(Direction direction)
 	if (accessible && !cellOccupied(newPos))
 	{
 		player->Move(newPos);
-		events.emplace_back(std::make_shared<Event>(Event::EventType::Move, player,direction));
+		events.emplace_back(std::make_shared<Event>(Event::EventType::Move, *player,direction));
 	}
 	else if (accessible)
 	{
@@ -298,6 +301,13 @@ std::shared_ptr<Item> Level::getItemAt(Position position)
 		}
 	}
 	throw std::exception();
+}
+
+void Level::addPlayer()
+{
+	int room = Helpers::getRandom(0, mapOfLevel.GetNumRooms() - 1);
+	player->Move(GetAvalibleRandomPosRoom(room));
+	addSprite(player);
 }
 
 void Level::addEnemy(std::shared_ptr<Character> enemy)

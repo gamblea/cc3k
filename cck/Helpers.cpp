@@ -84,7 +84,7 @@ Direction Helpers::strToDirection(const std::string &str)
 	{
 		return Direction::SE;
 	}
-	else throw std::runtime_error("Cannot read string to direction");
+	else return Direction::None;
 }
 
 int Helpers::getRandom(int min, int max)
@@ -92,5 +92,5 @@ int Helpers::getRandom(int min, int max)
 	if (min > max) std::swap(min, max);
 	int range = max - min + 1;
 	int random = rand() % range;
-	return random + range;
+	return random + min;
 }

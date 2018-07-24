@@ -5,6 +5,7 @@
 #include "Sprite.h"
 #include "Player.h"
 #include "Level.h"
+#include "Event.h"
 
 #include <string>
 
@@ -101,7 +102,7 @@ void GameIO::UpdateBoard()
 				const Map::Cell &cell = map.GetCell(x, y);
 				char c = 0;
 				cell >> c;
-				board.at(x).at(y) = c;
+				board.at(y).at(x) = c;
 			}
 		}
 	}
@@ -120,7 +121,7 @@ void GameIO::UpdateBoard()
 
 char & GameIO::getBoardAt(Position pos)
 {
-	return board.at(pos.x).at(pos.y);
+	return board.at(pos.y).at(pos.x);
 }
 
 
@@ -132,17 +133,17 @@ void GameIO::DrawBoard()
 void GameIO::DrawDetails()
 {
 	const Map& map = level->GetMap();
-	const PPlayer player = level->GetPlayer();
+	const std::shared_ptr<Player> player = level->GetPlayer();
 	int width = board.back().size();
-	std::string playerRaceAndGold = ("Race: " + player->GetName()) + (" Gold: "  + player->GetGold());
+	std::string playerRaceAndGold = "Race: " + player->GetName() + " Gold: "  + std::to_string(player->GetGold());
 	PrintBothEnds(playerRaceAndGold, map.GetName());
 	out << "HP: " << player->GetHealth() << "/" << player->GetStartingHealth() << std::endl;
 	out << "Atk: " << player->GetAttack() << std::endl;
 	out << "Def: " << player->GetDefense() << std::endl;
 	int outputed = 0;
-	for (const std::shared_ptr<const Event> &event : level->GetEvents())
+	for (const std::shared_ptr<const Event> event : level->GetEvents())
 	{
-		out << event;
+		out << *event;
 		outputed++;
 		if (outputed == 2)
 		{

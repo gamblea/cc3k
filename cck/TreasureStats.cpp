@@ -4,7 +4,7 @@
 #include "Helpers.h"
 
 
-std::istream &operator>>(std::istream &in, TreasureStats stats)
+std::istream &operator>>(std::istream &in, TreasureStats &stats)
 {
 	std::string field = "";
 	bool valueSet = false;
@@ -35,6 +35,10 @@ std::istream &operator>>(std::istream &in, TreasureStats stats)
 		{
 			stats.ToBeGuarded = true;
 			in >> stats.GuardName;
+		}
+		else if (field == "Probability:")
+		{
+			in >> stats.Probability;
 		}
 	}
 	if (!valueSet || !pickedUpSet || !nameSet) throw std::runtime_error("TreasureStats cannot be fully read in!");
