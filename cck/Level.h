@@ -48,6 +48,8 @@ private:
 	bool cellOccupied(const Position &pos);
 	std::shared_ptr<Item> getItemAt(Position position);
 
+	const int levelNum;
+
 	void addPlayer();
 
 	void addEnemy(std::shared_ptr<Character> enemy);
@@ -72,7 +74,7 @@ private:
 	Position GetAvalibleAdjacent(Position pos);
 
 public:
-	Level(std::shared_ptr<Player> player, std::string fileName, GameIO &io, std::shared_ptr<SpriteFactory> factory);
+	Level(std::shared_ptr<Player> player, std::string fileName, GameIO &io, std::shared_ptr<SpriteFactory> factory, int levelNum);
 	~Level();
 	bool Play();
 
@@ -86,6 +88,8 @@ public:
 	void ToggleEnemies();
 	void MoveEnemies();
 	void MovePlayer(Direction direction);
+
+	int GetLevelNum() const;
 
 	std::shared_ptr<Character> getEnemyAt(Position position);
 };

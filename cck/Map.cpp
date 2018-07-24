@@ -8,9 +8,9 @@
 #include "Room.h"
 #include "Helpers.h"
 
-Map::Map(std::string name) :name{name}
+Map::Map(std::string fileName) :fileName{fileName}
 {
-	ReadMap(name + ".map");
+	ReadMap(fileName);
 	BuildRooms();
 }
 
@@ -272,7 +272,7 @@ char operator>>(Map::Cell cell, char &c)
 
 std::string Map::GetName() const
 {
-	return name;
+	return fileName;
 }
 
 const std::vector<Room>& Map::GetRooms()

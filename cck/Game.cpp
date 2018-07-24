@@ -23,12 +23,14 @@ Game::Game(std::string charactersDirectory, std::string potionsDirectory, std::s
 }
 
 Game::Game(std::string charactersDirectory, std::string potionsDirectory, std::string treasuresDirectory, std::string floor)
-	:factory{ nullptr }, floor{ floor }
+	:factory{ nullptr }
 {
+	
 	ReadConfigurations<std::string, CharacterStats>(charactersDirectory, config.Characters);
 	ReadConfigurations<std::string, PotionEffects>(potionsDirectory, config.Potions);
 	ReadConfigurations<std::string, TreasureStats>(treasuresDirectory, config.Treasures);
 	this->factory = std::make_shared<SpriteFactory>(config);
+	config.floorFile = floor;
 	srand((unsigned int)time(nullptr));
 }
 
@@ -43,13 +45,13 @@ Game::Game(std::string charactersDirectory, std::string potionsDirectory, std::s
 }
 
 Game::Game(std::string charactersDirectory, std::string potionsDirectory, std::string treasuresDirectory, std::string floor, int seed)
-	:factory{ nullptr }, floor{floor}
+	:factory{ nullptr }
 {
 	ReadConfigurations<std::string, CharacterStats>(charactersDirectory, config.Characters);
 	ReadConfigurations<std::string, PotionEffects>(potionsDirectory, config.Potions);
 	ReadConfigurations<std::string, TreasureStats>(treasuresDirectory, config.Treasures);
 	this->factory = std::make_shared<SpriteFactory>(config);
-	// this does not work
+	config.floorFile = floor;
 	srand(seed);
 }
 
@@ -81,10 +83,10 @@ void Game::Start()
 	{
 		bool passLevel = true;
 		player = std::make_shared<Player>(io.GetPlayerRace(config.Characters));
-
-		for (int i = 0; i < 5 && passLevel; i++ ) // Play the levels
+		 
+		for (int i = 1; i <= 5 && passLevel; i++ ) // Play the levels
 		{
-			std::shared_ptr<Level> level = std::make_shared<Level>(player, "floor", io, factory);
+			std::shared_ptr<Level> level = std::make_shared<Level>(player, config.floorFile, io, factory, i);
 			io.AttachLevel(level);
 			passLevel = level->Play();			
 		}

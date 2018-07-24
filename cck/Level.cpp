@@ -17,8 +17,8 @@
 #include <memory>
 #include <algorithm>
 
-Level::Level(std::shared_ptr<Player> player, std::string fileName, GameIO &io, std::shared_ptr<SpriteFactory> factory)
-	: player{player}, mapOfLevel{fileName}, io{io}, factory{factory}
+Level::Level(std::shared_ptr<Player> player, std::string fileName, GameIO &io, std::shared_ptr<SpriteFactory> factory, int levelNum)
+	: player{player}, mapOfLevel{fileName}, io{io}, factory{factory} , levelNum{levelNum}
 {
 	// needs to be implemented
 	addStaircase();
@@ -199,6 +199,11 @@ void Level::MovePlayer(Direction direction)
 	else throw CannotMove{direction};
 }
 
+int Level::GetLevelNum() const
+{
+	return levelNum;
+}
+
 std::shared_ptr<Character> Level::getEnemyAt(Position position)
 {
 	for (const std::shared_ptr<Character> &enemy : enemies)
@@ -313,7 +318,16 @@ std::shared_ptr<Item> Level::getItemAt(Position position)
 
 void Level::addPlayer()
 {
-	int room = Helpers::getRandom(0, mapOfLevel.GetNumRooms() - 1);
+	int roomFound = false;
+	int room = 0;
+	while (!roomFound)
+	{
+		room = Helpers::getRandom(0, mapOfLevel.GetNumRooms() - 1);
+		if (room != roomOfStairs)
+		{
+			roomFound = true;
+		}
+	} 
 	player->Move(GetAvalibleRandomPosRoom(room));
 	addSprite(player);
 }
@@ -421,20 +435,20 @@ void Level::addTreasure()
 	const GameConfig &config = factory->GetGameConfig();
 	for (const auto item: mapOfLevel.GetExistingItems()) 
 	{
-		if (item.first == '5') 
+		if (item.first == '6') 
 		{
 			TreasureStats effect = config.Treasures.find("Normal")->second;
 			addItem(std::make_shared<Treasure>(Treasure{item.second,effect}));
 		}
-		else if (item.first == '6')
+		else if (item.first == '7')
 		{
 			TreasureStats effect = config.Treasures.find("Small")->second;
 			addItem(std::make_shared<Treasure>(Treasure{ item.second,effect}));
-		} else if (item.first == '7')
+		} else if (item.first == '8')
 		{
 			TreasureStats effect = config.Treasures.find("MerchantHoard")->second;
 			addItem(std::make_shared<Treasure>(Treasure{ item.second,effect}));
-		} else if (item.first  == '8')
+		} else if (item.first  == '9')
 		{
 			TreasureStats effect = config.Treasures.find("DragonHoard")->second;
 			addItem(std::make_shared<Treasure>(Treasure{ item.second,effect}));

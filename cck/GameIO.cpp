@@ -136,7 +136,8 @@ void GameIO::DrawDetails()
 	const std::shared_ptr<Player> player = level->GetPlayer();
 	int width = board.back().size();
 	std::string playerRaceAndGold = "Race: " + player->GetName() + " Gold: "  + std::to_string(player->GetGold());
-	PrintBothEnds(playerRaceAndGold, map.GetName());
+	std::string levelName = "Level " + std::to_string(level->GetLevelNum());
+	PrintBothEnds(playerRaceAndGold, levelName);
 	out << "HP: " << player->GetHealth() << "/" << player->GetStartingHealth() << std::endl;
 	out << "Atk: " << player->GetAttack() << std::endl;
 	out << "Def: " << player->GetDefense() << std::endl;

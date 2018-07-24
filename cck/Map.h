@@ -28,7 +28,7 @@ private:
 	bool ContainedInARoom(Position pos);
 	char cellToChar(Cell cell);
 	Cell charToCell(char c);
-	std::string name;
+	std::string fileName;
 
 	void ReadMap(std::string fileName); // Map name + ".map";
 	void BuildRooms();

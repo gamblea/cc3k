@@ -27,7 +27,6 @@ private:
 	std::shared_ptr<Player> player;
 	GameIO io{std::cin,std::cout};
 	std::shared_ptr<SpriteFactory> factory;
-	std::string floor = "floor.txt";
 
 	template<typename ConfigName, typename Config>
 	void ReadConfigurations(std::string directory, std::map<ConfigName, Config> &configurations);
