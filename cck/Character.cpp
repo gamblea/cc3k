@@ -20,23 +20,56 @@ Character::~Character()
 
 std::shared_ptr<Event> Character::Attack(std::shared_ptr<Character> enemy)
 {
-	// memory error in this passing poitner where reference is wanted
-	/*
-	int r = Helpers::getRandom(0, 100);
+	// memory error in this passing pointer where reference is wanted
+	int r1 = Helpers::getRandom(0, 100);
+	int r2 = Helpers::getRandom(0, 100);
 	bool success = true;
-	if (r > stats.AtkAccuracy) success = false;
-	else if (r > enemy->stats.DodgeAccuracy) success = false;
-	if(success) health += stats.AtkHpGain;
-	if(stats.MaxHp && health > stats.HpStart) health = stats.HpStart;
 
-	int damage = std::ceil((100/(100+enemy->stats.Def))*stats.Atk);
+	//ATTACK
+	if (r1 > stats.AtkAccuracy) {
+		success = false;	
+	} 
+	
+	// DODGE
+	// halfing have a 50% chance to dodge to attack
+	if (r2 > enemy->getDodgeAccuary()) {
+		success = false;
+	}
 
-	enemy->DecrementHealth(damage);
-	*/
-	bool success = false;
-	int damage = 0;
-	std::shared_ptr<Event> event = std::make_shared<Event>(Event::EventType::Battle, std::make_shared<Character>(*this), enemy, success, damage);
-	return event; 
+	// SUCCESSFUL
+	if(success) {
+		// check if it loses HP because it is allergic to enemy
+		auto allergic = td::find(AllergicTo.begin(), AllergicTo.end(), enemy->stats.Name);
+		
+		if (allergic != AllergicTo.end()) { // allergic to enemy
+			health -= stats.AtkHpGain;
+		} else { // else then we want to add gain HP
+			health += stats.AtkHpGain;
+		}
+		// add gold for successful attack
+			gold += stats.GoldForKill;
+
+		if (stats.MaxHp && health > stats.HpStart) {
+			health = stats.HpStart;
+		}
+
+		// DAMAGE ON ENEMY
+		int damage = std::ceil((100/(100+enemy->getDefense()))*stats.Atk);
+
+		// check if we do more damage on a certain type
+		auto damageAmount = DamageEffect.find(enemy->stats.Name);
+		if (damageEnemy != DamageEffect.end()) {
+			double effect = 1;
+			effect = *damageAmount / 100;
+		} 
+
+		enemy->DecrementHealth(damage * effect);
+
+		std::shared_ptr<Event> event = std::make_shared<Event>(Event::EventType::Battle, std::make_shared<Character>(*this), enemy, success, damage);
+		return event; 
+	} else { // NOT SUCCESSFUL
+		return std::make_shared<Event>(Event::EventType::None, "");
+	}
 }
 
 int Character::GetHealth() const
@@ -62,6 +95,11 @@ int Character::GetDefense() const
 std::string Character::GetName() const
 {
 	return stats.Name;
+}
+
+int Character::GetDodgeAccuray() const
+{
+	return stats.DodgeAccuracy;
 }
 
 int Character::GetGold() const

@@ -15,7 +15,7 @@ struct CharacterStats
 	bool AccessToPath = false;
 
 	int HpStart; // starting Hp
-	bool MaxHp; //if the player has a max Hp
+	bool MaxHp = true; //if the player has a max Hp
 	int HpRegain; //Amount gained at the start of tern
 
 	int Atk;

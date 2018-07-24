@@ -28,6 +28,7 @@ public:
 	int GetStartingHealth() const;
 	virtual int GetAttack() const; // need to add potion benefits
 	virtual int GetDefense() const; // need to add potion benefits
+	int GetDodgeAccuracy() const;
 
 	void DecrementHealth(int amount);
 
