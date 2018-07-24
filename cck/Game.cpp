@@ -19,6 +19,15 @@ Game::Game(std::string charactersDirectory, std::string potionsDirectory, std::s
 	srand((unsigned int) time(nullptr));
 }
 
+Game::Game(std::string charactersDirectory, std::string potionsDirectory, std::string treasuresDirectory, std::string floor)
+	:factory{nullptr}, floor{floor}
+{
+	ReadConfigurations<std::string, CharacterStats>(charactersDirectory, config.Characters);
+	ReadConfigurations<std::string, PotionEffects>(potionsDirectory, config.Potions);
+	ReadConfigurations<std::string, TreasureStats>(treasuresDirectory, config.Treasures);
+	this->factory = std::make_shared<SpriteFactory>(config);
+	sr
+
 Game::Game(std::string charactersDirectory, std::string potionsDirectory, std::string treasuresDirectory, int seed)
 	:factory{ nullptr }
 {
@@ -26,6 +35,17 @@ Game::Game(std::string charactersDirectory, std::string potionsDirectory, std::s
 	ReadConfigurations<std::string, PotionEffects>(potionsDirectory, config.Potions);
 	ReadConfigurations<std::string, TreasureStats>(treasuresDirectory, config.Treasures);
 	this->factory = std::make_shared<SpriteFactory>(config);
+	srand(seed);
+}
+
+Game::Game(std::string charactersDirectory, std::string potionsDirectory, std::string treasuresDirectory, std::string floor, int seed)
+	:factory{ nullptr }, floor{floor}
+{
+	ReadConfigurations<std::string, CharacterStats>(charactersDirectory, config.Characters);
+	ReadConfigurations<std::string, PotionEffects>(potionsDirectory, config.Potions);
+	ReadConfigurations<std::string, TreasureStats>(treasuresDirectory, config.Treasures);
+	this->factory = std::make_shared<SpriteFactory>(config);
+	// this does not work
 	srand(seed);
 }
 
@@ -60,7 +80,7 @@ void Game::Start()
 
 		for (int i = 0; i < 5 && passLevel; i++ ) // Play the levels
 		{
-			std::shared_ptr<Level> level = std::make_shared<Level>(player, "floor.txt", io, factory);
+			std::shared_ptr<Level> level = std::make_shared<Level>(player, floor, io, factory);
 			io.AttachLevel(level);
 			passLevel = level->Play();			
 		}

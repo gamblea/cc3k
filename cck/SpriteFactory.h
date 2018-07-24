@@ -28,5 +28,7 @@ public:
 	Dragon CreateDragon(Position start, std::string name, std::shared_ptr<Item> itemToProtect);
 	Treasure CreateTreasure(Position start);
 	Potion CreatePotion(Position start);
+
+	const GameConfig &GetGameConfig();
 };
 

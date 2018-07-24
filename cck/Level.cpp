@@ -360,6 +360,36 @@ void Level::addStaircase()
 
 void Level::addPotions()
 {
+	const GameConfig &config = factory->GetGameConfig();
+	for (const auto item: mapOfLevel.existingItems) 
+	{
+		if (item.second = '0') 
+		{
+			PotionEffects effect = config.Potions.find("PositiveHealth")->second;
+			addItem(std::make_shared<Potion>(Potion{item.first,effect}));
+
+		} else if (item.second = '1') 
+		{
+			PotionEffects effect = config.Potions.find("PositiveAtk")->second;
+			addItem(std::make_shared<Potion>(Potion{item.first,effect}));
+		} else if (item.second = '2') 
+		{
+			PotionEffects effect = config.Potions.find("PositiveDef")->second;
+			addItem(std::make_shared<Potion>(Potion{item.first,effect}));
+		} else if (item.second = '3') 
+		{
+			PotionEffects effect = config.Potions.find("NegativeHealth")->second;
+			addItem(std::make_shared<Potion>(Potion{item.first,effect}));
+		} else if (item.second = '4')
+		{
+			PotionEffects effect = config.Potions.find("NegativeAtk")->second;
+			addItem(std::make_shared<Potion>(Potion{item.first,effect}));
+		} else if (item.second= '5') 
+		{
+			PotionEffects effect = config.Potions.find("NegativeDef")->second;
+			addItem(std::make_shared<Potion>(Potion{item.first,effect}));
+		}
+	}
 	for (int i = 0; i < 10; i++)
 	{
 		Potion potion = factory->CreatePotion(GetAvalibleRandomPos());
@@ -369,7 +399,29 @@ void Level::addPotions()
 }
 
 void Level::addTreasure()
-{
+{	
+	const GameConfig &config = factory->GetGameConfig();
+	for (const auto item: mapOfLevel.existingItems) 
+	{
+		if (item.second = "5") 
+		{
+			TreasureStats effect = config.Treasures.find("Normal")->second;
+			addItem(std::make_shared<Treasure>(Treasure{item.first,effect}));
+		} else (item.second = "6")
+		{
+			TreasureStats effect = config.Treasures.find("Small")->second;
+			addItem(std::make_shared<Treasure>(Treasure{item.first,effect}));
+		} else (item.second = "7")
+		{
+			TreasureStats effect = config.Treasures.find("MerchantHoard")->second;
+			addItem(std::make_shared<Treasure>(Treasure{item.first,effect}));
+		} else (item.second ="8")
+		{
+			TreasureStats effect = config.Treasures.find("DragonHoard")->second;
+			addItem(std::make_shared<Treasure>(Treasure{item.first,effect}));
+		}
+	}
+
 	for (int i = 0; i < 10; i++)
 	{
 		Treasure treasure = factory->CreateTreasure(GetAvalibleRandomPos());

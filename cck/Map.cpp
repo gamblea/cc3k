@@ -24,40 +24,48 @@ void Map::ReadMap(std::string fileName)
 	{
 		std::getline(file, line);
 		if ((int)line.length() == width)
-		{
+		{	
+			int col = 0;
 			for (char c : line)
 			{
-				switch (c)
-				{
-				case '.':
+				if (c >= '0' && c <= '9') {
 					tempCells.emplace_back(Cell::Floor);
-					break;
+					existingItems.emplace({col, i}, c);
 
-				case '-':
-					tempCells.emplace_back(Cell::WallHorz);
-					break;
+				} else {
+					switch (c)
+					{
+					case '.':
+						tempCells.emplace_back(Cell::Floor);
+						break;
 
-				case '|':
-					tempCells.emplace_back(Cell::WallVert);
-					break;
+					case '-':
+						tempCells.emplace_back(Cell::WallHorz);
+						break;
 
-				case '#':
-					tempCells.emplace_back(Cell::Passage);
-					break;
+					case '|':
+						tempCells.emplace_back(Cell::WallVert);
+						break;
 
-				case '+':
-					tempCells.emplace_back(Cell::Doorway);
-					break;
+					case '#':
+						tempCells.emplace_back(Cell::Passage);
+						break;
 
-				case ' ':
-					tempCells.emplace_back(Cell::Nothing);
-					break;
+					case '+':
+						tempCells.emplace_back(Cell::Doorway);
+						break;
 
-				default:
-					throw std::runtime_error("Invalid char read from file!");
-					break;
+					case ' ':
+						tempCells.emplace_back(Cell::Nothing);
+						break;
 
+					default:
+						throw std::runtime_error("Invalid char read from file!");
+						break;
+
+					}
 				}
+				++col;
 			}
 		}
 		else
