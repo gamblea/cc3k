@@ -3,6 +3,7 @@
 #include "Direction.h"
 #include "CharacterStats.h"
 #include "PotionEffects.h"
+#include <vector>
 
 class Event;
 class Character;
@@ -29,6 +30,7 @@ public:
 	virtual int GetAttack() const; // need to add potion benefits
 	virtual int GetDefense() const; // need to add potion benefits
 	int GetDodgeAccuracy() const;
+	std::vector<std::string> GetAllergicTo() const;
 
 	void DecrementHealth(int amount);
 

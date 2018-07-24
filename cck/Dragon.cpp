@@ -40,43 +40,46 @@ std::shared_ptr<Item> Dragon::getItem() {
 
 
 std::shared_ptr<Event> Dragon::Attack(std::shared_ptr<Character> enemy) {
-	
+
 	Position protectedPosition = itemToProtect->GetPosition();
 	Position enemyPosition = enemy->GetPosition();
 	
-	int myDiffX = position.x - enemyPosition.x;
-	int myDiffY = position.y - enemyPosition.y;
+	bool success = true;
+	int myDiffX = std::abs(position.x - enemyPosition.x);
+	int myDiffY = std::abs(position.y - enemyPosition.y);
 
 	int protectedDiffX = position.x - protectedPosition.x;
 	int protectedDiffY = position.y - protectedPosition.y;
 
 	if ((myDiffX <= 1 && myDiffY <= 1)
-		|| (protectedDiffX <= 1 && protectedDiffY <= 1)) 
+		|| (protectedDiffX <= 1 && protectedDiffY <= 1))
 	{
+		//ATTACK
+		int r1 = Helpers::getRandom(0, 100);
 
-	//ATTACK
-	int r1 = Helpers::getRandom(0, 100);
+		if (r1 > stats.AtkAccuracy) {
+			success = false;
+		}
 
-	if (r1 > stats.AtkAccuracy) {
-		success = false;	
-	} 
+		// SUCCESSFUL
+		if (success) {
 
-	// SUCCESSFUL
-	if(success) {
+			// DAMAGE ON ENEMY
+			int damage = (int) std::ceil((100 / (100 + enemy->GetDefense()))*stats.Atk);
+			enemy->DecrementHealth(damage);
 
-		// DAMAGE ON ENEMY
-		int damage = std::ceil((100/(100+enemy->getDefense()))*stats.Atk);
-		enemy->DecrementHealth(damage * effect);
-		
-		std::shared_ptr<Event> event = std::make_shared<Event>(Event::EventType::Battle, std::make_shared<Character>(*this), enemy, success, damage);
-		return event; 
-		
-	} else {
-		return std::make_shared<Event>(Event::EventType::None, "");
-	}
+			std::shared_ptr<Event> event = std::make_shared<Event>(Event::EventType::Battle, *this, *enemy, success, damage);
+			return event;
+
+		}
+		else {
+			return std::make_shared<Event>(Event::EventType::None, "");
+		}
+	} else return std::make_shared<Event>(Event::EventType::None, "");
 }
 
-Dragon::~Dragon() {
+Dragon::~Dragon() 
+{
 	itemToProtect->SetGuarded(false);
 }
 

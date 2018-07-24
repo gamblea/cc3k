@@ -69,7 +69,7 @@ std::shared_ptr<Event> Player::Use(PotionEffects effect) // called by Item
 	if(stats.MaxHp && health > GetStartingHealth())
 		health = GetStartingHealth();
 	
-	return std::make_shared<Event>(Event::EventType::GetPotion, std::make_shared<Player>(*this), effect);
+	return std::make_shared<Event>(Event::EventType::GetPotion, *this, effect);
 }
 
 std::shared_ptr<Event> Player::Use(TreasureStats treasureStats) // called by Item

@@ -107,11 +107,11 @@ bool Level::Play()
 		}
 
 		MoveEnemies();
-		// STILL HAVE TO DO ENEMIES MOVES
 
 		io.UpdateBoard();
 		io.DrawBoard();
 		io.DrawDetails();
+		events.clear();
 		if (completed) io.LevelCompleted();
 	}
 
@@ -149,7 +149,7 @@ void Level::MoveEnemies()
 						{
 							Direction direction = static_cast<Direction>(Helpers::getRandom(0, 7));
 							Position newPos = calcPosition(player->GetPosition(), direction);
-							if (cellOccupied(newPos) && accessibleCell(newPos, enemy->AccessToPath()))
+							if (!cellOccupied(newPos) && accessibleCell(newPos, enemy->AccessToPath()))
 							{
 								enemy->Move(newPos);
 								enemy->SetMoved(true);
@@ -175,7 +175,7 @@ void Level::MovePlayer(Direction direction)
 	if (accessible && !cellOccupied(newPos))
 	{
 		player->Move(newPos);
-		events.emplace_back(std::make_shared<Event>(Event::EventType::Move, player,direction));
+		events.emplace_back(std::make_shared<Event>(Event::EventType::Move, *player,direction));
 	}
 	else if (accessible)
 	{
