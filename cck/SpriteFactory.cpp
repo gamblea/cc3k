@@ -40,6 +40,13 @@ SpriteFactory::~SpriteFactory()
 {
 }
 
+
+const GameConfig & SpriteFactory::GetGameConfig()
+{
+	return gameConfig;
+}
+
+
 Character SpriteFactory::CreateEnemy(Position start)
 {
 	int size = enemyNamesChoose.size();

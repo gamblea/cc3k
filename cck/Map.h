@@ -20,6 +20,9 @@ private:
 
 	std::vector<Room> rooms;
 
+	// find numbers that are from 0 - 9
+	std::map<std::string, Position> existingItems;
+
 	void AddAttachedToRoom(Room &room, Position current);
 	bool ContainedInARoom(Position pos);
 	char cellToChar(Cell cell);
@@ -28,6 +31,7 @@ private:
 
 	void ReadMap(std::string fileName); // Map name + ".map";
 	void BuildRooms();
+
 
 public: 
 	Map(std::string name);
