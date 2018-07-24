@@ -15,4 +15,4 @@ struct PotionEffects
 	bool operator!=(const PotionEffects &other) const;
 };
 
-std::istream &operator>>(std::istream &in, PotionEffects effects);
+std::istream &operator>>(std::istream &in, PotionEffects &effects);

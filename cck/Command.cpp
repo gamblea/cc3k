@@ -23,7 +23,7 @@ std::istream &operator>>(std::istream &in, Command::Action &action)
 		{
 			action = Command::Action::Quit;
 		}
-		in.setstate(std::ios_base::failbit);
+		else in.setstate(std::ios_base::failbit);
 	}
 	else
 		in.setstate(std::ios_base::failbit);
@@ -41,6 +41,10 @@ std::istream &operator>>(std::istream &in, Command &command)
 			std::string s{};
 			in >> s;
 			command.direction = Helpers::strToDirection(s);
+			if (command.direction == Direction::None)
+			{
+				in.setstate(std::ios_base::failbit);
+			}
 		}
 	}
 	return in;

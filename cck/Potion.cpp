@@ -22,7 +22,7 @@ bool Potion::isEqual(const Sprite & other) const
 }
 
 Potion::Potion(Position position, PotionEffects effect)
-	: Item{ 'P' , position, Item::PickupMethod::Use, true }, effect{ effect }
+	: Item{ 'P' , position, Item::PickupMethod::Use}, effect{ effect }
 {
 }
 

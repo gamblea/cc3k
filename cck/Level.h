@@ -48,6 +48,8 @@ private:
 	bool cellOccupied(const Position &pos);
 	std::shared_ptr<Item> getItemAt(Position position);
 
+	void addPlayer();
+
 	void addEnemy(std::shared_ptr<Character> enemy);
 	void addItem(std::shared_ptr<Item> item);
 	void addSprite(std::shared_ptr<Sprite> sprite);

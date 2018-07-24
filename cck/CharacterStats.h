@@ -43,4 +43,4 @@ struct CharacterStats
 };
 
 
-std::istream &operator>>(std::istream &in, CharacterStats stats);
+std::istream &operator>>(std::istream &in, CharacterStats &stats);

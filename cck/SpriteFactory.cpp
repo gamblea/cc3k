@@ -16,10 +16,14 @@ SpriteFactory::SpriteFactory(GameConfig gameConfig) : gameConfig{gameConfig}
 {
 	for (const auto &config : gameConfig.Characters)
 	{
-		for (int i = 0; i < config.second.Probability; i++)
+		if (config.second.Playable == false && config.second.Probability > 0)
 		{
-			enemyNamesChoose.emplace_back(config.first);
+			for (int i = 0; i < config.second.Probability; i++)
+			{
+				enemyNamesChoose.emplace_back(config.first);
+			}
 		}
+		
 	}
 
 	for (const auto &config : gameConfig.Treasures)
@@ -60,7 +64,7 @@ Dragon SpriteFactory::CreateDragon(Position start, std::string name, std::shared
 
 Treasure SpriteFactory::CreateTreasure(Position start)
 {
-	int size = (int) gameConfig.Treasures.size();
+	int size = (int) treasureNamesChoose.size();
 	int index = Helpers::getRandom(0, size - 1);
 	TreasureStats stats = gameConfig.Treasures.find(treasureNamesChoose.at(index))->second;
 

@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "PotionEffects.h"
 
-std::istream &operator>>(std::istream &in, PotionEffects effects)
+std::istream &operator>>(std::istream &in, PotionEffects &effects)
 {
 	std::string field{};
 

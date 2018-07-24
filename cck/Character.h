@@ -14,8 +14,8 @@ private:
 protected:
 	CharacterStats stats;
 	bool moved = false;
-	int health;
-	int gold;
+	int health = 0;
+	int gold = 0;
 
 
 	Position getPosFromDir(Direction dir);

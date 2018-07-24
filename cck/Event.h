@@ -25,4 +25,4 @@ public:
 	EventType GetType() const;
 };
 
-std::ostream &operator<<(std::ostream &out, std::shared_ptr<Event> event);
+std::ostream &operator<<(std::ostream &out, const Event &event);

@@ -25,6 +25,7 @@ Level::Level(std::shared_ptr<Player> player, std::string fileName, GameIO &io, s
 	addPotions();
 	addTreasure();
 	addEnemies();
+	addPlayer();
 }
 
 Level::~Level()
@@ -33,6 +34,7 @@ Level::~Level()
 
 bool Level::Play()
 {
+	io.UpdateBoard();
 	io.DrawBoard();
 	io.DrawDetails();
 
@@ -107,6 +109,7 @@ bool Level::Play()
 		MoveEnemies();
 		// STILL HAVE TO DO ENEMIES MOVES
 
+		io.UpdateBoard();
 		io.DrawBoard();
 		io.DrawDetails();
 		if (completed) io.LevelCompleted();
@@ -298,6 +301,13 @@ std::shared_ptr<Item> Level::getItemAt(Position position)
 		}
 	}
 	throw std::exception();
+}
+
+void Level::addPlayer()
+{
+	int room = Helpers::getRandom(0, mapOfLevel.GetNumRooms() - 1);
+	player->Move(GetAvalibleRandomPosRoom(room));
+	addSprite(player);
 }
 
 void Level::addEnemy(std::shared_ptr<Character> enemy)

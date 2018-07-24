@@ -67,9 +67,9 @@ Event::EventType Event::GetType() const
 	return type;
 }
 
-std::ostream &operator<<(std::ostream &out, std::shared_ptr<Event> event)
+std::ostream &operator<<(std::ostream &out, const Event &event)
 {
-	out << event->GetDescription();
+	out << event.GetDescription();
 	return out;
 }
 

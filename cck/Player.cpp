@@ -24,13 +24,13 @@ bool Player::isEqual(const Sprite & other) const
 Player::Player(CharacterStats stats, Position start)
 	: Character{ stats, start}
 {
-	stats.Symbol = '@';
+	this->symbol = '@';
 }
 
 Player::Player(CharacterStats stats)
 	: Character{ stats, {0,0} }
 {
-	stats.Symbol = '@';
+	this->symbol = '@';
 }
 
 
