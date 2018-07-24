@@ -23,9 +23,9 @@ std::istream &operator>>(std::istream &in, PotionEffects &effects)
 		{
 			in >> effects.AtkEffect;
 		}
-		else if (field == "DefEffect")
+		else if (field == "DefEffect:")
 		{
-			in >> effects.HealthEffect;
+			in >> effects.DefEffect;
 		}
 	}
 

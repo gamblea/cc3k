@@ -48,8 +48,8 @@ std::shared_ptr<Event> Dragon::Attack(std::shared_ptr<Character> enemy) {
 	int myDiffX = std::abs(position.x - enemyPosition.x);
 	int myDiffY = std::abs(position.y - enemyPosition.y);
 
-	int protectedDiffX = position.x - protectedPosition.x;
-	int protectedDiffY = position.y - protectedPosition.y;
+	int protectedDiffX = std::abs(enemyPosition.x - protectedPosition.x);
+	int protectedDiffY = std::abs(enemyPosition.y - protectedPosition.y);
 
 	if ((myDiffX <= 1 && myDiffY <= 1)
 		|| (protectedDiffX <= 1 && protectedDiffY <= 1))
@@ -65,7 +65,7 @@ std::shared_ptr<Event> Dragon::Attack(std::shared_ptr<Character> enemy) {
 		if (success) {
 
 			// DAMAGE ON ENEMY
-			int damage = (int) std::ceil((100 / (100 + enemy->GetDefense()))*stats.Atk);
+			int damage = (int) std::ceil((100 / (100 + enemy->GetDefense()))* GetAttack());
 			enemy->DecrementHealth(damage);
 
 			std::shared_ptr<Event> event = std::make_shared<Event>(Event::EventType::Battle, *this, *enemy, success, damage);

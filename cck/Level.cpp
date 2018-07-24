@@ -80,10 +80,14 @@ bool Level::Play()
 				{
 					Position itemPos = calcPosition(player->GetPosition(), command.direction);
 					std::shared_ptr<Item> item = getItemAt(itemPos);
-
-					std::shared_ptr<Event> event = item->GetPickedUpBy(player);
+					if (item->GetPickupMethod() == Item::PickupMethod::Use)
+					{
+						std::shared_ptr<Event> event = item->GetPickedUpBy(player);
+						events.emplace_back(event);
+						removeItem(item); // needs to be tested
+					}
+					else throw CannotUse{ command.direction };
 					
-					removeItem(item); // needs to be tested
 				}
 				catch (...)
 				{
@@ -106,7 +110,12 @@ bool Level::Play()
 			continue;
 		}
 
-		MoveEnemies();
+		if (!completed)
+		{
+			MoveEnemies();
+		}
+		
+
 
 		io.UpdateBoard();
 		io.DrawBoard();
@@ -133,7 +142,7 @@ void Level::MoveEnemies()
 	{
 		for (int x = 0; x < mapOfLevel.GetWidth(); x++)
 		{
-			for (PCharacter enemy : enemies)
+			for (PCharacter& enemy : enemies)
 			{
 				if (enemy->GetPosition().x == x && !enemy->BeenMoved())
 				{
@@ -145,16 +154,15 @@ void Level::MoveEnemies()
 					}
 					else
 					{
-						while (!enemy->BeenMoved())
+						try
 						{
-							Direction direction = static_cast<Direction>(Helpers::getRandom(0, 7));
-							Position newPos = calcPosition(player->GetPosition(), direction);
-							if (!cellOccupied(newPos) && accessibleCell(newPos, enemy->AccessToPath()))
-							{
-								enemy->Move(newPos);
-								enemy->SetMoved(true);
-							}
+							enemy->Move(GetAvalibleAdjacent(enemy->GetPosition()));
 						}
+						catch (const std::exception&)
+						{
+									
+						}
+						enemy->SetMoved(true);
 					}
 				}
 			}
@@ -370,12 +378,12 @@ void Level::addStaircase()
 
 void Level::addPotions()
 {
-	for (int i = 0; i < 10; i++)
+	for (int i = 0; i < 25; i++) //change to 10
 	{
 		Potion potion = factory->CreatePotion(GetAvalibleRandomPos());
 		addItem(std::make_shared<Potion>(potion));
 	}
-	
+
 }
 
 void Level::addTreasure()
@@ -450,7 +458,7 @@ Position Level::GetAvalibleAdjacent(Position pos)
 	while (!posFound)
 	{
 		Direction direction = static_cast<Direction>(Helpers::getRandom(0, 7));
-		if (std::find(tried.begin(), tried.end(), direction) != tried.end())
+		if (std::find(tried.begin(), tried.end(), direction) == tried.end())
 		{
 			tried.emplace_back(direction);
 			newPos = calcPosition(pos, direction);

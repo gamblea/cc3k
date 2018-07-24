@@ -48,7 +48,7 @@ Event::Event(EventType type, Player player, PotionEffects effect)
 		effects += "Def: " + std::to_string(effect.DefEffect);
 	if (effect.HealthEffect != 0)
 		effects += "Hp: " + std::to_string(effect.HealthEffect);
-	description = player.GetName() + " drank " + effect.Description + effects;
+	description = player.GetName() + " drank " + effect.Description + " " + effects + ".";
 }
 
 

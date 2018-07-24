@@ -25,12 +25,14 @@ Player::Player(CharacterStats stats, Position start)
 	: Character{ stats, start}
 {
 	this->symbol = '@';
+	this->stats.Name = "Player";
 }
 
 Player::Player(CharacterStats stats)
 	: Character{ stats, {0,0} }
 {
 	this->symbol = '@';
+	this->stats.Name = "Player";
 }
 
 
@@ -52,6 +54,7 @@ int Player::GetDefense() const
 
 std::shared_ptr<Event> Player::Use(PotionEffects effect) // called by Item
 {
+
 	if(stats.PotionEffect != 100){
 		effect.DefEffect = stats.PotionEffect * effect.DefEffect / 100;
 		effect.AtkEffect = stats.PotionEffect * effect.AtkEffect / 100;
@@ -82,7 +85,7 @@ std::shared_ptr<Event> Player::Use(TreasureStats treasureStats) // called by Ite
 std::shared_ptr<Event> Player::Use(const Stairs &stairs)
 {
 	
-	return std::make_shared<Event>(Event::EventType::EndLevel, "Level Complete!");
+	return std::make_shared<Event>(Event::EventType::EndLevel, "Level Completed!");
 }
 
 

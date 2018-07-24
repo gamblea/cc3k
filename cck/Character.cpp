@@ -56,7 +56,7 @@ std::shared_ptr<Event> Character::Attack(std::shared_ptr<Character> enemy)
 				health = stats.HpStart;
 
 			// DAMAGE ON ENEMY
-			int damage = (int) std::ceil((100.0 / (100 + enemy->GetDefense())) * stats.Atk);
+			int damage = (int) std::ceil((100.0 / (100 + enemy->GetDefense())) * GetAttack());
 
 			// check if we do more damage on a certain type
 			auto damageAmount = stats.DamageEffect.find(enemy->stats.Name);
