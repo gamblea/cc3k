@@ -1,9 +1,9 @@
-
 #include "Helpers.h"
 #include "Direction.h"
 
 #include <string>
 #include <cstdlib>
+#include <stdexcept>
 
 
 bool Helpers::stringToBool(std::string str)

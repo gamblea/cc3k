@@ -4,6 +4,7 @@
 
 #include <string>
 #include <cstdlib>
+#include <stdexcept>
 
 
 bool Helpers::stringToBool(std::string str)
