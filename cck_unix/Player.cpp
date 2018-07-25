@@ -98,7 +98,7 @@ std::shared_ptr<Event> Player::Use(TreasureStats treasureStats) // called by Ite
 std::shared_ptr<Event> Player::Use(const Stairs &stairs)
 {
 	
-	return std::make_shared<Event>(Event::EventType::EndLevel, *this);
+	return std::make_shared<Event>(Event::EventType::EndLevel, this);
 }
 
 
@@ -109,8 +109,17 @@ void Player::ResetForLevel()
 	SeenPotions.clear();
 }
 
+void Player::RegainHealth()
+{
+	health += stats.HpRegain;
+	if (stats.MaxHp & health >= stats.HpStart)
+	{
+		health = stats.HpStart;
+	}
+}
+
 
 int Player::GetScore()
 {
-	return gold * (stats.ScoreBonus / 100);
+	return gold * stats.ScoreBonus / 100;
 }

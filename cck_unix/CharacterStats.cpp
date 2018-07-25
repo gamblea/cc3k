@@ -51,7 +51,7 @@ std::istream &operator>>(std::istream &in, CharacterStats &stats)
 		{
 			in >> stats.AtkAccuracy;
 		}
-		else if (field == "NumberOfAtks")
+		else if (field == "NumberOfAtks:")
 		{
 			in >> stats.NumberOfAtks;
 		}

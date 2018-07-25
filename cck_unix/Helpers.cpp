@@ -53,35 +53,35 @@ std::string Helpers::directionToStr(Direction direction)
 
 Direction Helpers::strToDirection(const std::string &str)
 {
-	if (str == "N" || str == "north")
+	if (str == "N" || str == "north" || str == "n")
 	{
 		return Direction::N;
 	}
-	else if (str == "S" || str == "south")
+	else if (str == "S" || str == "south" || str == "s")
 	{
 		return Direction::S;
 	}
-	else if (str == "W" || str == "west")
+	else if (str == "W" || str == "west" || str == "w")
 	{
 		return Direction::W;
 	}
-	else if (str == "E" || str == "east")
+	else if (str == "E" || str == "east" || str == "e")
 	{
 		return Direction::E;
 	}
-	else if (str == "NW" || str == "northwest")
+	else if (str == "NW" || str == "northwest" || str == "nw")
 	{
 		return Direction::NW;
 	}
-	else if (str == "NE" || str == "northeast")
+	else if (str == "NE" || str == "northeast" || str == "ne")
 	{
 		return Direction::NE;
 	}
-	else if (str == "SW" || str == "southwest")
+	else if (str == "SW" || str == "southwest" || str =="sw")
 	{
 		return Direction::SW;
 	}
-	else if (str == "SE" || str == "Southeast")
+	else if (str == "SE" || str == "Southeast" || str == "se")
 	{
 		return Direction::SE;
 	}

@@ -36,6 +36,8 @@ public:
 
 	void ResetForLevel();
 
+	void RegainHealth();
+
 	int GetScore();
 };
 #endif

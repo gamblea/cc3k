@@ -38,7 +38,7 @@ std::shared_ptr<Event> Character::Attack(std::shared_ptr<Character> enemy)
 
 		// DODGE
 		// halfing have a 50% chance to dodge to attack
-		if (r2 <= enemy->GetDodgeAccuracy())
+		if (r2 < enemy->GetDodgeAccuracy())
 			success = false;
 
 		// SUCCESSFUL
@@ -183,6 +183,15 @@ bool Character::Alive()
 int Character::GetGoldValue() const
 {
 	return stats.GoldValue;
+}
+
+int Character::GetNumAttack(std::string race)
+{
+	if (stats.DifferentAtkNumber.find(race) == stats.DifferentAtkNumber.end())
+	{
+		return stats.NumberOfAtks;
+	} 
+	else return stats.DifferentAtkNumber.find(race)->second;
 }
 
 std::string Character::Character::Die()

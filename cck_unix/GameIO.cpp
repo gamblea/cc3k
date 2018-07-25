@@ -55,11 +55,11 @@ CharacterStats GameIO::GetPlayerRace(const std::map<std::string, CharacterStats>
 		out << " Select a Race: Shade(S), Drow(D), Vampire(V), Troll(T), Goblin(G)" << std::endl;
 		if (in >> raceName)
 		{
-			if(raceName == "S") raceName = "Shade";
-			else if(raceName == "D") raceName = "Drow";
-			else if(raceName == "V") raceName = "Vampire";
-			else if(raceName == "T") raceName = "Troll";
-			else if(raceName == "G") raceName = "Goblin";
+			if(raceName == "S" || raceName == "s") raceName = "Shade";
+			else if(raceName == "D" || raceName == "d") raceName = "Drow";
+			else if(raceName == "V" || raceName == "v") raceName = "Vampire";
+			else if(raceName == "T" || raceName == "t") raceName = "Troll";
+			else if(raceName == "G" || raceName == "g") raceName = "Goblin";
 			if (races.find(raceName) != races.end() && races.find(raceName)->second.Playable == true)
 			{
 				selected = true;
@@ -176,7 +176,7 @@ void GameIO::InvalidCommand(const std::string &msg) const
 
 void GameIO::QuitGame()
 {
-	out << "Game over! You gave up :(";
+	out << "Game over! You gave up :(" << std::endl;
 }
 
 void GameIO::AttachLevel(std::shared_ptr<Level> level)

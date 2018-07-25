@@ -22,7 +22,7 @@ public:
 	Event(EventType type, std::string description);
 	Event(EventType type, Character *attacker, Character *defender, bool hit, int damage);
 	Event(EventType type, Player player, PotionEffects effect);
-	Event(EventType type, Player player);
+	Event(EventType type, Player *player);
 	Event(EventType type, Sprite *sprite, Direction direction);
 
 	virtual ~Event();
