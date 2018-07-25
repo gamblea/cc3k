@@ -1,4 +1,4 @@
-
+#include "stdafx.h"
 #include "Level.h"
 #include "Character.h"
 #include "Sprite.h"
@@ -12,6 +12,7 @@
 #include "Potion.h"
 #include "GameConfig.h"
 #include "Stairs.h"
+#include "Helpers.h"
 
 #include <exception>
 #include <memory>
@@ -38,6 +39,8 @@ bool Level::Play()
 	io.DrawBoard();
 	io.DrawDetails();
 
+
+
 	while (!completed)
 	{
 		Command command = io.GetCommand();
@@ -54,7 +57,17 @@ bool Level::Play()
 
 					events.emplace_back(battle);
 					if (defender->GetHealth() <= 0)
+					{
+
+						std::string treasureName = defender->Die();
+						if (treasureName != "")
+						{
+							Treasure treasure = factory->CreateTreasure(defender->GetPosition(), treasureName);
+							addItem(std::make_shared<Treasure>(treasure));
+						}
 						removeEnemy(defender); // should be tested
+					}
+						
 
 					if (defender->GetNeutral())
 					{
@@ -102,8 +115,17 @@ bool Level::Play()
 				}
 				break;
 
+			case Command::Action::Freeze :
+				enemiesMoveable = !enemiesMoveable;
+				continue;
+				break;
+
+			case Command::Action::Reset :
+				return false; // says the level failed
+				break;
+
 			case Command::Action::Quit :
-				io.EndGame();
+				io.QuitGame();
 				exit(0);
 				break;
 			default:
@@ -117,21 +139,18 @@ bool Level::Play()
 			continue;
 		}
 
-		if (!completed)
-		{
-			MoveEnemies();
-		}
-		
 
+		MoveEnemies();
+		if (!completed)
+			AddSeeEvents();
 
 		io.UpdateBoard();
 		io.DrawBoard();
 		io.DrawDetails();
 		events.clear();
-		if (completed) io.LevelCompleted();
 	}
 
-	return completed;
+	return player->Alive();
 }
 
 
@@ -151,15 +170,17 @@ void Level::MoveEnemies()
 		{
 			for (PCharacter& enemy : enemies)
 			{
-				if (enemy->GetPosition().x == x && !enemy->BeenMoved())
+				if (enemy->GetPosition().x == x && !enemy->BeenMoved() && enemy->GetMoves())
 				{
 					std::shared_ptr<Event> enemyEvent = enemy->Attack(player);
 					if (enemyEvent->GetType() == Event::EventType::Battle)
 					{
 						events.emplace_back(enemyEvent);
 						enemy->SetMoved(true);
+
 						if (!player->Alive())
 						{
+							events.emplace_back(std::make_shared<Event>(Event::EventType::Died, *player));
 							completed = true;
 							for (PCharacter enemy : enemies)
 							{
@@ -170,15 +191,16 @@ void Level::MoveEnemies()
 					}
 					else
 					{
-						try
-						{
-							enemy->Move(GetAvalibleAdjacent(enemy->GetPosition()));
-						}
-						catch (const std::exception&)
-						{
-									
-						}
-						enemy->SetMoved(true);
+	
+							try
+							{
+								enemy->Move(GetAvalibleAdjacent(enemy->GetPosition()));
+							}
+							catch (const std::exception&)
+							{
+
+							}
+							enemy->SetMoved(true);
 					}
 				}
 			}
@@ -199,7 +221,7 @@ void Level::MovePlayer(Direction direction)
 	if (accessible && !cellOccupied(newPos))
 	{
 		player->Move(newPos);
-		events.emplace_back(std::make_shared<Event>(Event::EventType::Move, *player,direction));
+		events.emplace_back(std::make_shared<Event>(Event::EventType::Move, player.get(),direction));
 	}
 	else if (accessible)
 	{
@@ -210,7 +232,10 @@ void Level::MovePlayer(Direction direction)
 			completed = true;
 		}
 		events.emplace_back(event);
-		removeItem(item);
+		if (event->GetType() != Event::EventType::See)
+		{
+			removeItem(item);
+		}
 		player->Move(newPos);
 	}
 	else throw CannotMove{direction};
@@ -503,6 +528,7 @@ void Level::addEnemies()
 			}
 
 			addEnemy(std::make_shared<Dragon>(factory->CreateDragon(guardPos, item->GetGuardName(), item)));
+			item->SetGuarded(true);
 		}
 	}
 
@@ -566,6 +592,30 @@ void Level::SetRaceNeutralality(std::string name, bool val)
 		if (enemy->GetName() == name)
 		{
 			enemy->SetNeutral(val);
+		}
+	}
+}
+
+void Level::AddSeeEvents()
+{
+	for (int i = 0; i <= 7; i++)
+	{
+		Direction direction = static_cast<Direction>(i);
+
+		Position relativePos = calcPosition(player->GetPosition(), direction);
+
+		for (auto &sprite : sprites)
+		{
+			if (sprite->GetPosition() == relativePos)
+			{
+				if (nullptr != std::dynamic_pointer_cast<Potion>(sprite) && !player->SeenPotion(sprite->GetName()))
+				{
+					events.emplace_back(std::make_shared<Event>(Event::EventType::See,
+						"The player sees a Unkown Potion " + Helpers::directionToStr(direction) + "."));
+				}
+				else events.emplace_back(std::make_shared<Event>(Event::EventType::See, sprite.get(), direction));
+				continue;
+			}
 		}
 	}
 }

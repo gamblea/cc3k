@@ -1,8 +1,9 @@
-
+#include "stdafx.h"
 #include "Treasure.h"
 #include "Player.h"
 #include "TreasureStats.h"
-
+#include "Event.h"
+#include <memory>
 
 bool Treasure::isEqual(const Sprite & other) const
 {
@@ -29,8 +30,17 @@ Treasure::Treasure(Position position, TreasureStats stats)
 
 Treasure::~Treasure() {}
 
+std::string Treasure::GetName() const
+{
+	return stats.Name;
+}
+
 
 std::shared_ptr<Event> Treasure::GetPickedUpBy(std::shared_ptr<Player> player)
 { 
-	return player->Use(stats);
+	if (GetGuarded())
+	{
+		return std::make_shared<Event>(Event::EventType::See , stats.Name + "is still guarded by the " + GetGuardName() + ".");
+	}
+	else return player->Use(stats);
 }

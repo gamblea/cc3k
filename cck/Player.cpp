@@ -91,7 +91,7 @@ std::shared_ptr<Event> Player::Use(PotionEffects effect) // called by Item
 std::shared_ptr<Event> Player::Use(TreasureStats treasureStats) // called by Item
 {
 	gold += treasureStats.Value;
-	std::string msg = stats.Name + " picked up: " + std::to_string(treasureStats.Value) + " gold.";
+	std::string msg = GetName() + " picked up: " + std::to_string(treasureStats.Value) + " gold.";
 	return std::make_shared<Event>(Event::EventType::GetTreasure, msg);
 }
 

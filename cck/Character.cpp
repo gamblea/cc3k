@@ -70,6 +70,7 @@ std::shared_ptr<Event> Character::Attack(std::shared_ptr<Character> enemy)
 			if (enemy->GetHealth() <= 0)
 			{
 				AddGold(enemy->GetGoldValue());
+				AddGold(stats.GoldForKill);
 			}
 
 			std::shared_ptr<Event> battle = std::make_shared<Event>(Event::EventType::Battle, this, enemy.get(), true, damage);

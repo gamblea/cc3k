@@ -1,10 +1,11 @@
-
+#include "stdafx.h"
 #include "Item.h"
 
 
 Item::Item(char symbol, Position position, Item::PickupMethod method, bool toBeGuarded, std::string guardName)
-	: Sprite{ symbol, position }, method{ method }, toBeGuarded{ toBeGuarded }, guardName{guardName}
+	: Sprite{ symbol, position }, method{ method }, toBeGuarded{ toBeGuarded }, guardName{guardName} 
 {
+
 }
 
 Item::Item(char symbol, Position position, Item::PickupMethod method)
@@ -34,6 +35,11 @@ bool Item::ToBeGuarded() const
 void Item::SetGuarded(bool value)
 {
 	guarded = value;
+}
+
+bool Item::GetGuarded() const
+{
+	return guarded;
 }
 
 

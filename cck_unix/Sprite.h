@@ -4,6 +4,7 @@
 #include "Position.h"
 #include <memory>
 #include "Direction.h"
+#include <string>
 
 class Level;
 
@@ -19,6 +20,9 @@ public:
 	virtual const Position &GetPosition() const;
 	virtual void Move(Position pos);
 	char GetSymbol() const;
+
+	virtual std::string GetName() const = 0;
+
 	virtual ~Sprite() = 0;
 
 	bool operator==(const Sprite& other) const;

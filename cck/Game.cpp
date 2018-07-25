@@ -93,7 +93,7 @@ void Game::Start()
 			player->ResetForLevel();
 			if (passLevel && i == 5) wonGame = true;
 		}
-
+		
 		io.EndGame(*player, wonGame);
 
 		play = io.PlayAgain();

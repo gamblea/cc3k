@@ -25,12 +25,15 @@ public:
 	Item(char symbol, Position position, PickupMethod method);
 	virtual ~Item() = 0;
 
+	virtual std::string GetName() const = 0;
+
 	Item::PickupMethod GetPickupMethod();
 	virtual std::shared_ptr<Event> GetPickedUpBy(std::shared_ptr<Player> player) = 0;
 
 	std::string GetGuardName() const;
 	bool ToBeGuarded() const;
 	void SetGuarded(bool value);
+	bool GetGuarded() const;
 };
 
 #endif

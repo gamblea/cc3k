@@ -170,7 +170,7 @@ void Level::MoveEnemies()
 		{
 			for (PCharacter& enemy : enemies)
 			{
-				if (enemy->GetPosition().x == x && !enemy->BeenMoved())
+				if (enemy->GetPosition().x == x && !enemy->BeenMoved() && enemy->GetMoves())
 				{
 					std::shared_ptr<Event> enemyEvent = enemy->Attack(player);
 					if (enemyEvent->GetType() == Event::EventType::Battle)
@@ -191,8 +191,7 @@ void Level::MoveEnemies()
 					}
 					else
 					{
-						if (enemy->GetMoves())
-						{
+	
 							try
 							{
 								enemy->Move(GetAvalibleAdjacent(enemy->GetPosition()));
@@ -201,8 +200,7 @@ void Level::MoveEnemies()
 							{
 
 							}
-						}
-						enemy->SetMoved(true);
+							enemy->SetMoved(true);
 					}
 				}
 			}

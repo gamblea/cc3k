@@ -1,4 +1,4 @@
-
+#include "stdafx.h"
 #include "GameIO.h"
 #include "CharacterStats.h"
 #include "Map.h"
@@ -6,6 +6,7 @@
 #include "Player.h"
 #include "Level.h"
 #include "Event.h"
+#include "Character.h"
 
 #include <string>
 
@@ -32,9 +33,11 @@ Command GameIO::GetCommand()
 			validCommand = true;
 		else
 		{
+			if(in.eof()) 
+				exit(0);
 			out << "Invalid!" << std::endl;
 			in.clear();
-			in.ignore(10000, '\n');
+			in.ignore(100000, '\n');
 		}
 	}
 
@@ -49,9 +52,14 @@ CharacterStats GameIO::GetPlayerRace(const std::map<std::string, CharacterStats>
 
 	while (!selected)
 	{
-		out << "Select a Race!" << std::endl;
+		out << " Select a Race: Shade(S), Drow(D), Vampire(V), Troll(T), Goblin(G)" << std::endl;
 		if (in >> raceName)
 		{
+			if(raceName == "S") raceName = "Shade";
+			else if(raceName == "D") raceName = "Drow";
+			else if(raceName == "V") raceName = "Vampire";
+			else if(raceName == "T") raceName = "Troll";
+			else if(raceName == "G") raceName = "Goblin";
 			if (races.find(raceName) != races.end() && races.find(raceName)->second.Playable == true)
 			{
 				selected = true;
@@ -63,7 +71,7 @@ CharacterStats GameIO::GetPlayerRace(const std::map<std::string, CharacterStats>
 		{
 			out << "Invalid!" << std::endl;
 			in.clear();
-			in.ignore(10000, '\n');
+			in.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 		}
 	}
 	return stats;
@@ -135,7 +143,7 @@ void GameIO::DrawDetails()
 	const Map& map = level->GetMap();
 	const std::shared_ptr<Player> player = level->GetPlayer();
 	int width = board.back().size();
-	std::string playerRaceAndGold = "Race: " + player->GetName() + " Gold: "  + std::to_string(player->GetGold());
+	std::string playerRaceAndGold = "Race: " + player->GetRace() + " Gold: "  + std::to_string(player->GetGold());
 	std::string levelName = "Level " + std::to_string(level->GetLevelNum());
 	PrintBothEnds(playerRaceAndGold, levelName);
 	out << "HP: " << player->GetHealth() << "/" << player->GetStartingHealth() << std::endl;
@@ -166,7 +174,7 @@ void GameIO::InvalidCommand(const std::string &msg) const
 	out << "Invalid: " << msg << std::endl;
 }
 
-void GameIO::EndGame()
+void GameIO::QuitGame()
 {
 	out << "Game over! You gave up :(";
 }
@@ -197,6 +205,16 @@ bool GameIO::PlayAgain()
 			return false;
 		}
 	}
+}
+
+
+
+void GameIO::EndGame(Player player, bool won)
+{
+	out << std::endl;
+	if (won) out << "You win! Score: " << player.GetScore();
+	else out << "You lose! Score: " << player.GetScore();
+	out << std::endl;
 }
 
 

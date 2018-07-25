@@ -1,4 +1,4 @@
-
+#include "stdafx.h"
 #include "Character.h"
 #include "Level.h"
 #include "Errors.h"
@@ -46,7 +46,7 @@ std::shared_ptr<Event> Character::Attack(std::shared_ptr<Character> enemy)
 		{
 			// check if it loses HP because it is allergic to enemy
 
-			if (std::find(stats.AllergicTo.begin(), stats.AllergicTo.end(), enemy->stats.Name) 
+			if (std::find(stats.AllergicTo.begin(), stats.AllergicTo.end(), enemy->GetRace()) 
 				!= stats.AllergicTo.end())  // allergic to enemy
 				health -= stats.AtkHpGain;
 			else  // else then we want to add gain HP
@@ -67,12 +67,18 @@ std::shared_ptr<Event> Character::Attack(std::shared_ptr<Character> enemy)
 
 			enemy->DecrementHealth(damage * effect);
 
-			std::shared_ptr<Event> battle = std::make_shared<Event>(Event::EventType::Battle, *this, *enemy, true, damage);
+			if (enemy->GetHealth() <= 0)
+			{
+				AddGold(enemy->GetGoldValue());
+				AddGold(stats.GoldForKill);
+			}
+
+			std::shared_ptr<Event> battle = std::make_shared<Event>(Event::EventType::Battle, this, enemy.get(), true, damage);
 			return battle;
 		}
 		else
 		{
-			return std::make_shared<Event>(Event::EventType::Battle, *this, *enemy, false, 0);
+			return std::make_shared<Event>(Event::EventType::Battle, this, enemy.get(), false, 0);
 		}
 
 	}
@@ -122,6 +128,16 @@ int Character::GetGold() const
 	return gold;
 }
 
+void Character::AddGold(int val)
+{
+	gold += val;
+}
+
+std::string Character::GetRace() const
+{
+	return stats.Name;
+}
+
 int Character::PickupGold(int amount)
 {
 	gold += amount;
@@ -154,10 +170,26 @@ void Character::SetNeutral(bool val)
 	neutral = val;
 }
 
+bool Character::GetMoves() const
+{
+	return stats.Moves;
+}
+
 bool Character::Alive()
 {
-	return health >= 0;
+	return health > 0;
 }
+
+int Character::GetGoldValue() const
+{
+	return stats.GoldValue;
+}
+
+std::string Character::Character::Die()
+{
+	return stats.TreasureDrop;
+}
+
 
 bool Character::isEqual(const Sprite & other) const
 {

@@ -7,7 +7,7 @@
 
 struct Command
 {
-	enum class Action { None, Move, Attack, Use, Quit};
+	enum class Action { None, Move, Attack, Use, Quit, Reset, Freeze };
 
 	Action action = Action::None;
 	Direction direction = Direction::None;

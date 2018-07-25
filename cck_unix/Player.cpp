@@ -1,6 +1,7 @@
-
+#include "stdafx.h"
 #include "Player.h"
 #include "Event.h"
+#include <algorithm>
 
 
 bool Player::isEqual(const Sprite & other) const
@@ -25,14 +26,12 @@ Player::Player(CharacterStats stats, Position start)
 	: Character{ stats, start}
 {
 	this->symbol = '@';
-	this->stats.Name = "Player";
 }
 
 Player::Player(CharacterStats stats)
 	: Character{ stats, {0,0} }
 {
 	this->symbol = '@';
-	this->stats.Name = "Player";
 }
 
 
@@ -51,9 +50,23 @@ int Player::GetDefense() const
 	return stats.Def + DefChange;
 }
 
+std::string Player::GetName() const
+{
+	return "Player";
+}
+
+bool Player::SeenPotion(std::string newPotion) {
+	const auto potion = std::find(SeenPotions.begin(), SeenPotions.end(), newPotion);
+	if (potion != SeenPotions.end()) return true;
+
+	return false;
+}
 
 std::shared_ptr<Event> Player::Use(PotionEffects effect) // called by Item
 {
+	// add it to the seen potions
+	// don't add if its already in the vector
+	if (!SeenPotion(effect.Name)) SeenPotions.emplace_back(effect.Name);
 
 	if(stats.PotionEffect != 100){
 		effect.DefEffect = stats.PotionEffect * effect.DefEffect / 100;
@@ -78,14 +91,14 @@ std::shared_ptr<Event> Player::Use(PotionEffects effect) // called by Item
 std::shared_ptr<Event> Player::Use(TreasureStats treasureStats) // called by Item
 {
 	gold += treasureStats.Value;
-	std::string msg = stats.Name + " picked up: " + std::to_string(treasureStats.Value) + " gold.";
+	std::string msg = GetName() + " picked up: " + std::to_string(treasureStats.Value) + " gold.";
 	return std::make_shared<Event>(Event::EventType::GetTreasure, msg);
 }
 
 std::shared_ptr<Event> Player::Use(const Stairs &stairs)
 {
 	
-	return std::make_shared<Event>(Event::EventType::EndLevel, "Level Completed!");
+	return std::make_shared<Event>(Event::EventType::EndLevel, *this);
 }
 
 
@@ -93,4 +106,11 @@ void Player::ResetForLevel()
 {
 	AtkChange = 0;
 	DefChange = 0;
+	SeenPotions.clear();
+}
+
+
+int Player::GetScore()
+{
+	return gold * (stats.ScoreBonus / 100);
 }

@@ -1,4 +1,4 @@
-
+#include "stdafx.h"
 #include "CharacterStats.h"
 #include "Helpers.h"
 
@@ -118,6 +118,20 @@ std::istream &operator>>(std::istream &in, CharacterStats &stats)
 		else if (field == "ScoreBonus:")
 		{
 			in >> stats.ScoreBonus;
+		}
+		else if (field == "Moves:")
+		{
+			std::string strBool{};
+			in >> strBool;
+			stats.Moves = Helpers::stringToBool(strBool);
+		}
+		else if (field == "TreasureDrop:")
+		{
+			in >> stats.TreasureDrop;
+		}
+		else if (field == "GoldValue:")
+		{
+			in >> stats.GoldValue;
 		}
 	}
 	return in;

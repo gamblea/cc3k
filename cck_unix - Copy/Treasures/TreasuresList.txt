@@ -1,0 +1,6 @@
+NormalTreasure
+SmallTreasure
+DragonTreasure
+MerchantTreasure
+
+

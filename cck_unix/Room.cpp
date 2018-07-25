@@ -1,8 +1,11 @@
-
+#include "stdafx.h"
 #include "Room.h"
 
 #include "Position.h"
 #include "Helpers.h"
+
+
+
 
 Room::Room()
 {

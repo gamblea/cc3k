@@ -1,4 +1,4 @@
-
+#include "stdafx.h"
 #include "Command.h"
 
 std::istream &operator>>(std::istream &in, Command::Action &action)
@@ -23,6 +23,14 @@ std::istream &operator>>(std::istream &in, Command::Action &action)
 		{
 			action = Command::Action::Quit;
 		}
+		else if (actionStr == "freeze" || actionStr == "f")
+		{
+			action = Command::Action::Freeze;
+		}
+		else if (actionStr == "reset" || actionStr == "r")
+		{
+			action = Command::Action::Reset;
+		}
 		else in.setstate(std::ios_base::failbit);
 	}
 	else
@@ -36,7 +44,7 @@ std::istream &operator>>(std::istream &in, Command &command)
 {
 	if (in >> command.action)
 	{
-		if (command.action != Command::Action::Quit && command.action != Command::Action::None)
+		if (command.action == Command::Action::Use || command.action == Command::Action::Move || command.action == Command::Action::Attack)
 		{
 			std::string s{};
 			in >> s;

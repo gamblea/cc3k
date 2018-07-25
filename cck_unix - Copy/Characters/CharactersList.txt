@@ -1,0 +1,12 @@
+Dragon
+Drow
+Dwarf
+Elf
+Goblin
+Halfling
+Human
+Merchant
+Orcs
+Shade
+Troll
+Vampire

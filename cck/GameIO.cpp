@@ -212,8 +212,8 @@ bool GameIO::PlayAgain()
 void GameIO::EndGame(Player player, bool won)
 {
 	out << std::endl;
-	if (won) out << "You win! Score: " + player.GetScore();
-	else out << "You lose! Score: " + player.GetScore();
+	if (won) out << "You win! Score: " << player.GetScore();
+	else out << "You lose! Score: " << player.GetScore();
 	out << std::endl;
 }
 

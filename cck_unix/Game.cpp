@@ -1,4 +1,4 @@
-
+#include "stdafx.h"
 #include "Game.h"
 #include "CharacterStats.h"
 #include "PotionEffects.h"
@@ -84,12 +84,17 @@ void Game::Start()
 		bool passLevel = true;
 		player = std::make_shared<Player>(io.GetPlayerRace(config.Characters));
 		 
+		bool wonGame = false;
 		for (int i = 1; i <= 5 && passLevel; i++ ) // Play the levels
 		{
 			std::shared_ptr<Level> level = std::make_shared<Level>(player, config.floorFile, io, factory, i);
 			io.AttachLevel(level);
-			passLevel = level->Play();			
+			passLevel = level->Play();
+			player->ResetForLevel();
+			if (passLevel && i == 5) wonGame = true;
 		}
+		
+		io.EndGame(*player, wonGame);
 
 		play = io.PlayAgain();
 	}
