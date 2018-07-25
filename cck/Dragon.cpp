@@ -5,6 +5,7 @@
 #include "Position.h"
 #include "Helpers.h"
 #include "Event.h"
+#include <cmath>
 
 bool Dragon::isEqual(const Sprite & other) const
 {
