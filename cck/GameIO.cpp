@@ -34,7 +34,7 @@ Command GameIO::GetCommand()
 		{
 			out << "Invalid!" << std::endl;
 			in.clear();
-			in.ignore(10000, '\n');
+			in.ignore(100000, '\n');
 		}
 	}
 
