@@ -32,6 +32,7 @@ Command GameIO::GetCommand()
 			validCommand = true;
 		else
 		{
+			if(in.eof()) exit 0;
 			out << "Invalid!" << std::endl;
 			in.clear();
 			in.ignore(100000, '\n');
