@@ -176,7 +176,7 @@ void GameIO::InvalidCommand(const std::string &msg) const
 
 void GameIO::QuitGame()
 {
-	out << "Game over! You gave up :(";
+	out << "Game over! You gave up :(" << std::endl;
 }
 
 void GameIO::AttachLevel(std::shared_ptr<Level> level)

@@ -121,5 +121,5 @@ void Player::RegainHealth()
 
 int Player::GetScore()
 {
-	return gold * (stats.ScoreBonus / 100);
+	return gold * stats.ScoreBonus / 100;
 }
