@@ -54,6 +54,8 @@ public:
 
 	int GetGoldValue() const;
 
+	int GetNumAttack(std::string race);
+
 	virtual std::string Die();
 };
 

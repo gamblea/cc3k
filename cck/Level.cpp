@@ -43,6 +43,7 @@ bool Level::Play()
 
 	while (!completed)
 	{
+		player->RegainHealth();
 		Command command = io.GetCommand();
 		try
 		{
@@ -54,8 +55,16 @@ bool Level::Play()
 					Position attackPos = calcPosition(player->GetPosition(), command.direction);
 					std::shared_ptr<Character> defender = getEnemyAt(attackPos);
 					std::shared_ptr<Event> battle = player->Attack(defender); // Handles the attack
-
+					
 					events.emplace_back(battle);
+
+					if (defender->GetNeutral())
+					{
+						defender->SetNeutral(false);
+						SetRaceNeutralality(defender->GetName(), false);
+						events.emplace_back(std::make_shared<Event>(Event::EventType::See, defender->GetName() + " threw out his friendship ring."));
+					}
+
 					if (defender->GetHealth() <= 0)
 					{
 
@@ -69,12 +78,7 @@ bool Level::Play()
 					}
 						
 
-					if (defender->GetNeutral())
-					{
-						defender->SetNeutral(false);
-						SetRaceNeutralality(defender->GetName(), false);
-						events.emplace_back(std::make_shared<Event>(Event::EventType::See, defender->GetName() + " threw out his friendship ring." ));
-					}
+					
 				}
 				catch (...)
 				{
@@ -147,7 +151,7 @@ bool Level::Play()
 		io.UpdateBoard();
 		io.DrawBoard();
 		io.DrawDetails();
-		events.clear();
+		events.clear();	
 	}
 
 	return player->Alive();
@@ -170,26 +174,35 @@ void Level::MoveEnemies()
 		{
 			for (PCharacter& enemy : enemies)
 			{
-				if (enemy->GetPosition().x == x && !enemy->BeenMoved() && enemy->GetMoves())
+				if (enemy->GetPosition().x == x && !enemy->BeenMoved())
 				{
-					std::shared_ptr<Event> enemyEvent = enemy->Attack(player);
-					if (enemyEvent->GetType() == Event::EventType::Battle)
-					{
-						events.emplace_back(enemyEvent);
-						enemy->SetMoved(true);
+					bool canAttack = false;
+					int numAttacks = enemy->GetNumAttack(player->GetRace());
 
-						if (!player->Alive())
+					for (int i = 1; i <= numAttacks; i++)
+					{
+						std::shared_ptr<Event> enemyEvent = enemy->Attack(player);
+						if (enemyEvent->GetType() == Event::EventType::Battle)
 						{
-							events.emplace_back(std::make_shared<Event>(Event::EventType::Died, *player));
-							completed = true;
-							for (PCharacter enemy : enemies)
+							canAttack = true;
+							events.emplace_back(enemyEvent);
+							enemy->SetMoved(true);
+
+							if (!player->Alive())
 							{
-								enemy->SetMoved(false);
+								events.emplace_back(std::make_shared<Event>(Event::EventType::Died, player.get()));
+								completed = true;
+								for (PCharacter enemy : enemies)
+								{
+									enemy->SetMoved(false);
+								}
+								return;
 							}
-							return;
 						}
 					}
-					else
+
+					
+					if (!canAttack && enemy->GetMoves())
 					{
 	
 							try
@@ -611,7 +624,7 @@ void Level::AddSeeEvents()
 				if (nullptr != std::dynamic_pointer_cast<Potion>(sprite) && !player->SeenPotion(sprite->GetName()))
 				{
 					events.emplace_back(std::make_shared<Event>(Event::EventType::See,
-						"The player sees a Unkown Potion " + Helpers::directionToStr(direction) + "."));
+						"The player sees a Unknown Potion " + Helpers::directionToStr(direction) + "."));
 				}
 				else events.emplace_back(std::make_shared<Event>(Event::EventType::See, sprite.get(), direction));
 				continue;
