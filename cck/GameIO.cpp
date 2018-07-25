@@ -71,7 +71,7 @@ CharacterStats GameIO::GetPlayerRace(const std::map<std::string, CharacterStats>
 		{
 			out << "Invalid!" << std::endl;
 			in.clear();
-			in.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			in.ignore(100000, '\n');
 		}
 	}
 	return stats;
