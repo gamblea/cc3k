@@ -1,4 +1,5 @@
-#pragma once
+#ifndef ITEM_H
+#define ITEM_H
 #include "Sprite.h"
 #include "CharacterStats.h"
 #include "Character.h"
@@ -32,3 +33,4 @@ public:
 	void SetGuarded(bool value);
 };
 
+#endif

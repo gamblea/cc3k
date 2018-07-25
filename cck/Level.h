@@ -1,4 +1,5 @@
-#pragma once
+#ifndef LEVEL_H
+#define LEVEL_H
 #include "Map.h"
 #include "Position.h"
 #include "GameIO.h"
@@ -89,4 +90,4 @@ public:
 
 	std::shared_ptr<Character> getEnemyAt(Position position);
 };
-
+#endif

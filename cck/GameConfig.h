@@ -1,4 +1,5 @@
-#pragma once
+#ifndef GAMECONFIG_H
+#define GAMECONFIG_H
 #include <map>
 
 struct CharacterStats;
@@ -11,4 +12,4 @@ struct GameConfig
 	std::map<std::string, PotionEffects> Potions;
 	std::map<std::string, TreasureStats> Treasures;
 };
-
+#endif

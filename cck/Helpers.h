@@ -1,4 +1,5 @@
-#pragma once
+#ifndef HELPERS_H
+#define HELPERS_H
 #include <string>
 
 enum class Direction;
@@ -11,3 +12,4 @@ namespace Helpers
 	Direction strToDirection(const std::string &str);
 	int getRandom(int min, int max);
 }
+#endif

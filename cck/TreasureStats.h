@@ -1,4 +1,5 @@
-#pragma once
+#ifndef TREASURESTATS_H
+#define TREASURESTATS_H
 #include <istream>
 
 struct TreasureStats
@@ -16,4 +17,4 @@ struct TreasureStats
 };
 
 std::istream &operator>>(std::istream &in, TreasureStats &stats); 
-
+#endif

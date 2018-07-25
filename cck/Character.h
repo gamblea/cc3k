@@ -1,4 +1,5 @@
-#pragma once
+#ifndef CHARACTER_H
+#define CHARACTER_H
 #include "Sprite.h"
 #include "Direction.h"
 #include "CharacterStats.h"
@@ -43,3 +44,4 @@ public:
 	bool AccessToPath();
 };
 
+#endif

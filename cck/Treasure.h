@@ -1,4 +1,5 @@
-#pragma once
+#ifndef TREASURE_H
+#define TREASURE_H
 #include "Item.h"
 #include "TreasureStats.h"
 #include "CharacterStats.h"
@@ -16,4 +17,4 @@ public:
 
 	virtual std::shared_ptr<Event> GetPickedUpBy(std::shared_ptr<Player> player);
 };
-
+#endif

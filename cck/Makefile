@@ -3,7 +3,7 @@ CXX=g++
 CXXFLAGS=-std=c++14 -Wextra -Wpedantic -Wall -MMD -g -Werror=vla
 OBJECTS=cck.o AttackInfo.o Charater.o Direction.o CharacterStats.o Command.o Error.o Event.o Game.o GameConfig.o GameIO.o Helpers.o Item.o Level.o Map.o Player.o Position.o Potion.o PotionEffects.o resource.o Sprite.o Stairs.o stdafx.o TextDisplay.o Treasure.o TreasureStats.o 
 DEPENDS=${OBJECTS:.o=.d}
-EXEC= a4q1
+EXEC= cck
 
 ${EXEC}: ${OBJECTS}
 	${CXX} ${CXXFLAGS} ${OBJECTS} -o ${EXEC}

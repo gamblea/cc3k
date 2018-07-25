@@ -1,4 +1,5 @@
-#pragma once
+#ifndef POTIONEFFECTS_H
+#define POTIONEFFECTS_H
 #include <string>
 #include <istream>
 
@@ -16,3 +17,4 @@ struct PotionEffects
 };
 
 std::istream &operator>>(std::istream &in, PotionEffects &effects);
+#endif

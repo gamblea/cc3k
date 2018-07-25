@@ -1,4 +1,5 @@
-#pragma once
+#ifndef PLAYER_H
+#define PLAYER_H
 #include "Character.h"
 #include "TreasureStats.h"
 #include "PotionEffects.h"
@@ -29,4 +30,4 @@ public:
 
 	void ResetForLevel();
 };
-
+#endif

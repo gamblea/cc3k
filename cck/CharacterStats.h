@@ -1,4 +1,5 @@
-#pragma once
+#ifndef CHARACTER_STATS_H
+#define CHARACTER_STATS_H
 #include <string>
 #include <map>
 #include <vector>
@@ -44,3 +45,4 @@ struct CharacterStats
 
 
 std::istream &operator>>(std::istream &in, CharacterStats &stats);
+#endif

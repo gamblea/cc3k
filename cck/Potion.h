@@ -1,4 +1,5 @@
-#pragma once
+#ifndef POTION_H
+#define POTION_H
 #include "Item.h"
 #include "PotionEffects.h"
 
@@ -16,4 +17,4 @@ public:
 
 	virtual std::shared_ptr<Event> GetPickedUpBy(std::shared_ptr<Player> player);
 };
-
+#endif

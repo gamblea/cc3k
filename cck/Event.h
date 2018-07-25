@@ -1,4 +1,5 @@
-#pragma once
+#ifndef EVENT_H
+#define EVENT_H
 #include <string>
 #include <memory>
 #include "Direction.h"
@@ -26,3 +27,5 @@ public:
 };
 
 std::ostream &operator<<(std::ostream &out, const Event &event);
+
+#endif
