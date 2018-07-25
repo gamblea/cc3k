@@ -33,6 +33,7 @@ public:
 	std::string GetGuardName() const;
 	bool ToBeGuarded() const;
 	void SetGuarded(bool value);
+	bool GetGuarded() const;
 };
 
 #endif

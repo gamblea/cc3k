@@ -69,7 +69,7 @@ std::shared_ptr<Event> Dragon::Attack(std::shared_ptr<Character> enemy) {
 			int damage = (int) std::ceil((100.0 / (100.0 + enemy->GetDefense()))* GetAttack());
 			enemy->DecrementHealth(damage);
 
-			std::shared_ptr<Event> event = std::make_shared<Event>(Event::EventType::Battle, *this, *enemy, success, damage);
+			std::shared_ptr<Event> event = std::make_shared<Event>(Event::EventType::Battle, this, enemy.get(), success, damage);
 			return event;
 
 		}
@@ -82,5 +82,11 @@ std::shared_ptr<Event> Dragon::Attack(std::shared_ptr<Character> enemy) {
 Dragon::~Dragon() 
 {
 	itemToProtect->SetGuarded(false);
+}
+
+std::string Dragon::Die()
+{
+	itemToProtect->SetGuarded(false);
+	return stats.TreasureDrop;
 }
 

@@ -27,7 +27,6 @@ public:
 
 	int GetAttack() const override ;
 	int GetDefense() const override ;
-	std::string GetName() const override;
 	bool SeenPotion(std::string newPotion);
 	virtual std::string GetName() const override;	
 

@@ -42,6 +42,11 @@ struct CharacterStats
 
 	int ScoreBonus = 100; // Used for shade
 
+	bool Moves = true;
+
+	std::string TreasureDrop = ""; // treasure to drop when you die
+	int GoldValue = 0; //Gold to give to killer of you
+
 	// only checks if names are equal right now!
 	bool operator==(const CharacterStats &other) const;
 	bool operator!=(const CharacterStats &other) const;

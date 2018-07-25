@@ -8,6 +8,8 @@
 class Character;
 class Player;
 struct PotionEffects;
+	
+typedef std::shared_ptr<Character> PCharacter;
 
 class Event
 {
@@ -18,11 +20,10 @@ private:
 	EventType type;
 public:
 	Event(EventType type, std::string description);
-	Event(EventType type, Character character, Direction direction);
-	Event(EventType type, Character &attacker, Character &defender, bool hit, int damage);
+	Event(EventType type, Character *attacker, Character *defender, bool hit, int damage);
 	Event(EventType type, Player player, PotionEffects effect);
 	Event(EventType type, Player player);
-	Event(EventType type, Sprite &sprite, Direction direction);
+	Event(EventType type, Sprite *sprite, Direction direction);
 
 	virtual ~Event();
 	virtual std::string GetDescription() const;

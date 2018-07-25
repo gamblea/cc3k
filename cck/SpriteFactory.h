@@ -27,7 +27,9 @@ public:
 	Character CreateEnemy(Position start, std::string name);
 	Dragon CreateDragon(Position start, std::string name, std::shared_ptr<Item> itemToProtect);
 	Treasure CreateTreasure(Position start);
+	Treasure CreateTreasure(Position start, std::string name);
 	Potion CreatePotion(Position start);
+	
 
 	void SetNeutrality(std::string name, bool neutralVal);
 

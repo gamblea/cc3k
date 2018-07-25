@@ -10,30 +10,24 @@
 Event::Event(EventType type, std::string description) : type{ type }, description{ description }
 {}
 
-Event::Event(Event::EventType type, Character character, Direction direction)
-	: type{type}
-{
-	this->description = character.GetName() + " moved " + Helpers::directionToStr(direction) + ".";
-}
-
-Event::Event(Event::EventType type,Character &attacker, Character &defender, bool hit, int damage) 
+Event::Event(Event::EventType type, Character *attacker, Character *defender, bool hit, int damage) 
 	: type{ type }
 {
-	if (defender.GetHealth() <= 0)
+	if (defender->GetHealth() <= 0)
 	{
-		description = "The " + attacker.GetName() + " killed " + " the " + defender.GetName() + ".";
+		description = "The " + attacker->GetName() + " killed " + "the " + defender->GetName() + ".";
 	}
 	else
 	{
 		if (hit)
 		{
-			description = "The " + attacker.GetName() + " dealt " + std::to_string(damage) + " to the " + defender.GetName()
-				+ " (" + std::to_string(defender.GetHealth()) + "/" + std::to_string(defender.GetStartingHealth()) + ").";
+			description = "The " + attacker->GetName() + " dealt " + std::to_string(damage) + " to the " + defender->GetName()
+				+ " (" + std::to_string(defender->GetHealth()) + "/" + std::to_string(defender->GetStartingHealth()) + ").";
 		}
 		else
 		{
-			description = "The " + attacker.GetName() + " missed the " + defender.GetName()
-				+ " (" + std::to_string(defender.GetHealth()) + "/" + std::to_string(defender.GetStartingHealth()) + ").";
+			description = "The " + attacker->GetName() + " missed the " + defender->GetName()
+				+ " (" + std::to_string(defender->GetHealth()) + "/" + std::to_string(defender->GetStartingHealth()) + ").";
 		}
 	}
 }
@@ -85,10 +79,37 @@ Event::Event(EventType type, Player player)
 	}
 }
 
-Event::Event(EventType type, Sprite &sprite, Direction direction)
+Event::Event(EventType type, Sprite *sprite, Direction direction)
 	:type{type}
 {
-	this->description = "You see a " + sprite.GetName() + " " + Helpers::directionToStr(direction) + ".";
+	switch (type)
+	{
+	case Event::EventType::Battle:
+		break;
+	case Event::EventType::EndLevel:
+		break;
+	case Event::EventType::GetPotion:
+		break;
+	case Event::EventType::GetTreasure:
+		break;
+	case Event::EventType::See:
+		this->description = "You see a " + sprite->GetName() + " " + Helpers::directionToStr(direction) + ".";
+		break;
+	case Event::EventType::Move:
+		this->description = sprite->GetName() + " moved " + Helpers::directionToStr(direction) + ".";
+		break;
+	case Event::EventType::Died:
+		break;
+	case Event::EventType::Won:
+		break;
+	case Event::EventType::Quit:
+		break;
+	case Event::EventType::None:
+		break;
+	default:
+		break;
+	}
+	
 }
 
 

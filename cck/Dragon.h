@@ -16,6 +16,8 @@ public:
 	std::shared_ptr<Item> getItem();
 	std::shared_ptr<Event> Attack(std::shared_ptr<Character> enemy) override;
 	~Dragon();
+
+	virtual std::string Die() override;
 };
 
 #endif

@@ -78,6 +78,13 @@ Treasure SpriteFactory::CreateTreasure(Position start)
 	return Treasure{start, stats };
 }
 
+Treasure SpriteFactory::CreateTreasure(Position start, std::string name)
+{
+	TreasureStats stats = gameConfig.Treasures.find(name)->second;
+	
+	return Treasure{ start, stats };
+}
+
 Potion SpriteFactory::CreatePotion(Position start)
 {
 	int size = gameConfig.Potions.size();
@@ -88,6 +95,8 @@ Potion SpriteFactory::CreatePotion(Position start)
 
 	return Potion{start , stats};
 }
+
+
 
 void SpriteFactory::SetNeutrality(std::string name, bool neutralVal)
 {

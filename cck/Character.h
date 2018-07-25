@@ -38,6 +38,7 @@ public:
 	virtual std::string GetName() const;
 	std::string GetRace() const;
 	int GetGold() const;
+	void AddGold(int val);
 	int PickupGold(int amount);
 
 	bool BeenMoved() const;
@@ -47,7 +48,13 @@ public:
 	bool GetNeutral() const;
 	void SetNeutral(bool val);
 
+	bool GetMoves() const;
+
 	bool Alive();
+
+	int GetGoldValue() const;
+
+	virtual std::string Die();
 };
 
 #endif

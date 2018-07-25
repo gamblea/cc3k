@@ -56,7 +56,7 @@ std::string Player::GetName() const
 }
 
 bool Player::SeenPotion(std::string newPotion) {
-	const auto potion = std::find(SeenPotions, SeenPotions.end(), newPotion);
+	const auto potion = std::find(SeenPotions.begin(), SeenPotions.end(), newPotion);
 	if (potion != SeenPotions.end()) return true;
 
 	return false;
