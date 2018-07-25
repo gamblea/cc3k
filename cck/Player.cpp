@@ -25,14 +25,12 @@ Player::Player(CharacterStats stats, Position start)
 	: Character{ stats, start}
 {
 	this->symbol = '@';
-	this->stats.Name = "Player";
 }
 
 Player::Player(CharacterStats stats)
 	: Character{ stats, {0,0} }
 {
 	this->symbol = '@';
-	this->stats.Name = "Player";
 }
 
 
@@ -51,6 +49,10 @@ int Player::GetDefense() const
 	return stats.Def + DefChange;
 }
 
+std::string Player::GetName() const
+{
+	return "Player";
+}
 
 std::shared_ptr<Event> Player::Use(PotionEffects effect) // called by Item
 {

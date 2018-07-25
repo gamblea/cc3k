@@ -23,6 +23,7 @@ public:
 
 	int GetAttack() const override ;
 	int GetDefense() const override ;
+	std::string GetName() const override;	
 
 	std::shared_ptr<Event> Use(PotionEffects effect);
 	std::shared_ptr<Event> Use(TreasureStats treasureStats);
