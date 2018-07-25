@@ -49,9 +49,14 @@ CharacterStats GameIO::GetPlayerRace(const std::map<std::string, CharacterStats>
 
 	while (!selected)
 	{
-		out << "Select a Race!" << std::endl;
+		out << "Select a Race:Shade(S), Drow(D), Vampire(V), Troll(T), Goblin(G)" << std::endl;
 		if (in >> raceName)
 		{
+			if(raceName == "S") raceName = "Shade";
+			else if(raceName == "D") raceName = "Drow";
+			else if(raceName == "V") raceName = "Vampire";
+			else if(raceName == "T") raceName = "Troll";
+			else if(raceName == "G") raceName = "Goblin";
 			if (races.find(raceName) != races.end() && races.find(raceName)->second.Playable == true)
 			{
 				selected = true;
@@ -135,7 +140,7 @@ void GameIO::DrawDetails()
 	const Map& map = level->GetMap();
 	const std::shared_ptr<Player> player = level->GetPlayer();
 	int width = board.back().size();
-	std::string playerRaceAndGold = "Race: " + player->GetName() + " Gold: "  + std::to_string(player->GetGold());
+	std::string playerRaceAndGold = "Race: " + player->GetRace() + " Gold: "  + std::to_string(player->GetGold());
 	std::string levelName = "Level " + std::to_string(level->GetLevelNum());
 	PrintBothEnds(playerRaceAndGold, levelName);
 	out << "HP: " << player->GetHealth() << "/" << player->GetStartingHealth() << std::endl;

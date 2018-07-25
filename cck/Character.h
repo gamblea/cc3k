@@ -35,7 +35,8 @@ public:
 
 	void DecrementHealth(int amount);
 
-	std::string GetName() const;
+	virtual std::string GetName() const;
+	std::string getRace() const;
 	int GetGold() const;
 	int PickupGold(int amount);
 

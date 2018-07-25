@@ -122,6 +122,11 @@ int Character::GetGold() const
 	return gold;
 }
 
+std::string Character::GetRace() const
+{
+	return stats.Name;
+}
+
 int Character::PickupGold(int amount)
 {
 	gold += amount;
