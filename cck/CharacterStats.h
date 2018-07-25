@@ -40,6 +40,8 @@ struct CharacterStats
 
 	bool Neutral = false; // used for merchant
 
+	int ScoreBonus = 100; // Used for shade
+
 	// only checks if names are equal right now!
 	bool operator==(const CharacterStats &other) const;
 	bool operator!=(const CharacterStats &other) const;

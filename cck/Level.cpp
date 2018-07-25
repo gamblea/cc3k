@@ -38,6 +38,8 @@ bool Level::Play()
 	io.DrawBoard();
 	io.DrawDetails();
 
+
+
 	while (!completed)
 	{
 		Command command = io.GetCommand();
@@ -117,12 +119,13 @@ bool Level::Play()
 			continue;
 		}
 
-		if (!completed)
-		{
-			MoveEnemies();
-		}
-		
 
+		MoveEnemies();
+
+		if (completed)
+		{
+			events.emplace_back(Event{Event::EventType::See,})
+		}
 
 		io.UpdateBoard();
 		io.DrawBoard();
@@ -158,6 +161,17 @@ void Level::MoveEnemies()
 					{
 						events.emplace_back(enemyEvent);
 						enemy->SetMoved(true);
+
+						if (!player->Alive())
+						{
+							events.emplace_back(Event::EventType::Died, *player);
+							completed = true;
+							for (PCharacter enemy : enemies)
+							{
+								enemy->SetMoved(false);
+							}
+							return;
+						}
 					}
 					else
 					{

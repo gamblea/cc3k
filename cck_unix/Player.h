@@ -29,5 +29,7 @@ public:
 	std::shared_ptr<Event> Use(const Stairs &stairs);
 
 	void ResetForLevel();
+
+	int Player::GetScore();
 };
 #endif

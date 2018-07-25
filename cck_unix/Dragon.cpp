@@ -66,7 +66,7 @@ std::shared_ptr<Event> Dragon::Attack(std::shared_ptr<Character> enemy) {
 		if (success) {
 
 			// DAMAGE ON ENEMY
-			int damage = (int) std::ceil((100 / (100 + enemy->GetDefense()))* GetAttack());
+			int damage = (int) std::ceil((100.0 / (100.0 + enemy->GetDefense()))* GetAttack());
 			enemy->DecrementHealth(damage);
 
 			std::shared_ptr<Event> event = std::make_shared<Event>(Event::EventType::Battle, *this, *enemy, success, damage);

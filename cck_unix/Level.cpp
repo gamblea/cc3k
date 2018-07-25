@@ -158,6 +158,15 @@ void Level::MoveEnemies()
 					{
 						events.emplace_back(enemyEvent);
 						enemy->SetMoved(true);
+						if (!player->Alive())
+						{
+							completed = true;
+							for (PCharacter enemy : enemies)
+							{
+								enemy->SetMoved(false);
+							}
+							return;
+						}
 					}
 					else
 					{

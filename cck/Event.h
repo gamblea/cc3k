@@ -11,7 +11,7 @@ struct PotionEffects;
 class Event
 {
 public:
-	enum class EventType {Battle, EndLevel, GetPotion, GetTreasure, See, Move, None};
+	enum class EventType {Battle, EndLevel, GetPotion, GetTreasure, See, Move, Died, Won, Quit, None};
 private:
 	std::string description;
 	EventType type;
@@ -20,6 +20,7 @@ public:
 	Event(EventType type, Character character, Direction direction);
 	Event(EventType type, Character &attacker, Character &defender, bool hit, int damage);
 	Event(EventType type, Player player, PotionEffects effect);
+	Event(EventType type, Player player);
 
 	virtual ~Event();
 	virtual std::string GetDescription() const;

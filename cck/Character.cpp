@@ -154,6 +154,11 @@ void Character::SetNeutral(bool val)
 	neutral = val;
 }
 
+bool Character::Alive()
+{
+	return health >= 0;
+}
+
 
 bool Character::isEqual(const Sprite & other) const
 {

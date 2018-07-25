@@ -45,6 +45,8 @@ public:
 
 	bool GetNeutral() const;
 	void SetNeutral(bool val);
+
+	bool Alive();
 };
 
 #endif

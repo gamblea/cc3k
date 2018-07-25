@@ -115,6 +115,10 @@ std::istream &operator>>(std::istream &in, CharacterStats &stats)
 			in >> strBool;
 			stats.Neutral = Helpers::stringToBool(strBool);
 		}
+		else if (field == "ScoreBonus:")
+		{
+			in >> stats.ScoreBonus;
+		}
 	}
 	return in;
 }

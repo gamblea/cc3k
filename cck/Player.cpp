@@ -94,3 +94,9 @@ void Player::ResetForLevel()
 	AtkChange = 0;
 	DefChange = 0;
 }
+
+
+int Player::GetScore()
+{
+	return gold * (stats.ScoreBonus / 100);
+}

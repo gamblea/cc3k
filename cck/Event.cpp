@@ -51,6 +51,39 @@ Event::Event(EventType type, Player player, PotionEffects effect)
 	description = player.GetName() + " drank " + effect.Description + " " + effects + ".";
 }
 
+Event::Event(EventType type, Player player)
+	: type{type}
+{
+	switch (type)
+	{
+	case Event::EventType::Battle:
+		break;
+	case Event::EventType::EndLevel:
+		break;
+	case Event::EventType::GetPotion:
+		break;
+	case Event::EventType::GetTreasure:
+		break;
+	case Event::EventType::See:
+		break;
+	case Event::EventType::Move:
+		break;
+	case Event::EventType::Won:
+		description = "The awesome player won! Score: " + player.GetScore();
+		break;
+	case Event::EventType::Quit:
+		description = "The player quit, what a whimp! Score: " + player.GetScore();
+		break;
+	case Event::EventType::Died:
+		description = "The player died! Score: " + player.GetScore();
+		break;
+	case Event::EventType::None:
+		break;
+	default:
+		break;
+	}
+}
+
 
 
 
