@@ -3,11 +3,24 @@
 
 #include "stdafx.h"
 #include "Game.h"
+#include <sstream>
+#include <string>
 
 
-int main()
+int main(int argc, char *argv[])
 {
-	Game game{ "Characters","Potions","Treasures" };
-	game.Start();
+	if (argc == 2)
+	{
+		
+	}
+	else if (argc == 3)
+	{
+			
+	}
+	else
+	{
+		Game game{ "Characters","Potions","Treasures" };
+		game.Start();
+	}
 }
 

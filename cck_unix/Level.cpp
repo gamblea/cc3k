@@ -213,6 +213,7 @@ void Level::MoveEnemies()
 							}
 							enemy->SetMoved(true);
 					}
+					enemy->SetMoved(true);
 				}
 			}
 		}
