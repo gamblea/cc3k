@@ -1,4 +1,5 @@
-#pragma once
+#ifndef STAIRS_H
+#define STAIRS_H
 #include "Item.h"
 class Stairs : public Item
 {
@@ -10,4 +11,4 @@ public:
 
 	std::shared_ptr<Event> GetPickedUpBy(std::shared_ptr<Player> player) override;
 };
-
+#endif

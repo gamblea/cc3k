@@ -1,4 +1,5 @@
-#pragma once
+#ifndef ROOM_H
+#define ROOM_H
 #include <vector>
 
 struct Position;
@@ -22,3 +23,4 @@ public:
 };
 
 std::ostream &operator<<(std::ostream &os, Room &room);
+#endif

@@ -1,4 +1,5 @@
-#pragma once
+#ifndef COMMAND_H
+#define COMMAND_H
 #include "Direction.h"
 #include "Errors.h"
 #include <istream>
@@ -16,3 +17,5 @@ struct Command
 std::istream &operator>>(std::istream &in, Command::Action &action);
 
 std::istream &operator>>(std::istream &in, Command &command);
+
+#endif

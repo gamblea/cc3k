@@ -1,5 +1,5 @@
-#pragma once
-
+#ifndef ERRORS_H
+#define ERRORS_H
 #include <string>
 #include "Direction.h"
 #include "Helpers.h"
@@ -50,3 +50,5 @@ public:
 };
 
 class CannotParse {};
+
+#endif

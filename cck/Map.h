@@ -1,6 +1,5 @@
-#pragma once
-//#ifndef MAP_H
-//#define MAP_H
+#ifndef MAP_H
+#define MAP_H
 #include <string>
 #include <vector>
 #include <map>
@@ -63,4 +62,4 @@ char operator>>(Map::Cell cell, char &c);
 
 std::ostream &operator<<(std::ostream &os, Map &map);
 
-//#endif 
+#endif 

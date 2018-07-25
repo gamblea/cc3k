@@ -1,5 +1,5 @@
-#pragma once
-
+#ifndef SPRITEFACTORY_H
+#define SPRITEFACTORY_H
 #include "GameConfig.h"
 #include <memory>
 #include <vector>
@@ -33,4 +33,4 @@ public:
 
 	const GameConfig &GetGameConfig();
 };
-
+#endif

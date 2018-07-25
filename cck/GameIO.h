@@ -1,4 +1,5 @@
-#pragma once
+#ifndef GAMEIO_H
+#define GAMEIO_H
 #include <string>
 #include <iostream>
 #include <memory>
@@ -61,3 +62,5 @@ public:
 };
 
 std::ostream &operator<<(std::ostream &out, const std::vector<std::vector<char>> &dVector);
+
+#endif

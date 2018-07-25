@@ -1,4 +1,5 @@
-#pragma once
+#ifndef GAMECONFIG_H
+#define GAMECONFIG_H
 #include <map>
 #include <string>
 
@@ -13,4 +14,4 @@ struct GameConfig
 	std::map<std::string, TreasureStats> Treasures;
 	std::string floorFile = "floor.map";
 };
-
+#endif
