@@ -15,6 +15,8 @@ public:
 	Potion(Position position, PotionEffects effect);
 	virtual ~Potion();
 
+
+	virtual std::string GetName() const override;
 	virtual std::shared_ptr<Event> GetPickedUpBy(std::shared_ptr<Player> player);
 };
 #endif

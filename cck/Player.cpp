@@ -87,7 +87,7 @@ std::shared_ptr<Event> Player::Use(TreasureStats treasureStats) // called by Ite
 std::shared_ptr<Event> Player::Use(const Stairs &stairs)
 {
 	
-	return std::make_shared<Event>(Event::EventType::EndLevel, "Level Completed!");
+	return std::make_shared<Event>(Event::EventType::EndLevel, *this);
 }
 
 

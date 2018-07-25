@@ -76,6 +76,8 @@ private:
 
 	void SetRaceNeutralality(std::string name, bool val);
 
+	void AddSeeEvents();
+
 public:
 	Level(std::shared_ptr<Player> player, std::string fileName, GameIO &io, std::shared_ptr<SpriteFactory> factory, int levelNum);
 	~Level();

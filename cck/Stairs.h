@@ -9,6 +9,8 @@ public:
 	Stairs(Position position);
 	virtual ~Stairs();
 
+	virtual std::string GetName() const override;
+
 	std::shared_ptr<Event> GetPickedUpBy(std::shared_ptr<Player> player) override;
 };
 #endif

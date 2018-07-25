@@ -30,6 +30,11 @@ Stairs::~Stairs()
 {
 }
 
+std::string Stairs::GetName() const
+{
+	return "Stairs";
+}
+
 std::shared_ptr<Event> Stairs::GetPickedUpBy(std::shared_ptr<Player> player)
 {
 	return player->Use(*this);

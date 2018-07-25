@@ -59,6 +59,7 @@ Event::Event(EventType type, Player player)
 	case Event::EventType::Battle:
 		break;
 	case Event::EventType::EndLevel:
+		description = "The player reached the stairs. Level Complete!";
 		break;
 	case Event::EventType::GetPotion:
 		break;
@@ -82,6 +83,12 @@ Event::Event(EventType type, Player player)
 	default:
 		break;
 	}
+}
+
+Event::Event(EventType type, Sprite &sprite, Direction direction)
+	:type{type}
+{
+	this->description = "You see a " + sprite.GetName() + " " + Helpers::directionToStr(direction) + ".";
 }
 
 

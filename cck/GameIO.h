@@ -52,11 +52,13 @@ public:
 	void DrawDetails();
 	void LevelCompleted();
 	void InvalidCommand(const std::string &msg) const;
-	void EndGame();
+	void QuitGame();
 
 	void AttachLevel(std::shared_ptr<Level> level);
 
 	bool PlayAgain();
+
+	void EndGame(Player player, bool won);
 
 	friend std::ostream &operator<<(std::ostream &out, const std::vector<std::vector<char>> &dVector);
 };

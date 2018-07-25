@@ -29,6 +29,11 @@ Treasure::Treasure(Position position, TreasureStats stats)
 
 Treasure::~Treasure() {}
 
+std::string Treasure::GetName() const
+{
+	return stats.Name;
+}
+
 
 std::shared_ptr<Event> Treasure::GetPickedUpBy(std::shared_ptr<Player> player)
 { 

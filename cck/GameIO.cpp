@@ -6,6 +6,7 @@
 #include "Player.h"
 #include "Level.h"
 #include "Event.h"
+#include "Character.h"
 
 #include <string>
 
@@ -49,7 +50,7 @@ CharacterStats GameIO::GetPlayerRace(const std::map<std::string, CharacterStats>
 
 	while (!selected)
 	{
-		out << "Select a Race:Shade(S), Drow(D), Vampire(V), Troll(T), Goblin(G)" << std::endl;
+		out << " Select a Race: Shade(S), Drow(D), Vampire(V), Troll(T), Goblin(G)" << std::endl;
 		if (in >> raceName)
 		{
 			if(raceName == "S") raceName = "Shade";
@@ -171,7 +172,7 @@ void GameIO::InvalidCommand(const std::string &msg) const
 	out << "Invalid: " << msg << std::endl;
 }
 
-void GameIO::EndGame()
+void GameIO::QuitGame()
 {
 	out << "Game over! You gave up :(";
 }
@@ -202,6 +203,16 @@ bool GameIO::PlayAgain()
 			return false;
 		}
 	}
+}
+
+
+
+void GameIO::EndGame(Player player, bool won)
+{
+	out << std::endl;
+	if (won) out << "You win! Score: " + player.GetScore();
+	else out << "You lose! Score: " + player.GetScore();
+	out << std::endl;
 }
 
 

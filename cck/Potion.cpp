@@ -31,6 +31,11 @@ Potion::~Potion()
 {
 }
 
+std::string Potion::GetName() const
+{
+	return effect.Name;
+}
+
 std::shared_ptr<Event> Potion::GetPickedUpBy(std::shared_ptr<Player> player)
 {
 	return player->Use(effect);

@@ -15,6 +15,8 @@ public:
 	Treasure(Position position, TreasureStats stats);
 	virtual ~Treasure();
 
+	virtual std::string GetName() const override;
+
 	virtual std::shared_ptr<Event> GetPickedUpBy(std::shared_ptr<Player> player);
 };
 #endif

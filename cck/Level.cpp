@@ -104,8 +104,17 @@ bool Level::Play()
 				}
 				break;
 
+			case Command::Action::Freeze :
+				enemiesMoveable = !enemiesMoveable;
+				continue;
+				break;
+
+			case Command::Action::Reset :
+				return false; // says the level failed
+				break;
+
 			case Command::Action::Quit :
-				io.EndGame();
+				io.QuitGame();
 				exit(0);
 				break;
 			default:
@@ -121,17 +130,12 @@ bool Level::Play()
 
 
 		MoveEnemies();
-
-		if (completed)
-		{
-			events.emplace_back(Event{Event::EventType::See,})
-		}
+		AddSeeEvents();
 
 		io.UpdateBoard();
 		io.DrawBoard();
 		io.DrawDetails();
 		events.clear();
-		if (completed) io.LevelCompleted();
 	}
 
 	return completed;
@@ -164,7 +168,7 @@ void Level::MoveEnemies()
 
 						if (!player->Alive())
 						{
-							events.emplace_back(Event::EventType::Died, *player);
+							events.emplace_back(std::make_shared<Event>(Event::EventType::Died, *player));
 							completed = true;
 							for (PCharacter enemy : enemies)
 							{
@@ -571,6 +575,27 @@ void Level::SetRaceNeutralality(std::string name, bool val)
 		if (enemy->GetName() == name)
 		{
 			enemy->SetNeutral(val);
+		}
+	}
+}
+
+void Level::AddSeeEvents()
+{
+	for (int i = 0; i <= 7; i++)
+	{
+		Direction direction = static_cast<Direction>(i);
+
+		Position relativePos = calcPosition(player->GetPosition(), direction);
+
+		for (auto &sprite : sprites)
+		{
+			if (sprite->GetPosition() == relativePos)
+			{
+				if (!player->seenPotion(sprite->GetName()) {
+					events.emplace_back(std::make_shared<Event>(Event::EventType::See, *sprite, direction));
+					continue;
+				}
+			}
 		}
 	}
 }
