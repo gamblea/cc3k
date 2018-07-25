@@ -4,6 +4,8 @@
 #include "Position.h"
 #include "Helpers.h"
 
+#include <iostream>
+
 
 Room::Room()
 {
