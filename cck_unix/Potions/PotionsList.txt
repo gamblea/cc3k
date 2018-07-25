@@ -1,0 +1,7 @@
+PositiveAtk
+PositiveDef
+PositiveHealth
+NegativeAtk
+NegativeDef
+NegativeHealth
+
