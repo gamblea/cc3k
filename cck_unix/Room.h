@@ -1,6 +1,7 @@
 #ifndef ROOM_H
 #define ROOM_H
 #include <vector>
+#include <iostream>
 
 struct Position;
 
