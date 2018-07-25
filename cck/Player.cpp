@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "Player.h"
 #include "Event.h"
+#include <algorithm>
 
 
 bool Player::isEqual(const Sprite & other) const
@@ -54,8 +55,18 @@ std::string Player::GetName() const
 	return "Player";
 }
 
+bool Player::SeenPotion(std::string newPotion) {
+	const auto potion = std::find(SeenPotions, SeenPotions.end(), newPotion);
+	if (potion != SeenPotions.end()) return true;
+
+	return false;
+}
+
 std::shared_ptr<Event> Player::Use(PotionEffects effect) // called by Item
 {
+	// add it to the seen potions
+	// don't add if its already in the vector
+	if (!SeenPotion(effect.Name)) SeenPotions.emplace_back(effect.Name);
 
 	if(stats.PotionEffect != 100){
 		effect.DefEffect = stats.PotionEffect * effect.DefEffect / 100;
@@ -95,6 +106,7 @@ void Player::ResetForLevel()
 {
 	AtkChange = 0;
 	DefChange = 0;
+	SeenPotions.clear();
 }
 
 
