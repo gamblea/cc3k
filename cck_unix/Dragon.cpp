@@ -1,4 +1,4 @@
-#include "stdafx.h"
+
 #include "Dragon.h"
 #include "Item.h"
 #include "Character.h"

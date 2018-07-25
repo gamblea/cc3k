@@ -1,4 +1,4 @@
-#include "stdafx.h"
+
 #include "CharacterStats.h"
 #include "Helpers.h"
 

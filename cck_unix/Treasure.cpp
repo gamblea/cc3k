@@ -1,4 +1,4 @@
-#include "stdafx.h"
+
 #include "Treasure.h"
 #include "Player.h"
 #include "TreasureStats.h"

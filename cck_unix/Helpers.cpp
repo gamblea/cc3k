@@ -1,4 +1,4 @@
-#include "stdafx.h"
+
 #include "Helpers.h"
 #include "Direction.h"
 

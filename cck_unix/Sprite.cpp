@@ -1,4 +1,4 @@
-#include "stdafx.h"
+
 #include "Sprite.h"
 #include "Level.h"
 

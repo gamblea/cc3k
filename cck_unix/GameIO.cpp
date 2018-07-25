@@ -1,4 +1,4 @@
-#include "stdafx.h"
+
 #include "GameIO.h"
 #include "CharacterStats.h"
 #include "Map.h"

@@ -1,4 +1,4 @@
-#include "stdafx.h"
+
 #include "Stairs.h"
 #include "Player.h"
 

@@ -1,4 +1,4 @@
-#include "stdafx.h"
+
 #include "Command.h"
 
 std::istream &operator>>(std::istream &in, Command::Action &action)

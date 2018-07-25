@@ -1,4 +1,4 @@
-#include "stdafx.h"
+
 #include "Position.h"
 
 bool Position::operator==(const Position &other) const

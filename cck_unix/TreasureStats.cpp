@@ -1,4 +1,4 @@
-#include "stdafx.h"
+
 #include "TreasureStats.h"
 #include <string>
 #include "Helpers.h"
