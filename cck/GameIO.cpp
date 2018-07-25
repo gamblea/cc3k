@@ -34,7 +34,7 @@ Command GameIO::GetCommand()
 		{
 			out << "Invalid!" << std::endl;
 			in.clear();
-			in.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			in.ignore(10000, '\n');
 		}
 	}
 
