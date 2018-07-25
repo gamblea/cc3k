@@ -39,8 +39,6 @@ bool Level::Play()
 	io.DrawBoard();
 	io.DrawDetails();
 
-
-
 	while (!completed)
 	{
 		player->RegainHealth();

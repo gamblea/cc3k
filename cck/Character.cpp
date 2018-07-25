@@ -187,7 +187,7 @@ int Character::GetGoldValue() const
 
 int Character::GetNumAttack(std::string race)
 {
-	if (stats.DifferentAtkNumber.find(race) != stats.DifferentAtkNumber.end())
+	if (stats.DifferentAtkNumber.find(race) == stats.DifferentAtkNumber.end())
 	{
 		return stats.NumberOfAtks;
 	} 
