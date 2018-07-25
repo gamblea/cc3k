@@ -17,7 +17,7 @@ protected:
 	bool moved = false;
 	int health = 0;
 	int gold = 0;
-
+	bool neutral = false;
 
 	Position getPosFromDir(Direction dir);
 public:
@@ -41,5 +41,8 @@ public:
 	bool BeenMoved() const;
 	void SetMoved(bool value);
 	bool AccessToPath();
+
+	bool GetNeutral() const;
+	void SetNeutral(bool val);
 };
 

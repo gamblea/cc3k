@@ -11,7 +11,7 @@
 #include <map>
 
 Character::Character(CharacterStats stats, Position start)
-	: Sprite{stats.Symbol, start}, stats { stats }, health{ stats.HpStart }
+	: Sprite{stats.Symbol, start}, stats { stats }, health{ stats.HpStart }, neutral{stats.Neutral}
 {
 }
 
@@ -26,7 +26,7 @@ std::shared_ptr<Event> Character::Attack(std::shared_ptr<Character> enemy)
 	int myDiffX = std::abs(position.x - enemyPosition.x);
 	int myDiffY = std::abs(position.y - enemyPosition.y);
 
-	if (myDiffX <= 1 && myDiffY <= 1)
+	if (myDiffX <= 1 && myDiffY <= 1 && !neutral)
 	{
 		int r1 = Helpers::getRandom(0, 100);
 		int r2 = Helpers::getRandom(0, 100);
@@ -142,6 +142,16 @@ void Character::SetMoved(bool value)
 bool Character::AccessToPath()
 {
 	return stats.AccessToPath;
+}
+
+bool Character::GetNeutral() const
+{
+	return neutral;
+}
+
+void Character::SetNeutral(bool val)
+{
+	neutral = val;
 }
 
 

@@ -73,6 +73,8 @@ private:
 
 	Position GetAvalibleAdjacent(Position pos);
 
+	void SetRaceNeutralality(std::string name, bool val);
+
 public:
 	Level(std::shared_ptr<Player> player, std::string fileName, GameIO &io, std::shared_ptr<SpriteFactory> factory, int levelNum);
 	~Level();

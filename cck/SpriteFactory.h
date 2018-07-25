@@ -29,6 +29,8 @@ public:
 	Treasure CreateTreasure(Position start);
 	Potion CreatePotion(Position start);
 
+	void SetNeutrality(std::string name, bool neutralVal);
+
 	const GameConfig &GetGameConfig();
 };
 

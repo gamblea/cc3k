@@ -35,7 +35,9 @@ std::istream &operator>>(std::istream &in, CharacterStats &stats)
 		}
 		else if (field == "MaxHp:")
 		{
-			in >> stats.MaxHp;
+			std::string val{};
+			in >> val;
+			stats.MaxHp = Helpers::stringToBool(val);
 		}
 		else if (field == "HpRegain:")
 		{
@@ -106,6 +108,12 @@ std::istream &operator>>(std::istream &in, CharacterStats &stats)
 		else if (field == "NumPiles:") 
 		{
 			in >> stats.NumPiles;
+		}
+		else if (field == "Neutral:")
+		{
+			std::string strBool{};
+			in >> strBool;
+			stats.Neutral = Helpers::stringToBool(strBool);
 		}
 	}
 	return in;

@@ -88,3 +88,12 @@ Potion SpriteFactory::CreatePotion(Position start)
 
 	return Potion{start , stats};
 }
+
+void SpriteFactory::SetNeutrality(std::string name, bool neutralVal)
+{
+	std::map<std::string, CharacterStats>::iterator it = gameConfig.Characters.find(name);
+	if (it != gameConfig.Characters.end())
+	{
+		it->second.Neutral = neutralVal;
+	}
+}

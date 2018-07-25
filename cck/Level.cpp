@@ -55,6 +55,13 @@ bool Level::Play()
 					events.emplace_back(battle);
 					if (defender->GetHealth() <= 0)
 						removeEnemy(defender); // should be tested
+
+					if (defender->GetNeutral())
+					{
+						defender->SetNeutral(false);
+						SetRaceNeutralality(defender->GetName(), false);
+						events.emplace_back(std::make_shared<Event>(Event::EventType::See, defender->GetName() + " threw out his friendship ring." ));
+					}
 				}
 				catch (...)
 				{
@@ -195,6 +202,7 @@ void Level::MovePlayer(Direction direction)
 		}
 		events.emplace_back(event);
 		removeItem(item);
+		player->Move(newPos);
 	}
 	else throw CannotMove{direction};
 }
@@ -539,6 +547,18 @@ Position Level::GetAvalibleAdjacent(Position pos)
 		return newPos;
 	}
 	else throw std::runtime_error("No avalible adjacent positions");
+}
+
+void Level::SetRaceNeutralality(std::string name, bool val)
+{
+	factory->SetNeutrality(name, val);
+	for (auto &enemy : enemies)
+	{
+		if (enemy->GetName() == name)
+		{
+			enemy->SetNeutral(val);
+		}
+	}
 }
 
 const Map & Level::GetMap()
