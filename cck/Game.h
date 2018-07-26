@@ -22,6 +22,7 @@ class Game
 {
 private:
 	const std::string charactersFile;
+	bool preMadeMap = false;
 
 	GameConfig config;
 

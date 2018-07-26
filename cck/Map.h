@@ -21,7 +21,7 @@ private:
 	std::vector<Room> rooms;
 
 	// find numbers that are from 0 - 9
-	std::map<char, Position> existingItems;
+	std::multimap<char, Position> existingItems;
 
 	void AddAttachedToRoom(Room &room, Position current);
 	bool ContainedInARoom(Position pos);
@@ -31,6 +31,8 @@ private:
 
 	void ReadMap(std::string fileName); // Map name + ".map";
 	void BuildRooms();
+
+	bool validChar(char c);
 
 
 public: 
@@ -52,7 +54,7 @@ public:
 
 	Position GetPositionFromRoom(int room) const;
 
-	const std::map<char, Position> &GetExistingItems();
+	const std::multimap<char, Position> &GetExistingItems();
 
 	friend std::ostream &operator<<(std::ostream &os, Map &map);
 

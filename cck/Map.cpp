@@ -28,7 +28,8 @@ void Map::ReadMap(std::string fileName)
 			int col = 0;
 			for (char c : line)
 			{
-				if (c >= '0' && c <= '9') {
+				if (validChar(c))
+				{
 					tempCells.emplace_back(Cell::Floor);
 					existingItems.emplace(c, Position{ col, i });
 
@@ -230,6 +231,13 @@ void Map::BuildRooms()
 	}
 }
 
+bool Map::validChar(char c)
+{
+	return ((c >= '0' && c <= '9') || c == 'D' || c == 'W' || c == 'H'
+		|| c == 'E' || c == 'O' || c == 'M' || c == 'L'
+		|| c == '\\' || c == '@');
+}
+
 const std::vector<Map::Cell>& Map::GetCells() const
 {
 	return cells;
@@ -302,7 +310,7 @@ Position Map::GetPositionFromRoom(int room) const
 	return rooms.at(room).GetRandomPositionInRoom();
 }
 
-const std::map<char, Position> &Map::GetExistingItems()
+const std::multimap<char, Position> &Map::GetExistingItems()
 {
 	return existingItems;
 }
