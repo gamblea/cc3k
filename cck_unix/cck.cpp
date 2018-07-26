@@ -9,13 +9,11 @@
 
 int main(int argc, char *argv[])
 {
+
 	if (argc == 2)
 	{
-		
-	}
-	else if (argc == 3)
-	{
-			
+		std::string map{ argv[1] };
+		Game game{ "Characters","Potions","Treasures",map};
 	}
 	else
 	{
