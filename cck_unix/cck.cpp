@@ -14,6 +14,7 @@ int main(int argc, char *argv[])
 	{
 		std::string map{ argv[1] };
 		Game game{ "Characters","Potions","Treasures",map};
+		game.Start();
 	}
 	else
 	{
