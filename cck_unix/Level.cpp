@@ -25,6 +25,7 @@ Level::Level(std::shared_ptr<Player> player, std::string fileName, GameIO &io, s
 	if (preMade)
 	{
 		buildBoardPremade();
+		
 	}
 	else
 	{
@@ -626,7 +627,7 @@ void Level::buildBoardPremade()
 	{
 		if (it->first == '\\')
 		{
-			addSprite(std::make_shared<Stairs>(it->second));
+			addItem(std::make_shared<Stairs>(it->second));
 			it = existingItems.erase(it);
 			break;
 		}	
