@@ -18,15 +18,22 @@
 #include <memory>
 #include <algorithm>
 
-Level::Level(std::shared_ptr<Player> player, std::string fileName, GameIO &io, std::shared_ptr<SpriteFactory> factory, int levelNum)
-	: player{player}, mapOfLevel{fileName}, io{io}, factory{factory} , levelNum{levelNum}
+Level::Level(std::shared_ptr<Player> player, std::string fileName, GameIO &io, std::shared_ptr<SpriteFactory> factory, int levelNum, bool preMade)
+	: player{player}, mapOfLevel{fileName,levelNum,preMade}, io{io}, factory{factory} , levelNum{levelNum} , preMade{preMade}
 {
 	// needs to be implemented
-	addStaircase();
-	addPotions();
-	addTreasure();
-	addEnemies();
-	addPlayer();
+	if (preMade)
+	{
+		buildBoardPremade();
+	}
+	else
+	{
+		addStaircase();
+		addPotions();
+		addTreasure();
+		addEnemies();
+		addPlayer();
+	}
 }
 
 Level::~Level()
@@ -486,29 +493,6 @@ void Level::addPotions()
 
 void Level::addTreasure()
 {	
-	const GameConfig &config = factory->GetGameConfig();
-	for (const auto item: mapOfLevel.GetExistingItems()) 
-	{
-		if (item.first == '6') 
-		{
-			TreasureStats effect = config.Treasures.find("Normal")->second;
-			addItem(std::make_shared<Treasure>(Treasure{item.second,effect}));
-		}
-		else if (item.first == '7')
-		{
-			TreasureStats effect = config.Treasures.find("Small")->second;
-			addItem(std::make_shared<Treasure>(Treasure{ item.second,effect}));
-		} else if (item.first == '8')
-		{
-			TreasureStats effect = config.Treasures.find("MerchantHoard")->second;
-			addItem(std::make_shared<Treasure>(Treasure{ item.second,effect}));
-		} else if (item.first  == '9')
-		{
-			TreasureStats effect = config.Treasures.find("DragonHoard")->second;
-			addItem(std::make_shared<Treasure>(Treasure{ item.second,effect}));
-		}
-	}
-
 	for (int i = 0; i < 10; i++)
 	{
 		Treasure treasure = factory->CreateTreasure(GetAvalibleRandomPos());
@@ -630,6 +614,177 @@ void Level::AddSeeEvents()
 			}
 		}
 	}
+}
+
+void Level::buildBoardPremade()
+{
+	const GameConfig &config = factory->GetGameConfig();
+	std::multimap<char, Position> existingItems = mapOfLevel.GetExistingItems();
+	std::multimap<char, Position>::iterator it = existingItems.begin();
+
+	while (it != existingItems.end())
+	{
+		if (it->first == '\\')
+		{
+			addSprite(std::make_shared<Stairs>(it->second));
+			it = existingItems.erase(it);
+			break;
+		}	
+		else ++it;
+	}
+
+	it = existingItems.begin();
+
+	// add potions
+	while (it != existingItems.end())
+	{
+		if (it->first == '0')
+		{
+			PotionEffects effect = config.Potions.find("PositiveHealth")->second;
+			addItem(std::make_shared<Potion>(Potion{ it->second,effect }));
+			it = existingItems.erase(it);
+		}
+		else if (it->first == '1')
+		{
+			PotionEffects effect = config.Potions.find("PositiveAtk")->second;
+			addItem(std::make_shared<Potion>(Potion{ it->second,effect }));
+			it = existingItems.erase(it);
+		}
+		else if (it->first == '2')
+		{
+			PotionEffects effect = config.Potions.find("PositiveDef")->second;
+			addItem(std::make_shared<Potion>(Potion{ it->second,effect }));
+			it = existingItems.erase(it);
+		}
+		else if (it->first == '3')
+		{
+			PotionEffects effect = config.Potions.find("NegativeHealth")->second;
+			addItem(std::make_shared<Potion>(Potion{ it->second,effect }));
+			it = existingItems.erase(it);
+		}
+		else if (it->first == '4')
+		{
+			PotionEffects effect = config.Potions.find("NegativeAtk")->second;
+			addItem(std::make_shared<Potion>(Potion{ it->second,effect }));
+			it = existingItems.erase(it);
+		}
+		else if (it->first == '5')
+		{
+			PotionEffects effect = config.Potions.find("NegativeDef")->second;
+			addItem(std::make_shared<Potion>(Potion{ it->second,effect }));
+			it = existingItems.erase(it);
+		}
+		else
+		{
+			++it;
+		}
+	}
+
+	it = existingItems.begin();
+
+	// add treasure
+	while (it != existingItems.end())
+	{
+		if (it->first == '6')
+		{
+			TreasureStats effect = config.Treasures.find("Normal")->second;
+			addItem(std::make_shared<Treasure>(Treasure{ it->second,effect }));
+			it = existingItems.erase(it);
+		}
+		else if (it->first == '7')
+		{
+			TreasureStats effect = config.Treasures.find("Small")->second;
+			addItem(std::make_shared<Treasure>(Treasure{ it->second,effect }));
+			it = existingItems.erase(it);
+		}
+		else if (it->first == '8')
+		{
+			TreasureStats effect = config.Treasures.find("MerchantHoard")->second;
+			addItem(std::make_shared<Treasure>(Treasure{ it->second,effect }));
+			it = existingItems.erase(it);
+		}
+		else if (it->first == '9')
+		{
+			TreasureStats effect = config.Treasures.find("DragonHoard")->second;
+			addItem(std::make_shared<Treasure>(Treasure{ it->second,effect }));
+			it = existingItems.erase(it);
+		}
+		else ++it;
+	}
+
+
+	it = existingItems.begin();
+
+	// add enemies
+	while (it != existingItems.end())
+	{
+		if (it->first == 'D')
+		{
+			CharacterStats stats = config.Characters.find("Dragon")->second;
+
+			std::shared_ptr<Item> toProtect;
+
+			for (auto item : items)
+			{
+				if (item->GetName() == "DragonHoard" && Helpers::OneRadiiAway(it->second,item->GetPosition()))
+				{
+					toProtect = item;
+					break;
+				}
+			}
+
+			auto dragon = std::make_shared<Dragon>(stats, it->second, toProtect);
+			toProtect->SetGuarded(true);
+			addEnemy(dragon);
+			it = existingItems.erase(it);
+		}
+		else if (it->first == 'W')
+		{
+			CharacterStats stats = config.Characters.find("Dwarf")->second;
+			addEnemy(std::make_shared<Character>(stats, it->second));
+			it = existingItems.erase(it);
+		}
+		else if (it->first == 'H')
+		{
+			CharacterStats stats = config.Characters.find("Human")->second;
+			addEnemy(std::make_shared<Character>(stats, it->second));
+			it = existingItems.erase(it);
+		}
+		else if (it->first == 'E')
+		{
+			CharacterStats stats = config.Characters.find("Elf")->second;
+			addEnemy(std::make_shared<Character>(stats, it->second));
+			it = existingItems.erase(it);
+		}
+		else if (it->first == 'O')
+		{
+			CharacterStats stats = config.Characters.find("Orcs")->second;
+			addEnemy(std::make_shared<Character>(stats, it->second));
+			it = existingItems.erase(it);
+		}
+		else if (it->first == 'M')
+		{
+			CharacterStats stats = config.Characters.find("Merchant")->second;
+			addEnemy(std::make_shared<Character>(stats, it->second));
+			it = existingItems.erase(it);
+		}
+		else if (it->first == 'L')
+		{
+			CharacterStats stats = config.Characters.find("Halfing")->second;
+			addEnemy(std::make_shared<Character>(stats, it->second));
+			it = existingItems.erase(it);
+		}
+		else if (it->first == '@')
+		{
+			player->Move(it->second);
+			it = existingItems.erase(it);
+		}
+		else
+			++it;
+
+	}
+
+
 }
 
 const Map & Level::GetMap()

@@ -95,3 +95,13 @@ int Helpers::getRandom(int min, int max)
 	int random = rand() % range;
 	return random + min;
 }
+
+bool Helpers::OneRadiiAway(Position pos1, Position pos2)
+{
+	int myDiffX = std::abs(pos1.x - pos2.x);
+	int myDiffY = std::abs(pos1.y - pos2.y);
+
+	if (myDiffX <= 1 && myDiffY <= 1)
+		return true;
+	else return false;
+}

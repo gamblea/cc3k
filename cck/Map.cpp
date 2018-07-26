@@ -8,17 +8,29 @@
 #include "Room.h"
 #include "Helpers.h"
 
-Map::Map(std::string fileName) :fileName{fileName}
+Map::Map(std::string fileName, int level, bool allFive) :fileName{fileName}
 {
-	ReadMap(fileName);
+	ReadMap(fileName, level, allFive);
 	BuildRooms();
 }
 
-void Map::ReadMap(std::string fileName) 
+void Map::ReadMap(std::string fileName, int level, bool allFive) 
 {
 	std::ifstream file{ fileName };
 	std::vector<Cell> tempCells;
 	std::string line = "";
+
+	if (allFive)
+	{
+		for (int i = 0; i < level - 1; i++)
+		{
+			for (int i = 1; i <= height; i++)
+			{
+				std::string bad{};
+				std::getline(file, bad);
+			}
+		}
+	}
 
 	for (int i = 0; i < height; i++)
 	{

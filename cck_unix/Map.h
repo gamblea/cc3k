@@ -21,7 +21,7 @@ private:
 	std::vector<Room> rooms;
 
 	// find numbers that are from 0 - 9
-	std::map<char, Position> existingItems;
+	std::multimap<char, Position> existingItems;
 
 	void AddAttachedToRoom(Room &room, Position current);
 	bool ContainedInARoom(Position pos);
@@ -29,12 +29,14 @@ private:
 	Cell charToCell(char c);
 	std::string fileName;
 
-	void ReadMap(std::string fileName); // Map name + ".map";
+	void ReadMap(std::string fileName, int level, bool allFive); // Map name + ".map";
 	void BuildRooms();
+
+	bool validChar(char c);
 
 
 public: 
-	Map(std::string name);
+	Map(std::string name, int level, bool allFive);
 	~Map();
 	
 	const Cell& GetCell(int x, int y) const;
@@ -52,7 +54,7 @@ public:
 
 	Position GetPositionFromRoom(int room) const;
 
-	const std::map<char, Position> &GetExistingItems();
+	const std::multimap<char, Position> &GetExistingItems();
 
 	friend std::ostream &operator<<(std::ostream &os, Map &map);
 

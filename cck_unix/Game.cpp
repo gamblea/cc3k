@@ -25,7 +25,7 @@ Game::Game(std::string charactersDirectory, std::string potionsDirectory, std::s
 Game::Game(std::string charactersDirectory, std::string potionsDirectory, std::string treasuresDirectory, std::string floor)
 	:factory{ nullptr }
 {
-	
+	preMadeMap = true;
 	ReadConfigurations<std::string, CharacterStats>(charactersDirectory, config.Characters);
 	ReadConfigurations<std::string, PotionEffects>(potionsDirectory, config.Potions);
 	ReadConfigurations<std::string, TreasureStats>(treasuresDirectory, config.Treasures);
@@ -47,6 +47,7 @@ Game::Game(std::string charactersDirectory, std::string potionsDirectory, std::s
 Game::Game(std::string charactersDirectory, std::string potionsDirectory, std::string treasuresDirectory, std::string floor, int seed)
 	:factory{ nullptr }
 {
+	preMadeMap = true;
 	ReadConfigurations<std::string, CharacterStats>(charactersDirectory, config.Characters);
 	ReadConfigurations<std::string, PotionEffects>(potionsDirectory, config.Potions);
 	ReadConfigurations<std::string, TreasureStats>(treasuresDirectory, config.Treasures);
@@ -87,7 +88,7 @@ void Game::Start()
 		bool wonGame = false;
 		for (int i = 1; i <= 5 && passLevel; i++ ) // Play the levels
 		{
-			std::shared_ptr<Level> level = std::make_shared<Level>(player, config.floorFile, io, factory, i);
+			std::shared_ptr<Level> level = std::make_shared<Level>(player, config.floorFile, io, factory, i, preMadeMap);
 			io.AttachLevel(level);
 			passLevel = level->Play();
 			player->ResetForLevel();

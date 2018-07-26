@@ -19,7 +19,7 @@
 #include <algorithm>
 
 Level::Level(std::shared_ptr<Player> player, std::string fileName, GameIO &io, std::shared_ptr<SpriteFactory> factory, int levelNum, bool preMade)
-	: player{player}, mapOfLevel{fileName}, io{io}, factory{factory} , levelNum{levelNum} , preMade{preMade}
+	: player{player}, mapOfLevel{fileName,levelNum,preMade}, io{io}, factory{factory} , levelNum{levelNum} , preMade{preMade}
 {
 	// needs to be implemented
 	if (preMade)

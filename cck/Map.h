@@ -29,14 +29,14 @@ private:
 	Cell charToCell(char c);
 	std::string fileName;
 
-	void ReadMap(std::string fileName); // Map name + ".map";
+	void ReadMap(std::string fileName, int level, bool allFive); // Map name + ".map";
 	void BuildRooms();
 
 	bool validChar(char c);
 
 
 public: 
-	Map(std::string name);
+	Map(std::string name, int level, bool allFive);
 	~Map();
 	
 	const Cell& GetCell(int x, int y) const;

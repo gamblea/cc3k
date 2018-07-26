@@ -50,6 +50,7 @@ private:
 	std::shared_ptr<Item> getItemAt(Position position);
 
 	const int levelNum;
+	bool preMade;
 
 	void addPlayer();
 
@@ -78,8 +79,10 @@ private:
 
 	void AddSeeEvents();
 
+	void buildBoardPremade();
+
 public:
-	Level(std::shared_ptr<Player> player, std::string fileName, GameIO &io, std::shared_ptr<SpriteFactory> factory, int levelNum);
+	Level(std::shared_ptr<Player> player, std::string fileName, GameIO &io, std::shared_ptr<SpriteFactory> factory, int levelNum, bool preMade);
 	~Level();
 	bool Play();
 

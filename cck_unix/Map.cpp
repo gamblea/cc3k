@@ -8,17 +8,29 @@
 #include "Room.h"
 #include "Helpers.h"
 
-Map::Map(std::string fileName) :fileName{fileName}
+Map::Map(std::string fileName, int level, bool allFive) :fileName{fileName}
 {
-	ReadMap(fileName);
+	ReadMap(fileName, level, allFive);
 	BuildRooms();
 }
 
-void Map::ReadMap(std::string fileName) 
+void Map::ReadMap(std::string fileName, int level, bool allFive) 
 {
 	std::ifstream file{ fileName };
 	std::vector<Cell> tempCells;
 	std::string line = "";
+
+	if (allFive)
+	{
+		for (int i = 0; i < level - 1; i++)
+		{
+			for (int i = 1; i <= height; i++)
+			{
+				std::string bad{};
+				std::getline(file, bad);
+			}
+		}
+	}
 
 	for (int i = 0; i < height; i++)
 	{
@@ -28,7 +40,8 @@ void Map::ReadMap(std::string fileName)
 			int col = 0;
 			for (char c : line)
 			{
-				if (c >= '0' && c <= '9') {
+				if (validChar(c))
+				{
 					tempCells.emplace_back(Cell::Floor);
 					existingItems.emplace(c, Position{ col, i });
 
@@ -230,6 +243,13 @@ void Map::BuildRooms()
 	}
 }
 
+bool Map::validChar(char c)
+{
+	return ((c >= '0' && c <= '9') || c == 'D' || c == 'W' || c == 'H'
+		|| c == 'E' || c == 'O' || c == 'M' || c == 'L'
+		|| c == '\\' || c == '@');
+}
+
 const std::vector<Map::Cell>& Map::GetCells() const
 {
 	return cells;
@@ -302,7 +322,7 @@ Position Map::GetPositionFromRoom(int room) const
 	return rooms.at(room).GetRandomPositionInRoom();
 }
 
-const std::map<char, Position> &Map::GetExistingItems()
+const std::multimap<char, Position> &Map::GetExistingItems()
 {
 	return existingItems;
 }
